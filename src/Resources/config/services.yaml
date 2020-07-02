@@ -75,6 +75,10 @@ services:
           request: Velhron\DadataBundle\Model\Request\Suggest\MetroRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\MetroResponse
 
+        - name: 'suggestCarBrand'
+          request: Velhron\DadataBundle\Model\Request\Suggest\CarBrandRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\CarBrandResponse
+
         - name: 'cleanAddress'
           request: Velhron\DadataBundle\Model\Request\Clean\AddressRequest
           response: Velhron\DadataBundle\Model\Response\Clean\AddressResponse

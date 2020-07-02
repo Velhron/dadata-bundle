@@ -322,6 +322,11 @@ class DadataSuggest extends AbstractService
         return $this->suggest('suggestMetro', $query, $options);
     }
 
+    public function suggestCarBrand(string $query, array $options = []): array
+    {
+        return $this->suggest('suggestCarBrand', $query, $options);
+    }
+
     /**
      * {@inheritdoc}
      */
