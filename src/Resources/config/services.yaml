@@ -71,6 +71,10 @@ services:
           request: Velhron\DadataBundle\Model\Request\Suggest\RegionCourtRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\RegionCourtResponse
 
+        - name: 'suggestMetro'
+          request: Velhron\DadataBundle\Model\Request\Suggest\MetroRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\MetroResponse
+
         - name: 'cleanAddress'
           request: Velhron\DadataBundle\Model\Request\Clean\AddressRequest
           response: Velhron\DadataBundle\Model\Response\Clean\AddressResponse

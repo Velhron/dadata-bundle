@@ -18,6 +18,7 @@ use Velhron\DadataBundle\Model\Response\Suggest\EmailResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FioResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FmsUnitResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FnsUnitResponse;
+use Velhron\DadataBundle\Model\Response\Suggest\MetroResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\PartyResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\RegionCourtResponse;
@@ -304,6 +305,21 @@ class DadataSuggest extends AbstractService
     public function suggestRegionCourt(string $query, array $options = []): array
     {
         return $this->suggest('suggestRegionCourt', $query, $options);
+    }
+
+    /**
+     * Подсказки по справочнику "Станции метро".
+     *
+     * @param string $query   - текст запроса
+     * @param array  $options - дополнительные параметры запроса
+     *
+     * @return MetroResponse[]
+     *
+     * @throws DadataException
+     */
+    public function suggestMetro(string $query, array $options = []): array
+    {
+        return $this->suggest('suggestMetro', $query, $options);
     }
 
     /**
