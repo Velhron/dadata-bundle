@@ -14,6 +14,7 @@ use Velhron\DadataBundle\Model\Response\AbstractResponse;
 use Velhron\DadataBundle\Model\Response\Iplocate\IplocateResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\AddressResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\BankResponse;
+use Velhron\DadataBundle\Model\Response\Suggest\CarBrandResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\EmailResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FioResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FmsUnitResponse;
@@ -322,6 +323,16 @@ class DadataSuggest extends AbstractService
         return $this->suggest('suggestMetro', $query, $options);
     }
 
+    /**
+     * Подсказки по справочнику "Марки автомобилей".
+     *
+     * @param string $query   - текст запроса
+     * @param array  $options - дополнительные параметры запроса
+     *
+     * @return CarBrandResponse[]
+     *
+     * @throws DadataException
+     */
     public function suggestCarBrand(string $query, array $options = []): array
     {
         return $this->suggest('suggestCarBrand', $query, $options);
