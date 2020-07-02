@@ -15,6 +15,7 @@ use Velhron\DadataBundle\Model\Response\Iplocate\IplocateResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\AddressResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\BankResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\CarBrandResponse;
+use Velhron\DadataBundle\Model\Response\Suggest\CountryResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\EmailResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FioResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FmsUnitResponse;
@@ -321,6 +322,21 @@ class DadataSuggest extends AbstractService
     public function suggestMetro(string $query, array $options = []): array
     {
         return $this->suggest('suggestMetro', $query, $options);
+    }
+
+    /**
+     * Подсказки по справочнику "Страны".
+     *
+     * @param string $query   - текст запроса
+     * @param array  $options - дополнительные параметры запроса
+     *
+     * @return CountryResponse[]
+     *
+     * @throws DadataException
+     */
+    public function suggestCountry(string $query, array $options = []): array
+    {
+        return $this->suggest('suggestCountry', $query, $options);
     }
 
     /**
