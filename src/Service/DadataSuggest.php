@@ -22,6 +22,7 @@ use Velhron\DadataBundle\Model\Response\Suggest\FioResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FmsUnitResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FnsUnitResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\MetroResponse;
+use Velhron\DadataBundle\Model\Response\Suggest\Okpd2Response;
 use Velhron\DadataBundle\Model\Response\Suggest\Okved2Response;
 use Velhron\DadataBundle\Model\Response\Suggest\PartyResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse;
@@ -384,6 +385,21 @@ class DadataSuggest extends AbstractService
     public function suggestOkved2(string $query, array $options = []): array
     {
         return $this->suggest('suggestOkved2', $query, $options);
+    }
+
+    /**
+     * Подсказки по справочнику "Виды продукции (ОКПД 2)".
+     *
+     * @param string $query   - текст запроса
+     * @param array  $options - дополнительные параметры запроса
+     *
+     * @return Okpd2Response[]
+     *
+     * @throws DadataException
+     */
+    public function suggestOkpd2(string $query, array $options = []): array
+    {
+        return $this->suggest('suggestOkpd2', $query, $options);
     }
 
     /**
