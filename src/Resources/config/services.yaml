@@ -87,6 +87,10 @@ services:
           request: Velhron\DadataBundle\Model\Request\Suggest\CurrencyRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\CurrencyResponse
 
+        - name: 'suggestOkved2'
+          request: Velhron\DadataBundle\Model\Request\Suggest\Okved2Request
+          response: Velhron\DadataBundle\Model\Response\Suggest\Okved2Response
+
         - name: 'cleanAddress'
           request: Velhron\DadataBundle\Model\Request\Clean\AddressRequest
           response: Velhron\DadataBundle\Model\Response\Clean\AddressResponse
