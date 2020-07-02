@@ -83,6 +83,10 @@ services:
           request: Velhron\DadataBundle\Model\Request\Suggest\CountryRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\CountryResponse
 
+        - name: 'suggestCurrency'
+          request: Velhron\DadataBundle\Model\Request\Suggest\CurrencyRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\CurrencyResponse
+
         - name: 'cleanAddress'
           request: Velhron\DadataBundle\Model\Request\Clean\AddressRequest
           response: Velhron\DadataBundle\Model\Response\Clean\AddressResponse

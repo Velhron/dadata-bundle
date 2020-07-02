@@ -16,6 +16,7 @@ use Velhron\DadataBundle\Model\Response\Suggest\AddressResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\BankResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\CarBrandResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\CountryResponse;
+use Velhron\DadataBundle\Model\Response\Suggest\CurrencyResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\EmailResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FioResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FmsUnitResponse;
@@ -325,6 +326,21 @@ class DadataSuggest extends AbstractService
     }
 
     /**
+     * Подсказки по справочнику "Марки автомобилей".
+     *
+     * @param string $query   - текст запроса
+     * @param array  $options - дополнительные параметры запроса
+     *
+     * @return CarBrandResponse[]
+     *
+     * @throws DadataException
+     */
+    public function suggestCarBrand(string $query, array $options = []): array
+    {
+        return $this->suggest('suggestCarBrand', $query, $options);
+    }
+
+    /**
      * Подсказки по справочнику "Страны".
      *
      * @param string $query   - текст запроса
@@ -340,18 +356,18 @@ class DadataSuggest extends AbstractService
     }
 
     /**
-     * Подсказки по справочнику "Марки автомобилей".
+     * Подсказки по справочнику "Валюты".
      *
      * @param string $query   - текст запроса
      * @param array  $options - дополнительные параметры запроса
      *
-     * @return CarBrandResponse[]
+     * @return CurrencyResponse[]
      *
      * @throws DadataException
      */
-    public function suggestCarBrand(string $query, array $options = []): array
+    public function suggestCurrency(string $query, array $options = []): array
     {
-        return $this->suggest('suggestCarBrand', $query, $options);
+        return $this->suggest('suggestCurrency', $query, $options);
     }
 
     /**
