@@ -1,0 +1,88 @@
+services:
+  Velhron\DadataBundle\Service\AbstractService:
+    abstract: true
+    arguments:
+      $token: '%velhron_dadata.token%'
+      $secret: '%velhron_dadata.secret%'
+      $resolver: '@Velhron\DadataBundle\Resolver'
+      $httpClient: '@http_client'
+
+  Velhron\DadataBundle\Service\DadataGeneral:
+    parent: Velhron\DadataBundle\Service\AbstractService
+
+  Velhron\DadataBundle\Service\DadataSuggest:
+    parent: Velhron\DadataBundle\Service\AbstractService
+
+  Velhron\DadataBundle\Service\DadataClean:
+    parent: Velhron\DadataBundle\Service\AbstractService
+
+  Velhron\DadataBundle\Resolver:
+    arguments:
+      $methods:
+        - name: 'suggestAddress'
+          request: Velhron\DadataBundle\Model\Request\Suggest\AddressRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+
+        - name: 'geolocateAddress'
+          request: Velhron\DadataBundle\Model\Request\Geolocate\AddressRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+
+        - name: 'iplocateAddress'
+          request: Velhron\DadataBundle\Model\Request\Iplocate\AddressRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+
+        - name: 'suggestParty'
+          request: Velhron\DadataBundle\Model\Request\Suggest\PartyRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\PartyResponse
+
+        - name: 'suggestBank'
+          request: Velhron\DadataBundle\Model\Request\Suggest\BankRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\BankResponse
+
+        - name: 'suggestFio'
+          request: Velhron\DadataBundle\Model\Request\Suggest\FioRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\FioResponse
+
+        - name: 'suggestEmail'
+          request: Velhron\DadataBundle\Model\Request\Suggest\EmailRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\EmailResponse
+
+        - name: 'suggestFias'
+          request: Velhron\DadataBundle\Model\Request\Suggest\FiasRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+
+        - name: 'suggestFmsUnit'
+          request: Velhron\DadataBundle\Model\Request\Suggest\FmsUnitRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\FmsUnitResponse
+
+        - name: 'suggestPostalUnit'
+          request: Velhron\DadataBundle\Model\Request\Suggest\PostalUnitRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse
+
+        - name: 'geolocatePostalUnit'
+          request: Velhron\DadataBundle\Model\Request\Geolocate\PostalUnitRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse
+
+        - name: 'cleanAddress'
+          request: Velhron\DadataBundle\Model\Request\Clean\AddressRequest
+          response: Velhron\DadataBundle\Model\Response\Clean\AddressResponse
+
+        - name: 'cleanPhone'
+          request: Velhron\DadataBundle\Model\Request\Clean\PhoneRequest
+          response: Velhron\DadataBundle\Model\Response\Clean\PhoneResponse
+
+        - name: 'cleanPassport'
+          request: Velhron\DadataBundle\Model\Request\Clean\PassportRequest
+          response: Velhron\DadataBundle\Model\Response\Clean\PassportResponse
+
+        - name: 'cleanBirthdate'
+          request: Velhron\DadataBundle\Model\Request\Clean\BirthdateRequest
+          response: Velhron\DadataBundle\Model\Response\Clean\BirthdateResponse
+
+        - name: 'cleanVehicle'
+          request: Velhron\DadataBundle\Model\Request\Clean\VehicleRequest
+          response: Velhron\DadataBundle\Model\Response\Clean\VehicleResponse
+
+        - name: 'cleanName'
+          request: Velhron\DadataBundle\Model\Request\Clean\NameRequest
+          response: Velhron\DadataBundle\Model\Response\Clean\NameResponse

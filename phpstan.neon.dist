@@ -1,0 +1,10 @@
+parameters:
+    inferPrivatePropertyTypeFromConstructor: true
+    checkMissingIterableValueType: false
+    level: 4
+    autoload_directories:
+        - src
+    paths:
+        - src
+    ignoreErrors:
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::.+\(\)#'
