@@ -22,5 +22,15 @@
         "symfony/phpunit-bridge": "^4.4|^5.0",
         "friendsofphp/php-cs-fixer": "^2.16",
         "phpstan/phpstan": "^0.12.25"
+    },
+    "autoload": {
+        "psr-4": {
+            "Velhron\\DadataBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Velhron\\DadataBundle\\Tests\\": "tests"
+        }
     }
 }
