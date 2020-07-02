@@ -20,6 +20,7 @@ use Velhron\DadataBundle\Model\Response\Suggest\FmsUnitResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FnsUnitResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\PartyResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse;
+use Velhron\DadataBundle\Model\Response\Suggest\RegionCourtResponse;
 
 class DadataSuggest extends AbstractService
 {
@@ -288,6 +289,21 @@ class DadataSuggest extends AbstractService
     public function suggestFnsUnit(string $query, array $options = []): array
     {
         return $this->suggest('suggestFnsUnit', $query, $options);
+    }
+
+    /**
+     * Подсказки по справочнику "Мировые суды".
+     *
+     * @param string $query   - текст запроса
+     * @param array  $options - дополнительные параметры запроса
+     *
+     * @return RegionCourtResponse[]
+     *
+     * @throws DadataException
+     */
+    public function suggestRegionCourt(string $query, array $options = []): array
+    {
+        return $this->suggest('suggestRegionCourt', $query, $options);
     }
 
     /**

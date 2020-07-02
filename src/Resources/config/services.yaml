@@ -59,13 +59,17 @@ services:
           request: Velhron\DadataBundle\Model\Request\Suggest\PostalUnitRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse
 
+        - name: 'geolocatePostalUnit'
+          request: Velhron\DadataBundle\Model\Request\Geolocate\PostalUnitRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse
+
         - name: 'suggestFnsUnit'
           request: Velhron\DadataBundle\Model\Request\Suggest\FnsUnitRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\FnsUnitResponse
 
-        - name: 'geolocatePostalUnit'
-          request: Velhron\DadataBundle\Model\Request\Geolocate\PostalUnitRequest
-          response: Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse
+        - name: 'suggestRegionCourt'
+          request: Velhron\DadataBundle\Model\Request\Suggest\RegionCourtRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\RegionCourtResponse
 
         - name: 'cleanAddress'
           request: Velhron\DadataBundle\Model\Request\Clean\AddressRequest
