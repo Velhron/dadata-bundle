@@ -11,11 +11,13 @@ use Velhron\DadataBundle\Model\Request\Geolocate\GeolocateRequest;
 use Velhron\DadataBundle\Model\Request\Iplocate\IplocateRequest;
 use Velhron\DadataBundle\Model\Request\Suggest\SuggestRequest;
 use Velhron\DadataBundle\Model\Response\AbstractResponse;
+use Velhron\DadataBundle\Model\Response\Iplocate\IplocateResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\AddressResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\BankResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\EmailResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FioResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FmsUnitResponse;
+use Velhron\DadataBundle\Model\Response\Suggest\FnsUnitResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\PartyResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse;
 
@@ -23,10 +25,6 @@ class DadataSuggest extends AbstractService
 {
     /**
      * Обработчик для API подсказок.
-     *
-     * @param string $method  - метод
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
      *
      * @throws DadataException
      */
@@ -51,11 +49,6 @@ class DadataSuggest extends AbstractService
 
     /**
      * Обработчик для API обратного геокодирования (по координатам).
-     *
-     * @param string $method    - метод
-     * @param float  $latitude  - широта
-     * @param float  $longitude - долгота
-     * @param array  $options   - дополнительные параметры запроса
      *
      * @throws DadataException
      */
@@ -82,13 +75,9 @@ class DadataSuggest extends AbstractService
     /**
      * Обработчик для API по IP-адресу.
      *
-     * @param string $method  - метод
-     * @param string $ip      - ip-адрес
-     * @param array  $options - дополнительные параметры запроса
-     *
      * @throws DadataException
      */
-    private function iplocate(string $method, string $ip, array $options = []): ?AbstractResponse
+    private function iplocate(string $method, string $ip, array $options = []): ?IplocateResponse
     {
         $requestClass = $this->resolver->getMatchedRequest($method);
         $responseClass = $this->resolver->getMatchedResponse($method);
@@ -284,6 +273,21 @@ class DadataSuggest extends AbstractService
     public function geolocatePostalUnit(float $latitude, float $longitude, array $options = []): array
     {
         return $this->geolocate('geolocatePostalUnit', $latitude, $longitude, $options);
+    }
+
+    /**
+     * Подсказки по справочнику "Налоговые инспекции".
+     *
+     * @param string $query   - текст запроса
+     * @param array  $options - дополнительные параметры запроса
+     *
+     * @return FnsUnitResponse[]
+     *
+     * @throws DadataException
+     */
+    public function suggestFnsUnit(string $query, array $options = []): array
+    {
+        return $this->suggest('suggestFnsUnit', $query, $options);
     }
 
     /**
