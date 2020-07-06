@@ -8,9 +8,6 @@ class Resolver
 {
     private $methods;
 
-    /**
-     * Resolver constructor.
-     */
     public function __construct(array $methods)
     {
         $this->methods = $methods;
