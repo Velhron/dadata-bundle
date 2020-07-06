@@ -15,6 +15,26 @@ use Velhron\DadataBundle\Model\Response\General\StatResponse;
 class DadataGeneral extends AbstractService
 {
     /**
+     * {@inheritdoc}
+     */
+    protected function query(AbstractRequest $request): array
+    {
+        try {
+            $response = $this->httpClient->request('GET', $request->getUrl(), [
+                'headers' => [
+                    'Authorization' => "Token {$this->token}",
+                    'X-Secret' => $this->secret,
+                ],
+                'query' => $request->getBody(),
+            ]);
+
+            return json_decode($response->getContent(), true) ?? [];
+        } catch (ExceptionInterface $exception) {
+            throw new DadataException($exception);
+        }
+    }
+
+    /**
      * Возвращает текущий баланс счета.
      *
      * Возвращает сумму в рублях с точностью до копеек, десятичный разделитель — точка.
@@ -52,25 +72,5 @@ class DadataGeneral extends AbstractService
     public function version(): array
     {
         return $this->query(new VersionRequest());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function query(AbstractRequest $request): array
-    {
-        try {
-            $response = $this->httpClient->request('GET', $request->getUrl(), [
-                'headers' => [
-                    'Authorization' => "Token {$this->token}",
-                    'X-Secret' => $this->secret,
-                ],
-                'query' => $request->getBody(),
-            ]);
-
-            return json_decode($response->getContent(), true) ?? [];
-        } catch (ExceptionInterface $exception) {
-            throw new DadataException($exception);
-        }
     }
 }
