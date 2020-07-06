@@ -33,8 +33,6 @@ class DadataGeneral extends AbstractService
      *
      * Дата должна быть задана в формате YYYY-MM-DD. По умолчанию, сегодня.
      *
-     * @param string $date - дата в формате YYYY-MM-DD
-     *
      * @throws DadataException
      */
     public function stat(string $date = ''): StatResponse
@@ -62,7 +60,7 @@ class DadataGeneral extends AbstractService
     protected function query(AbstractRequest $request): array
     {
         try {
-            $response = $this->httpClient->request($request->getMethod(), $request->getUrl(), [
+            $response = $this->httpClient->request('GET', $request->getUrl(), [
                 'headers' => [
                     'Authorization' => "Token {$this->token}",
                     'X-Secret' => $this->secret,
