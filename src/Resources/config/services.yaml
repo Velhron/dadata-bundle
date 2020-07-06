@@ -142,3 +142,7 @@ services:
         - name: 'cleanName'
           request: Velhron\DadataBundle\Model\Request\Clean\NameRequest
           response: Velhron\DadataBundle\Model\Response\Clean\NameResponse
+
+        - name: 'cleanEmail'
+          request: Velhron\DadataBundle\Model\Request\Clean\EmailRequest
+          response: Velhron\DadataBundle\Model\Response\Clean\EmailResponse
