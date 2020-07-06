@@ -37,6 +37,29 @@ class DadataClean extends AbstractService
     }
 
     /**
+     * {@inheritdoc}
+     */
+    protected function query(AbstractRequest $request): array
+    {
+        try {
+            $response = $this->httpClient->request('POST', $request->getUrl(), [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => "Token {$this->token}",
+                    'X-Secret' => $this->secret,
+                ],
+                'body' => json_encode($request->getBody()),
+            ]);
+
+            $result = json_decode($response->getContent(), true);
+
+            return (1 === count($result)) ? array_shift($result) : $result;
+        } catch (ExceptionInterface $exception) {
+            throw new DadataException($exception);
+        }
+    }
+
+    /**
      * Стандартизация адреса.
      *
      * - Разбивает адрес по отдельным полям (регион, город, улица, дом, квартира) согласно КЛАДР/ФИАС.
@@ -109,28 +132,5 @@ class DadataClean extends AbstractService
     public function cleanEmail(string $query): EmailResponse
     {
         return $this->handle('cleanEmail', $query);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function query(AbstractRequest $request): array
-    {
-        try {
-            $response = $this->httpClient->request('POST', $request->getUrl(), [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => "Token {$this->token}",
-                    'X-Secret' => $this->secret,
-                ],
-                'body' => json_encode($request->getBody()),
-            ]);
-
-            $result = json_decode($response->getContent(), true);
-
-            return (1 === count($result)) ? array_shift($result) : $result;
-        } catch (ExceptionInterface $exception) {
-            throw new DadataException($exception);
-        }
     }
 }

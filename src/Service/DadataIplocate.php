@@ -19,7 +19,7 @@ class DadataIplocate extends AbstractService
      *
      * @throws DadataException
      */
-    private function handle(string $method, string $ip, array $options = []): ?IplocateResponse
+    private function handle(string $method, string $ip, array $options = [])
     {
         $requestClass = $this->resolver->getMatchedRequest($method);
         $responseClass = $this->resolver->getMatchedResponse($method);
