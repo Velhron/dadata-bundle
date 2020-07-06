@@ -52,7 +52,7 @@ class BankResponse extends SuggestResponse
     public $opf;
 
     /**
-     * @var array Адрес регистрации
+     * @var AddressResponse Адрес регистрации
      */
     public $address;
 
@@ -60,4 +60,13 @@ class BankResponse extends SuggestResponse
      * @var array Состояние
      */
     public $state;
+
+    public function __construct(array $data)
+    {
+        parent::__construct($data);
+
+        if (isset($data['data']['address'])) {
+            $this->address = new AddressResponse($data['data']['address']);
+        }
+    }
 }
