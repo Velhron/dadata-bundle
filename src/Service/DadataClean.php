@@ -7,15 +7,9 @@ namespace Velhron\DadataBundle\Service;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Velhron\DadataBundle\Exception\DadataException;
 use Velhron\DadataBundle\Model\Request\AbstractRequest;
-use Velhron\DadataBundle\Model\Request\Clean\AddressRequest;
-use Velhron\DadataBundle\Model\Request\Clean\BirthdateRequest;
 use Velhron\DadataBundle\Model\Request\Clean\CleanRequest;
-use Velhron\DadataBundle\Model\Request\Clean\NameRequest;
-use Velhron\DadataBundle\Model\Request\Clean\PassportRequest;
-use Velhron\DadataBundle\Model\Request\Clean\PhoneRequest;
-use Velhron\DadataBundle\Model\Request\Clean\VehicleRequest;
 use Velhron\DadataBundle\Model\Response\Clean\AddressResponse;
-use Velhron\DadataBundle\Model\Response\Clean\CleanResponse;
+use Velhron\DadataBundle\Model\Response\Clean\EmailResponse;
 use Velhron\DadataBundle\Model\Response\Clean\NameResponse;
 use Velhron\DadataBundle\Model\Response\Clean\PassportResponse;
 use Velhron\DadataBundle\Model\Response\Clean\PhoneResponse;
@@ -26,12 +20,9 @@ class DadataClean extends AbstractService
     /**
      * Обработчик для API стандартизации.
      *
-     * @param string $method - метод
-     * @param string $query  - текст запроса
-     *
      * @throws DadataException
      */
-    public function handle(string $method, string $query): CleanResponse
+    private function handle(string $method, string $query)
     {
         $requestClass = $this->resolver->getMatchedRequest($method);
         $responseClass = $this->resolver->getMatchedResponse($method);
@@ -48,14 +39,16 @@ class DadataClean extends AbstractService
     /**
      * Стандартизация адреса.
      *
+     * - Разбивает адрес по отдельным полям (регион, город, улица, дом, квартира) согласно КЛАДР/ФИАС.
+     * - Определяет корректный индекс по данным Почты России.
+     * - Определяет округ и район города, геокоординаты, метро, площадь и стоимость квартиры.
+     * - Достает коды КЛАДР, ФИАС, ОКАТО, ОКТМО и ИФНС.
+     *
      * @throws DadataException
      */
     public function cleanAddress(string $query): AddressResponse
     {
-        $request = (new AddressRequest())->setQuery($query);
-        $result = $this->query($request);
-
-        return new AddressResponse($result);
+        return $this->handle('cleanAddress', $query);
     }
 
     /**
@@ -65,10 +58,7 @@ class DadataClean extends AbstractService
      */
     public function cleanPhone(string $query): PhoneResponse
     {
-        $request = (new PhoneRequest())->setQuery($query);
-        $result = $this->query($request);
-
-        return new PhoneResponse($result);
+        return $this->handle('cleanPhone', $query);
     }
 
     /**
@@ -78,10 +68,7 @@ class DadataClean extends AbstractService
      */
     public function cleanPassport(string $query): PassportResponse
     {
-        $request = (new PassportRequest())->setQuery($query);
-        $result = $this->query($request);
-
-        return new PassportResponse($result);
+        return $this->handle('cleanPassport', $query);
     }
 
     /**
@@ -91,10 +78,7 @@ class DadataClean extends AbstractService
      */
     public function cleanBirthdate(string $query): PassportResponse
     {
-        $request = (new BirthdateRequest())->setQuery($query);
-        $result = $this->query($request);
-
-        return new PassportResponse($result);
+        return $this->handle('cleanBirthdate', $query);
     }
 
     /**
@@ -104,10 +88,7 @@ class DadataClean extends AbstractService
      */
     public function cleanVehicle(string $query): VehicleResponse
     {
-        $request = (new VehicleRequest())->setQuery($query);
-        $result = $this->query($request);
-
-        return new VehicleResponse($result);
+        return $this->handle('cleanVehicle', $query);
     }
 
     /**
@@ -117,10 +98,17 @@ class DadataClean extends AbstractService
      */
     public function cleanName(string $query): NameResponse
     {
-        $request = (new NameRequest())->setQuery($query);
-        $result = $this->query($request);
+        return $this->handle('cleanName', $query);
+    }
 
-        return new NameResponse($result);
+    /**
+     * Стандартизация e-mail.
+     *
+     * @throws DadataException
+     */
+    public function cleanEmail(string $query): EmailResponse
+    {
+        return $this->handle('cleanEmail', $query);
     }
 
     /**
@@ -129,7 +117,7 @@ class DadataClean extends AbstractService
     protected function query(AbstractRequest $request): array
     {
         try {
-            $response = $this->httpClient->request($request->getMethod(), $request->getUrl(), [
+            $response = $this->httpClient->request('POST', $request->getUrl(), [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Authorization' => "Token {$this->token}",
