@@ -19,14 +19,6 @@ abstract class CleanRequest extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getMethod(): string
-    {
-        return 'POST';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getBody(): array
     {
         return [$this->query];

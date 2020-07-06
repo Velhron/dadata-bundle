@@ -17,6 +17,11 @@ class AddressRequest extends SuggestRequest
     protected $locations;
 
     /**
+     * @var array Ограничение по радиусу окружности
+     */
+    protected $locations_geo;
+
+    /**
      * @var array Приоритет города при ранжировании
      */
     protected $locations_boost;

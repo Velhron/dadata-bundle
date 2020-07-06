@@ -15,9 +15,4 @@ abstract class IplocateRequest extends SuggestRequest
     {
         return 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/';
     }
-
-    public function getMethod(): string
-    {
-        return 'GET';
-    }
 }

@@ -11,9 +11,9 @@ abstract class GeneralRequest extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getMethod(): string
+    protected function getBaseUrl(): string
     {
-        return 'GET';
+        return 'https://dadata.ru/api/v2/';
     }
 
     /**
@@ -24,13 +24,5 @@ abstract class GeneralRequest extends AbstractRequest
         return array_filter(get_object_vars($this), function ($var) {
             return null !== $var;
         });
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getBaseUrl(): string
-    {
-        return 'https://dadata.ru/api/v2/';
     }
 }

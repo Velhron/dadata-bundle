@@ -24,29 +24,10 @@ abstract class SuggestRequest extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getMethod(): string
-    {
-        return 'POST';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getBody(): array
     {
         return array_filter(get_object_vars($this), function ($var) {
             return null !== $var;
         });
-    }
-
-    public function fillOptions(array $data): self
-    {
-        foreach (get_object_vars($this) as $property => $value) {
-            if (isset($data[$property])) {
-                $this->{$property} = $data[$property];
-            }
-        }
-
-        return $this;
     }
 }
