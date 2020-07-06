@@ -7,11 +7,8 @@ namespace Velhron\DadataBundle\Service;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Velhron\DadataBundle\Exception\DadataException;
 use Velhron\DadataBundle\Model\Request\AbstractRequest;
-use Velhron\DadataBundle\Model\Request\Geolocate\GeolocateRequest;
-use Velhron\DadataBundle\Model\Request\Iplocate\IplocateRequest;
 use Velhron\DadataBundle\Model\Request\Suggest\SuggestRequest;
-use Velhron\DadataBundle\Model\Response\AbstractResponse;
-use Velhron\DadataBundle\Model\Response\Iplocate\IplocateResponse;
+use Velhron\DadataBundle\Model\Response\Find\DeliveryResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\AddressResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\BankResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\CarBrandResponse;
@@ -35,7 +32,7 @@ class DadataSuggest extends AbstractService
      *
      * @throws DadataException
      */
-    private function suggest(string $method, string $query, array $options = []): array
+    private function handle(string $method, string $query, array $options = []): array
     {
         $requestClass = $this->resolver->getMatchedRequest($method);
         $responseClass = $this->resolver->getMatchedResponse($method);
@@ -55,49 +52,24 @@ class DadataSuggest extends AbstractService
     }
 
     /**
-     * Обработчик для API обратного геокодирования (по координатам).
-     *
-     * @throws DadataException
+     * {@inheritdoc}
      */
-    private function geolocate(string $method, float $latitude, float $longitude, array $options = []): array
+    protected function query(AbstractRequest $request): array
     {
-        $requestClass = $this->resolver->getMatchedRequest($method);
-        $responseClass = $this->resolver->getMatchedResponse($method);
+        try {
+            $response = $this->httpClient->request('POST', $request->getUrl(), [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => "Token {$this->token}",
+                ],
+                'body' => json_encode($request->getBody()),
+            ]);
 
-        /* @var GeolocateRequest $request */
-        $request = new $requestClass();
-        $request->fillOptions(array_merge([
-            'lat' => $latitude,
-            'lon' => $longitude,
-        ], $options));
-
-        $responseData = $this->query($request);
-        foreach ($responseData['suggestions'] ?? [] as $suggestion) {
-            $data[] = new $responseClass($suggestion);
+            return json_decode($response->getContent(), true) ?? [];
+        } catch (ExceptionInterface $exception) {
+            throw new DadataException($exception);
         }
-
-        return $data ?? [];
-    }
-
-    /**
-     * Обработчик для API по IP-адресу.
-     *
-     * @throws DadataException
-     */
-    private function iplocate(string $method, string $ip, array $options = []): ?IplocateResponse
-    {
-        $requestClass = $this->resolver->getMatchedRequest($method);
-        $responseClass = $this->resolver->getMatchedResponse($method);
-
-        /* @var IplocateRequest $request */
-        $request = new $requestClass();
-        $request
-            ->setQuery($ip)
-            ->fillOptions($options);
-
-        $responseData = $this->query($request);
-
-        return isset($responseData['location']) ? new $responseClass($responseData['location']) : null;
     }
 
     /**
@@ -116,44 +88,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestAddress(string $query, array $options = []): array
     {
-        return $this->suggest('suggestAddress', $query, $options);
-    }
-
-    /**
-     * Адрес по координатам.
-     *
-     * Находит ближайшие адреса (дома, улицы, города) по географическим координатам. Только для России.
-     *
-     * @param float $latitude  - широта
-     * @param float $longitude - долгота
-     * @param array $options   - дополнительные параметры запроса
-     *
-     * @return AddressResponse[]
-     *
-     * @throws DadataException
-     */
-    public function geolocateAddress(float $latitude, float $longitude, array $options = []): array
-    {
-        return $this->geolocate('geolocateAddress', $latitude, $longitude, $options);
-    }
-
-    /**
-     * Город по IP-адресу.
-     *
-     * - Определяет город по IP-адресу в России
-     * - Поддерживает как IPv4, так и IPv6 адреса
-     * - Возвращает детальную информацию о городе, в том числе почтовый индекс
-     *
-     * @param string $ip      - ip-адрес
-     * @param array  $options - дополнительные параметры запроса
-     *
-     * @return AddressResponse|null
-     *
-     * @throws DadataException
-     */
-    public function iplocateAddress(string $ip, array $options = []): ?AbstractResponse
-    {
-        return $this->iplocate('iplocateAddress', $ip, $options);
+        return $this->handle('suggestAddress', $query, $options);
     }
 
     /**
@@ -175,7 +110,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestParty(string $query, array $options = []): array
     {
-        return $this->suggest('suggestParty', $query, $options);
+        return $this->handle('suggestParty', $query, $options);
     }
 
     /**
@@ -190,7 +125,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestBank(string $query, array $options = []): array
     {
-        return $this->suggest('suggestBank', $query, $options);
+        return $this->handle('suggestBank', $query, $options);
     }
 
     /**
@@ -209,7 +144,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestFio(string $query, array $options = []): array
     {
-        return $this->suggest('suggestFio', $query, $options);
+        return $this->handle('suggestFio', $query, $options);
     }
 
     /**
@@ -227,7 +162,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestEmail(string $query, array $options = []): array
     {
-        return $this->suggest('suggestEmail', $query, $options);
+        return $this->handle('suggestEmail', $query, $options);
     }
 
     /**
@@ -244,7 +179,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestFias(string $query, array $options = []): array
     {
-        return $this->suggest('suggestFias', $query, $options);
+        return $this->handle('suggestFias', $query, $options);
     }
 
     /**
@@ -259,7 +194,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestFmsUnit(string $query, array $options = []): array
     {
-        return $this->suggest('suggestFmsUnit', $query, $options);
+        return $this->handle('suggestFmsUnit', $query, $options);
     }
 
     /**
@@ -274,12 +209,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestPostalUnit(string $query, array $options = []): array
     {
-        return $this->suggest('suggestPostalUnit', $query, $options);
-    }
-
-    public function geolocatePostalUnit(float $latitude, float $longitude, array $options = []): array
-    {
-        return $this->geolocate('geolocatePostalUnit', $latitude, $longitude, $options);
+        return $this->handle('suggestPostalUnit', $query, $options);
     }
 
     /**
@@ -294,7 +224,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestFnsUnit(string $query, array $options = []): array
     {
-        return $this->suggest('suggestFnsUnit', $query, $options);
+        return $this->handle('suggestFnsUnit', $query, $options);
     }
 
     /**
@@ -309,7 +239,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestRegionCourt(string $query, array $options = []): array
     {
-        return $this->suggest('suggestRegionCourt', $query, $options);
+        return $this->handle('suggestRegionCourt', $query, $options);
     }
 
     /**
@@ -324,7 +254,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestMetro(string $query, array $options = []): array
     {
-        return $this->suggest('suggestMetro', $query, $options);
+        return $this->handle('suggestMetro', $query, $options);
     }
 
     /**
@@ -339,7 +269,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestCarBrand(string $query, array $options = []): array
     {
-        return $this->suggest('suggestCarBrand', $query, $options);
+        return $this->handle('suggestCarBrand', $query, $options);
     }
 
     /**
@@ -354,7 +284,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestCountry(string $query, array $options = []): array
     {
-        return $this->suggest('suggestCountry', $query, $options);
+        return $this->handle('suggestCountry', $query, $options);
     }
 
     /**
@@ -369,7 +299,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestCurrency(string $query, array $options = []): array
     {
-        return $this->suggest('suggestCurrency', $query, $options);
+        return $this->handle('suggestCurrency', $query, $options);
     }
 
     /**
@@ -384,7 +314,7 @@ class DadataSuggest extends AbstractService
      */
     public function suggestOkved2(string $query, array $options = []): array
     {
-        return $this->suggest('suggestOkved2', $query, $options);
+        return $this->handle('suggestOkved2', $query, $options);
     }
 
     /**
@@ -399,27 +329,107 @@ class DadataSuggest extends AbstractService
      */
     public function suggestOkpd2(string $query, array $options = []): array
     {
-        return $this->suggest('suggestOkpd2', $query, $options);
+        return $this->handle('suggestOkpd2', $query, $options);
     }
 
     /**
-     * {@inheritdoc}
+     * Адрес по коду КЛАДР или ФИАС.
+     *
+     * Находит адрес по коду КЛАДР или ФИАС.
+     *
+     * @param string $query   - текст запроса
+     * @param array  $options - дополнительные параметры запроса
+     *
+     * @return AddressResponse[]
+     *
+     * @throws DadataException
      */
-    protected function query(AbstractRequest $request): array
+    public function findAddress(string $query, array $options = []): array
     {
-        try {
-            $response = $this->httpClient->request($request->getMethod(), $request->getUrl(), [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                    'Authorization' => "Token {$this->token}",
-                ],
-                'body' => json_encode($request->getBody()),
-            ]);
+        return $this->handle('findAddress', $query, $options);
+    }
 
-            return json_decode($response->getContent(), true) ?? [];
-        } catch (ExceptionInterface $exception) {
-            throw new DadataException($exception);
-        }
+    /**
+     * Почтовое отделение по индексу.
+     *
+     * @param string $query   - текст запроса
+     * @param array  $options - дополнительные параметры запроса
+     *
+     * @return PostalUnitResponse[]
+     *
+     * @throws DadataException
+     */
+    public function findPostalUnit(string $query, array $options = []): array
+    {
+        return $this->handle('findPostalUnit', $query, $options);
+    }
+
+    /**
+     * Идентификатор города в СДЭК, Boxberry и DPD.
+     *
+     * @param string $query   - текст запроса
+     * @param array  $options - дополнительные параметры запроса
+     *
+     * @return DeliveryResponse[]
+     *
+     * @throws DadataException
+     */
+    public function findDelivery(string $query, array $options = []): array
+    {
+        return $this->handle('findDelivery', $query, $options);
+    }
+
+    /**
+     * Организация по ИНН или ОГРН.
+     *
+     * @param string $query   - текст запроса
+     * @param array  $options - дополнительные параметры запроса
+     *
+     * @return PartyResponse[]
+     *
+     * @throws DadataException
+     */
+    public function findParty(string $query, array $options = []): array
+    {
+        return $this->handle('findParty', $query, $options);
+    }
+
+    /**
+     * Банк по БИК, SWIFT, ИНН или регистрационному номеру.
+     *
+     * Находит банк по любому из идентификаторов:
+     * - БИК,
+     * - SWIFT,
+     * - ИНН,
+     * - ИНН + КПП (для филиалов),
+     * - регистрационному номеру, присвоенному Банком России.
+     *
+     * Ищет только по точному совпадению.
+     *
+     * @param string $query   - текст запроса
+     * @param array  $options - дополнительные параметры запроса
+     *
+     * @return BankResponse[]
+     *
+     * @throws DadataException
+     */
+    public function findBank(string $query, array $options = []): array
+    {
+        return $this->handle('findBank', $query, $options);
+    }
+
+    /**
+     * Адрес в ФИАС по идентификатору.
+     *
+     * @param string $query   - текст запроса
+     * @param array  $options - дополнительные параметры запроса
+     *
+     * @return AddressResponse[]
+     *
+     * @throws DadataException
+     */
+    public function findFias(string $query, array $options = []): array
+    {
+        return $this->handle('findFias', $query, $options);
     }
 }

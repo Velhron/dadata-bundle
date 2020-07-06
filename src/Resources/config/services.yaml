@@ -23,14 +23,6 @@ services:
           request: Velhron\DadataBundle\Model\Request\Suggest\AddressRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
 
-        - name: 'geolocateAddress'
-          request: Velhron\DadataBundle\Model\Request\Geolocate\AddressRequest
-          response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
-
-        - name: 'iplocateAddress'
-          request: Velhron\DadataBundle\Model\Request\Iplocate\AddressRequest
-          response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
-
         - name: 'suggestParty'
           request: Velhron\DadataBundle\Model\Request\Suggest\PartyRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\PartyResponse
@@ -57,10 +49,6 @@ services:
 
         - name: 'suggestPostalUnit'
           request: Velhron\DadataBundle\Model\Request\Suggest\PostalUnitRequest
-          response: Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse
-
-        - name: 'geolocatePostalUnit'
-          request: Velhron\DadataBundle\Model\Request\Geolocate\PostalUnitRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse
 
         - name: 'suggestFnsUnit'
@@ -94,6 +82,42 @@ services:
         - name: 'suggestOkpd2'
           request: Velhron\DadataBundle\Model\Request\Suggest\Okpd2Request
           response: Velhron\DadataBundle\Model\Response\Suggest\Okpd2Response
+
+        - name: 'findAddress'
+          request: Velhron\DadataBundle\Model\Request\Find\AddressRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+
+        - name: 'findPostalUnit'
+          request: Velhron\DadataBundle\Model\Request\Find\PostalUnitRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+
+        - name: 'findDelivery'
+          request: Velhron\DadataBundle\Model\Request\Find\DeliveryRequest
+          response: Velhron\DadataBundle\Model\Response\Find\DeliveryResponse
+
+        - name: 'findParty'
+          request: Velhron\DadataBundle\Model\Request\Find\PartyRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\PartyResponse
+
+        - name: 'findBank'
+          request: Velhron\DadataBundle\Model\Request\Find\BankRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\BankResponse
+
+        - name: 'findFias'
+          request: Velhron\DadataBundle\Model\Request\Find\FiasRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+
+        - name: 'geolocateAddress'
+          request: Velhron\DadataBundle\Model\Request\Geolocate\AddressRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+
+        - name: 'geolocatePostalUnit'
+          request: Velhron\DadataBundle\Model\Request\Geolocate\PostalUnitRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse
+
+        - name: 'iplocateAddress'
+          request: Velhron\DadataBundle\Model\Request\Iplocate\AddressRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
 
         - name: 'cleanAddress'
           request: Velhron\DadataBundle\Model\Request\Clean\AddressRequest
