@@ -135,17 +135,4 @@ class PartyResponse extends SuggestResponse
      * @var array Лицензии
      */
     public $licenses;
-
-    public function __construct(array $data)
-    {
-        $this->value = $data['value'] ?? null;
-        $this->unrestrictedValue = $data['unrestricted_value'] ?? null;
-
-        foreach ($data['data'] as $property => $value) {
-            $camelCaseProperty = $this->toCamelCase($property);
-            if (property_exists(self::class, $camelCaseProperty)) {
-                $this->{$camelCaseProperty} = $value;
-            }
-        }
-    }
 }

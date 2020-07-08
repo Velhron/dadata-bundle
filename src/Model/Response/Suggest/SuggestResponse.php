@@ -23,7 +23,7 @@ abstract class SuggestResponse extends AbstractResponse
         $this->value = $data['value'] ?? null;
         $this->unrestrictedValue = $data['unrestricted_value'] ?? null;
 
-        foreach ($data['data'] as $property => $value) {
+        foreach ($data['data'] ?? [] as $property => $value) {
             $camelCaseProperty = $this->toCamelCase($property);
             if (property_exists($this, $camelCaseProperty)) {
                 $this->{$camelCaseProperty} = $value;
