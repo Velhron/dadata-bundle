@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 namespace Velhron\DadataBundle\Tests\Service;
 
+use Velhron\DadataBundle\Service\DadataIplocate;
+
 class DadataIplocateTest extends DadataServiceTest
 {
+    protected function createService(string $mockFilepath): DadataIplocate
+    {
+        return new DadataIplocate('', '', $this->resolver, $this->getMockHttpClient($mockFilepath));
+    }
+
     public function testIplocateAddress(): void
     {
-        $service = $this->createIplocateService(__DIR__.'/../Mock/Iplocate/address.json');
+        $service = $this->createIplocateService(__DIR__.'/../mocks/Iplocate/address.json');
         $result = $service->iplocateAddress('46.226.227.20');
 
         $this->assertEquals('г Белгород', $result->value);

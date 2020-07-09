@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 namespace Velhron\DadataBundle\Tests\Service;
 
+use Velhron\DadataBundle\Service\DadataGeolocate;
+
 class DadataGeolocateTest extends DadataServiceTest
 {
+    protected function createService(string $mockFilepath): DadataGeolocate
+    {
+        return new DadataGeolocate('', '', $this->resolver, $this->getMockHttpClient($mockFilepath));
+    }
+
     public function testGeolocateAddress(): void
     {
-        $service = $this->createGeolocateService(__DIR__.'/../Mock/Geolocate/address.json');
+        $service = $this->createGeolocateService(__DIR__.'/../mocks/Geolocate/address.json');
         $result = $service->geolocateAddress(55.878, 37.653);
 
         $this->assertEquals('г Москва, ул Сухонская, д 11', $result[0]->value);
@@ -17,7 +24,7 @@ class DadataGeolocateTest extends DadataServiceTest
 
     public function testGeolocatePostalUnit(): void
     {
-        $service = $this->createGeolocateService(__DIR__.'/../Mock/Geolocate/postalUnit.json');
+        $service = $this->createGeolocateService(__DIR__.'/../mocks/Geolocate/postalUnit.json');
         $result = $service->geolocatePostalUnit(55.878, 37.653, ['radius_meters' => 1000]);
 
         $this->assertEquals('127642', $result[0]->postalCode);
