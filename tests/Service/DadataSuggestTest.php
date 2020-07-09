@@ -4,39 +4,11 @@ declare(strict_types=1);
 
 namespace Velhron\DadataBundle\Tests\Service;
 
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpClient\MockHttpClient;
-use Symfony\Component\HttpClient\Response\MockResponse;
-use Velhron\DadataBundle\Resolver;
-use Velhron\DadataBundle\Service\DadataSuggest;
-use Velhron\DadataBundle\Tests\TestingKernel;
-
-class DadataSuggestTest extends TestCase
+class DadataSuggestTest extends DadataServiceTest
 {
-    /**
-     * @var Resolver
-     */
-    private $resolver;
-
-    protected function setUp(): void
-    {
-        $kernel = new TestingKernel('test', false);
-        $kernel->boot();
-        $container = $kernel->getContainer();
-        $this->resolver = $container->get(Resolver::class);
-    }
-
-    public function createService(string $filepath): DadataSuggest
-    {
-        $mockResponse = new MockResponse(file_get_contents($filepath));
-        $client = new MockHttpClient($mockResponse);
-
-        return new DadataSuggest('', '', $this->resolver, $client);
-    }
-
     public function testSuggestAddress(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/address.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/address.json');
         $result = $service->suggestAddress('москва хабар', ['count' => 10]);
 
         $this->assertCount(10, $result);
@@ -46,7 +18,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestParty(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/party.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/party.json');
         $result = $service->suggestParty('сбербанк', ['count' => 2]);
 
         $this->assertCount(2, $result);
@@ -57,7 +29,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestBank(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/bank.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/bank.json');
         $result = $service->suggestBank('сбербанк', ['count' => 2]);
 
         $this->assertCount(2, $result);
@@ -68,7 +40,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestFio(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/fio.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/fio.json');
         $result = $service->suggestFio('Викт');
 
         $this->assertEquals('Виктор', $result[0]->value);
@@ -77,7 +49,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestEmail(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/email.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/email.json');
         $result = $service->suggestEmail('anton@');
 
         $this->assertEquals('anton@mail.ru', $result[0]->value);
@@ -87,7 +59,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestFias(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/fias.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/fias.json');
         $result = $service->suggestFias('москва хабар', ['count' => 2]);
 
         $this->assertCount(2, $result);
@@ -97,7 +69,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestFmsUnit(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/fmsUnit.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/fmsUnit.json');
         $result = $service->suggestFmsUnit('772 053');
 
         $this->assertEquals('ОВД ЗЮЗИНО Г. МОСКВЫ', $result[0]->value);
@@ -107,7 +79,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestPostalUnit(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/postalUnit.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/postalUnit.json');
         $result = $service->suggestPostalUnit('дежнева 2а');
 
         $this->assertEquals('127642', $result[0]->value);
@@ -117,7 +89,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestFnsUnit(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/fnsUnit.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/fnsUnit.json');
         $result = $service->suggestFnsUnit('нижнего');
 
         $this->assertEquals('Инспекция ФНС России по Автозаводскому району г.Нижнего Новгорода', $result[0]->value);
@@ -127,7 +99,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestRegionCourt(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/regionCourt.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/regionCourt.json');
         $result = $service->suggestRegionCourt('нижний');
 
         $this->assertEquals('52MS0001', $result[0]->code);
@@ -136,7 +108,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestMetro(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/metro.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/metro.json');
         $result = $service->suggestMetro('алек');
 
         $this->assertEquals('Александровский сад', $result[0]->value);
@@ -147,7 +119,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestCarBrand(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/carBrand.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/carBrand.json');
         $result = $service->suggestCarBrand('форд');
 
         $this->assertEquals('Ford', $result[0]->value);
@@ -156,7 +128,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestCountry(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/country.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/country.json');
         $result = $service->suggestCountry('та');
 
         $this->assertEquals('Таджикистан', $result[0]->value);
@@ -165,7 +137,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestCurrency(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/currency.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/currency.json');
         $result = $service->suggestCurrency('руб');
 
         $this->assertEquals('Белорусский рубль', $result[0]->value);
@@ -176,7 +148,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestOkved2(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/okved2.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/okved2.json');
         $result = $service->suggestOkved2('запуск');
 
         $this->assertEquals('H.51.22.3', $result[0]->idx);
@@ -185,7 +157,7 @@ class DadataSuggestTest extends TestCase
 
     public function testSuggestOkpd2(): void
     {
-        $service = $this->createService(__DIR__.'/../Mock/Suggest/okpd2.json');
+        $service = $this->createSuggestService(__DIR__.'/../Mock/Suggest/okpd2.json');
         $result = $service->suggestOkpd2('калоши');
 
         $this->assertEquals('Услуги по обрезиневанию валенок (рыбацкие калоши)', $result[0]->value);
