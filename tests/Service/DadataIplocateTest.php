@@ -15,7 +15,7 @@ class DadataIplocateTest extends DadataServiceTest
 
     public function testIplocateAddress(): void
     {
-        $service = $this->createIplocateService(__DIR__.'/../mocks/Iplocate/address.json');
+        $service = $this->createService(__DIR__.'/../mocks/Iplocate/address.json');
         $result = $service->iplocateAddress('46.226.227.20');
 
         $this->assertEquals('г Белгород', $result->value);
