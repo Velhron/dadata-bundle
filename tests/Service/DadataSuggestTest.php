@@ -197,7 +197,6 @@ class DadataSuggestTest extends DadataServiceTest
         $this->assertEquals('3100400100000', $result[0]->kladrId);
         $this->assertEquals('01929', $result[0]->boxberryId);
         $this->assertEquals('196006461', $result[0]->dpdId);
-
     }
 
     public function testFindParty(): void
@@ -227,6 +226,5 @@ class DadataSuggestTest extends DadataServiceTest
 
         $this->assertEquals('г Москва, ул Снежная', $result[0]->value);
         $this->assertEquals('77000000000268400', $result[0]->kladrId);
-
     }
 }
