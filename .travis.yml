@@ -14,9 +14,6 @@ cache:
   directories:
     - ~/.composer/cache/files
 
-before_install:
-  - phpenv config-rm xdebug.ini || true
-
 install:
   - composer require symfony/config:${SYMFONY_VERSION} --no-update --no-scripts --prefer-dist
   - composer require symfony/dependency-injection:${SYMFONY_VERSION} --no-update --no-scripts --prefer-dist
@@ -27,6 +24,8 @@ install:
   - composer require --dev symfony/yaml:${SYMFONY_VERSION} --no-update --no-scripts --prefer-dist
 
   - composer update --prefer-dist
+
+  - vendor/bin/simple-phpunit install
 
 script:
   - composer check
