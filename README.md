@@ -4,7 +4,7 @@
 
 ## Описание
 
-Symfony DaDataBundle предназначен для работы с REST API сайта [ДаДата](https://dadata.ru).
+Symfony DaDataBundle предназначен для работы с API сервиса [ДаДата](https://dadata.ru).
 
 ## Установка
 
@@ -64,4 +64,90 @@ class AppKernel extends Kernel
 velhron_dadata:
     token: 'token'
     secret: 'secret'
+```
+
+## Использование
+
+Прежде всего, необходимо подключить для работы нужный вам сервис. Например:
+
+```php
+<?php
+
+// ...
+
+use Velhron\DadataBundle\Service\DadataSuggest;
+
+class BaseController extends AbstractController
+{
+    private $dadataSuggest;
+
+    public function __construct(DadataSuggest $dadataSuggest)
+    {
+        $this->dadataSuggest = $dadataSuggest;
+    }
+}
+```
+
+Всего сервисов - 5, а именно:
+1. `DadataSuggest` - [подсказки](https://dadata.ru/api/suggest/)
+2. `DadataClean` - [стандартизация](https://dadata.ru/api/clean/)
+3. `DadataGeolocate` - [обратное геокодирование](https://dadata.ru/api/geolocate/)
+4. `DadataIplocate` - [город по IP-адресу](https://dadata.ru/api/iplocate/)
+5. `DadataGeneral` - остальные методы
+
+Все доступные методы можно посмотреть в самих классах.
+
+Дополнительные параметры обычно передаются вторым параметром в виде ассоциативного массива. 
+Все параметры аналогичны тем, что указаны на сайте ДаДаты.
+
+### [API подсказок](https://dadata.ru/api/suggest/)
+
+Например, подсказки по адресам:
+
+```php
+$response = $dadataSuggest->suggestAddress('москва хабар', ['count' => 10]);
+$address = $response[0]->value;
+```
+
+Подсказки по организациям:
+
+```php
+$response = $dadataSuggest->suggestParty('сбербанк', ['count' => 2]);
+$inn = $response[0]->inn;
+```
+
+### [API стандартизации](https://dadata.ru/api/clean/)
+
+Например, стандартизация ФИО:
+
+```php
+$response = $dadataClean->cleanName('Срегей владимерович иванов');
+$name = $response->result;
+```
+
+### [Обратное геокодирование](https://dadata.ru/api/geolocate/)
+
+Например, адрес по координатам:
+
+```php
+$response = $dadataGeolocate->geolocateAddress(55.878, 37.653);
+$address = $response[0]->value;
+```
+
+### [Город по IP-адресу](https://dadata.ru/api/iplocate/)
+
+Получение города по IP адресу:
+
+```php
+$response = $dadataIplocate->iplocateAddress('46.226.227.20');
+$city = $response->value;
+```
+
+### [Адрес по коду КЛАДР или ФИАС](https://dadata.ru/api/find-address/)
+
+Получение адреса по коду КЛАДР:
+
+```php
+$response = $dadataSuggest->findAddress('77000000000268400');
+$address = $response[0]->value;
 ```
