@@ -77,7 +77,7 @@ class PartyResponse extends SuggestResponse
     public $branchType;
 
     /**
-     * @var string Адрес
+     * @var AddressResponse Адрес
      */
     public $address;
 
@@ -135,4 +135,13 @@ class PartyResponse extends SuggestResponse
      * @var array Лицензии
      */
     public $licenses;
+
+    public function __construct(array $data)
+    {
+        parent::__construct($data);
+
+        if (isset($data['data']['address'])) {
+            $this->address = new AddressResponse($data['data']['address']);
+        }
+    }
 }
