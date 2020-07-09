@@ -8,10 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Velhron\DadataBundle\Resolver;
-use Velhron\DadataBundle\Service\DadataClean;
-use Velhron\DadataBundle\Service\DadataGeolocate;
-use Velhron\DadataBundle\Service\DadataIplocate;
-use Velhron\DadataBundle\Service\DadataSuggest;
 use Velhron\DadataBundle\Tests\TestingKernel;
 
 abstract class DadataServiceTest extends TestCase
@@ -19,7 +15,9 @@ abstract class DadataServiceTest extends TestCase
     /**
      * @var Resolver
      */
-    private $resolver;
+    protected $resolver;
+
+    abstract protected function createService(string $mockFilepath);
 
     /**
      * {@inheritdoc}
@@ -35,25 +33,5 @@ abstract class DadataServiceTest extends TestCase
     protected function getMockHttpClient(string $filepath): MockHttpClient
     {
         return new MockHttpClient(new MockResponse(file_get_contents($filepath)));
-    }
-
-    protected function createSuggestService(string $filepath): DadataSuggest
-    {
-        return new DadataSuggest('', '', $this->resolver, $this->getMockHttpClient($filepath));
-    }
-
-    protected function createIplocateService(string $filepath): DadataIplocate
-    {
-        return new DadataIplocate('', '', $this->resolver, $this->getMockHttpClient($filepath));
-    }
-
-    protected function createGeolocateService(string $filepath): DadataGeolocate
-    {
-        return new DadataGeolocate('', '', $this->resolver, $this->getMockHttpClient($filepath));
-    }
-
-    protected function createCleanService(string $filepath): DadataClean
-    {
-        return new DadataClean('', '', $this->resolver, $this->getMockHttpClient($filepath));
     }
 }
