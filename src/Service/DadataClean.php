@@ -9,6 +9,7 @@ use Velhron\DadataBundle\Exception\DadataException;
 use Velhron\DadataBundle\Model\Request\AbstractRequest;
 use Velhron\DadataBundle\Model\Request\Clean\CleanRequest;
 use Velhron\DadataBundle\Model\Response\Clean\AddressResponse;
+use Velhron\DadataBundle\Model\Response\Clean\BirthdateResponse;
 use Velhron\DadataBundle\Model\Response\Clean\EmailResponse;
 use Velhron\DadataBundle\Model\Response\Clean\NameResponse;
 use Velhron\DadataBundle\Model\Response\Clean\PassportResponse;
@@ -99,7 +100,7 @@ class DadataClean extends AbstractService
      *
      * @throws DadataException
      */
-    public function cleanBirthdate(string $query): PassportResponse
+    public function cleanBirthdate(string $query): BirthdateResponse
     {
         return $this->handle('cleanBirthdate', $query);
     }
