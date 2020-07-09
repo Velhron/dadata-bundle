@@ -96,7 +96,7 @@ services:
 
         - name: 'findPostalUnit'
           request: Velhron\DadataBundle\Model\Request\Find\PostalUnitRequest
-          response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+          response: Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse
 
         - name: 'findDelivery'
           request: Velhron\DadataBundle\Model\Request\Find\DeliveryRequest
