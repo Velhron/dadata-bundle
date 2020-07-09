@@ -215,6 +215,8 @@ class DadataSuggest extends AbstractService
     /**
      * Подсказки по справочнику "Налоговые инспекции".
      *
+     * Справочник инспекций Налоговой службы.
+     *
      * @param string $query   - текст запроса
      * @param array  $options - дополнительные параметры запроса
      *
@@ -229,6 +231,8 @@ class DadataSuggest extends AbstractService
 
     /**
      * Подсказки по справочнику "Мировые суды".
+     *
+     * Справочник мировых судов России.
      *
      * @param string $query   - текст запроса
      * @param array  $options - дополнительные параметры запроса
@@ -245,6 +249,8 @@ class DadataSuggest extends AbstractService
     /**
      * Подсказки по справочнику "Станции метро".
      *
+     * Справочник станций метро в Москве, Санкт-Петербурге и других городах России.
+     *
      * @param string $query   - текст запроса
      * @param array  $options - дополнительные параметры запроса
      *
@@ -259,6 +265,8 @@ class DadataSuggest extends AbstractService
 
     /**
      * Подсказки по справочнику "Марки автомобилей".
+     *
+     * Справочник марок автомобилей на английском и русском языках.
      *
      * @param string $query   - текст запроса
      * @param array  $options - дополнительные параметры запроса
@@ -275,6 +283,8 @@ class DadataSuggest extends AbstractService
     /**
      * Подсказки по справочнику "Страны".
      *
+     * Справочник стран мира по стандарту ISO 3166.
+     *
      * @param string $query   - текст запроса
      * @param array  $options - дополнительные параметры запроса
      *
@@ -289,6 +299,8 @@ class DadataSuggest extends AbstractService
 
     /**
      * Подсказки по справочнику "Валюты".
+     *
+     * Справочник валют по стандарту ISO 4217.
      *
      * @param string $query   - текст запроса
      * @param array  $options - дополнительные параметры запроса
@@ -305,6 +317,8 @@ class DadataSuggest extends AbstractService
     /**
      * Подсказки по справочнику "Виды деятельности (ОКВЭД 2)".
      *
+     * Общероссийский классификатор видов экономической деятельности.
+     *
      * @param string $query   - текст запроса
      * @param array  $options - дополнительные параметры запроса
      *
@@ -319,6 +333,8 @@ class DadataSuggest extends AbstractService
 
     /**
      * Подсказки по справочнику "Виды продукции (ОКПД 2)".
+     *
+     * Общероссийский классификатор продукции по видам экономической деятельности.
      *
      * @param string $query   - текст запроса
      * @param array  $options - дополнительные параметры запроса
