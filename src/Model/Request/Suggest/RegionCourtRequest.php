@@ -8,8 +8,6 @@ class RegionCourtRequest extends SuggestRequest
 {
     /**
      * @var array Фильтрация
-     *
-     * Работает по полю `region_code` (первые 2 цифры КЛАДР-кода региона).
      */
     protected $filters;
 

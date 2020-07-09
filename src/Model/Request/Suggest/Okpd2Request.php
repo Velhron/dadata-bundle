@@ -8,8 +8,6 @@ class Okpd2Request extends SuggestRequest
 {
     /**
      * @var array Фильтрация
-     *
-     * Работает по полю `razdel`.
      */
     public $filters;
 

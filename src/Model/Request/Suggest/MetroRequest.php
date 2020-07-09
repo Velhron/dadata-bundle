@@ -8,8 +8,6 @@ class MetroRequest extends SuggestRequest
 {
     /**
      * @var array Фильтрация
-     *
-     * Работает по полям `city_kladr_id`, `city_fias_id`, `city`, `line_id` и `is_closed`.
      */
     public $filters;
 
