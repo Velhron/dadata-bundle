@@ -1,0 +1,24 @@
+{
+  "suggestions": [
+    {
+      "value": "Белорусский рубль",
+      "unrestricted_value": "Белорусский рубль",
+      "data": {
+        "code": "933",
+        "strcode": "BYN",
+        "name": "Белорусский рубль",
+        "country": "Беларусь"
+      }
+    },
+    {
+      "value": "Российский рубль",
+      "unrestricted_value": "Российский рубль",
+      "data": {
+        "code": "643",
+        "strcode": "RUB",
+        "name": "Российский рубль",
+        "country": "Россия"
+      }
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "suggestions": [
+    {
+      "value": "Виктор",
+      "unrestricted_value": "Виктор",
+      "data": {
+        "surname": null,
+        "name": "Виктор",
+        "patronymic": null,
+        "gender": "MALE",
+        "source": null,
+        "qc": "0"
+      }
+    },
+    {
+      "value": "Виктория",
+      "unrestricted_value": "Виктория",
+      "data": {
+        "surname": null,
+        "name": "Виктория",
+        "patronymic": null,
+        "gender": "FEMALE",
+        "source": null,
+        "qc": "0"
+      }
+    },
+    {
+      "value": "Викторова",
+      "unrestricted_value": "Викторова",
+      "data": {
+        "surname": "Викторова",
+        "name": null,
+        "patronymic": null,
+        "gender": "FEMALE",
+        "source": null,
+        "qc": "0"
+      }
+    },
+    {
+      "value": "Викторов",
+      "unrestricted_value": "Викторов",
+      "data": {
+        "surname": "Викторов",
+        "name": null,
+        "patronymic": null,
+        "gender": "MALE",
+        "source": null,
+        "qc": "0"
+      }
+    },
+    {
+      "value": "Викторина",
+      "unrestricted_value": "Викторина",
+      "data": {
+        "surname": null,
+        "name": "Викторина",
+        "patronymic": null,
+        "gender": "FEMALE",
+        "source": null,
+        "qc": "0"
+      }
+    },
+    {
+      "value": "Викторенко",
+      "unrestricted_value": "Викторенко",
+      "data": {
+        "surname": "Викторенко",
+        "name": null,
+        "patronymic": null,
+        "gender": "UNKNOWN",
+        "source": null,
+        "qc": "0"
+      }
+    },
+    {
+      "value": "Викторович",
+      "unrestricted_value": "Викторович",
+      "data": {
+        "surname": "Викторович",
+        "name": null,
+        "patronymic": null,
+        "gender": "UNKNOWN",
+        "source": null,
+        "qc": "0"
+      }
+    },
+    {
+      "value": "Викторин",
+      "unrestricted_value": "Викторин",
+      "data": {
+        "surname": null,
+        "name": "Викторин",
+        "patronymic": null,
+        "gender": "MALE",
+        "source": null,
+        "qc": "0"
+      }
+    },
+    {
+      "value": "Викторенкова",
+      "unrestricted_value": "Викторенкова",
+      "data": {
+        "surname": "Викторенкова",
+        "name": null,
+        "patronymic": null,
+        "gender": "FEMALE",
+        "source": null,
+        "qc": "0"
+      }
+    },
+    {
+      "value": "Викторас",
+      "unrestricted_value": "Викторас",
+      "data": {
+        "surname": null,
+        "name": "Викторас",
+        "patronymic": null,
+        "gender": "MALE",
+        "source": null,
+        "qc": "0"
+      }
+    }
+  ]
+}

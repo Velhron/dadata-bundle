@@ -1,0 +1,13 @@
+{
+  "suggestions": [
+    {
+      "value": "Ford",
+      "unrestricted_value": "Ford",
+      "data": {
+        "id": "FORD",
+        "name": "Ford",
+        "name_ru": "Форд"
+      }
+    }
+  ]
+}

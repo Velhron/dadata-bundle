@@ -1,0 +1,114 @@
+{
+  "suggestions": [
+    {
+      "value": "anton@mail.ru",
+      "unrestricted_value": "anton@mail.ru",
+      "data": {
+        "local": "anton",
+        "domain": "mail.ru",
+        "type": null,
+        "source": null,
+        "qc": null
+      }
+    },
+    {
+      "value": "anton@gmail.com",
+      "unrestricted_value": "anton@gmail.com",
+      "data": {
+        "local": "anton",
+        "domain": "gmail.com",
+        "type": null,
+        "source": null,
+        "qc": null
+      }
+    },
+    {
+      "value": "anton@yandex.ru",
+      "unrestricted_value": "anton@yandex.ru",
+      "data": {
+        "local": "anton",
+        "domain": "yandex.ru",
+        "type": null,
+        "source": null,
+        "qc": null
+      }
+    },
+    {
+      "value": "anton@ngs.ru",
+      "unrestricted_value": "anton@ngs.ru",
+      "data": {
+        "local": "anton",
+        "domain": "ngs.ru",
+        "type": null,
+        "source": null,
+        "qc": null
+      }
+    },
+    {
+      "value": "anton@pochta.ru",
+      "unrestricted_value": "anton@pochta.ru",
+      "data": {
+        "local": "anton",
+        "domain": "pochta.ru",
+        "type": null,
+        "source": null,
+        "qc": null
+      }
+    },
+    {
+      "value": "anton@yahoo.com",
+      "unrestricted_value": "anton@yahoo.com",
+      "data": {
+        "local": "anton",
+        "domain": "yahoo.com",
+        "type": null,
+        "source": null,
+        "qc": null
+      }
+    },
+    {
+      "value": "anton@rambler.ru",
+      "unrestricted_value": "anton@rambler.ru",
+      "data": {
+        "local": "anton",
+        "domain": "rambler.ru",
+        "type": null,
+        "source": null,
+        "qc": null
+      }
+    },
+    {
+      "value": "anton@km.ru",
+      "unrestricted_value": "anton@km.ru",
+      "data": {
+        "local": "anton",
+        "domain": "km.ru",
+        "type": null,
+        "source": null,
+        "qc": null
+      }
+    },
+    {
+      "value": "anton@meta.ua",
+      "unrestricted_value": "anton@meta.ua",
+      "data": {
+        "local": "anton",
+        "domain": "meta.ua",
+        "type": null,
+        "source": null,
+        "qc": null
+      }
+    },
+    {
+      "value": "anton@mail.com",
+      "unrestricted_value": "anton@mail.com",
+      "data": {
+        "local": "anton",
+        "domain": "mail.com",
+        "type": null,
+        "source": null,
+        "qc": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "suggestions": [
+    {
+      "value": "Таджикистан",
+      "unrestricted_value": "Республика Таджикистан",
+      "data": {
+        "code": "762",
+        "alfa2": "TJ",
+        "alfa3": "TJK",
+        "name_short": "Таджикистан",
+        "name": "Республика Таджикистан"
+      }
+    },
+    {
+      "value": "Таиланд",
+      "unrestricted_value": "Королевство Таиланд",
+      "data": {
+        "code": "764",
+        "alfa2": "TH",
+        "alfa3": "THA",
+        "name_short": "Таиланд",
+        "name": "Королевство Таиланд"
+      }
+    },
+    {
+      "value": "Тайвань",
+      "unrestricted_value": "Тайвань (китай)",
+      "data": {
+        "code": "158",
+        "alfa2": "TW",
+        "alfa3": "TWN",
+        "name_short": "Тайвань",
+        "name": "Тайвань (китай)"
+      }
+    },
+    {
+      "value": "Танзания",
+      "unrestricted_value": "Объединенная Республика Танзания",
+      "data": {
+        "code": "834",
+        "alfa2": "TZ",
+        "alfa3": "TZA",
+        "name_short": "Танзания",
+        "name": "Объединенная Республика Танзания"
+      }
+    }
+  ]
+}

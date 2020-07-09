@@ -1,0 +1,25 @@
+{
+  "suggestions": [
+    {
+      "value": "127642",
+      "unrestricted_value": "г Москва, проезд Дежнёва, д 2А",
+      "data": {
+        "postal_code": "127642",
+        "is_closed": false,
+        "type_code": "ГОПС",
+        "address_str": "г Москва, проезд Дежнёва, д 2А",
+        "address_kladr_id": "7700000000000",
+        "address_qc": "0",
+        "geo_lat": 55.872127,
+        "geo_lon": 37.651223,
+        "schedule_mon": "08:00-20:00",
+        "schedule_tue": "08:00-20:00",
+        "schedule_wed": "08:00-20:00",
+        "schedule_thu": "08:00-20:00",
+        "schedule_fri": "08:00-20:00",
+        "schedule_sat": "09:00-18:00",
+        "schedule_sun": "09:00-18:00"
+      }
+    }
+  ]
+}
