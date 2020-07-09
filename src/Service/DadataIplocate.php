@@ -64,7 +64,7 @@ class DadataIplocate extends AbstractService
      * @param string $ip      - ip-адрес
      * @param array  $options - дополнительные параметры запроса
      *
-     * @return AddressResponse|null
+     * @return AddressResponse|null - ответ
      *
      * @throws DadataException
      */
