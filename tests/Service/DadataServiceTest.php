@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Velhron\DadataBundle\Resolver;
+use Velhron\DadataBundle\Service\DadataClean;
 use Velhron\DadataBundle\Service\DadataGeolocate;
 use Velhron\DadataBundle\Service\DadataIplocate;
 use Velhron\DadataBundle\Service\DadataSuggest;
@@ -49,5 +50,10 @@ abstract class DadataServiceTest extends TestCase
     protected function createGeolocateService(string $filepath): DadataGeolocate
     {
         return new DadataGeolocate('', '', $this->resolver, $this->getMockHttpClient($filepath));
+    }
+
+    protected function createCleanService(string $filepath): DadataClean
+    {
+        return new DadataClean('', '', $this->resolver, $this->getMockHttpClient($filepath));
     }
 }
