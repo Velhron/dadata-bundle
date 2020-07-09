@@ -1,5 +1,7 @@
 # Symfony DaData
 
+[![Build Status](https://travis-ci.com/Velhron/dadata-bundle.svg?token=tDXe7dqwQ2esgAZeQapf&branch=master)](https://travis-ci.com/Velhron/dadata-bundle)
+
 ## Описание
 
 Symfony DaDataBundle предназначен для работы с REST API сайта [ДаДата](https://dadata.ru).
