@@ -16,6 +16,12 @@ services:
   Velhron\DadataBundle\Service\DadataClean:
     parent: Velhron\DadataBundle\Service\AbstractService
 
+  Velhron\DadataBundle\Service\DadataIplocate:
+    parent: Velhron\DadataBundle\Service\AbstractService
+
+  Velhron\DadataBundle\Service\DadataGeolocate:
+    parent: Velhron\DadataBundle\Service\AbstractService
+
   Velhron\DadataBundle\Resolver:
     public: true
     arguments:
