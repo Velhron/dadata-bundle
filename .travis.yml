@@ -19,9 +19,9 @@ install:
   - composer require symfony/dependency-injection:${SYMFONY_VERSION} --no-update --no-scripts --prefer-dist
   - composer require symfony/http-client:${SYMFONY_VERSION} --no-update --no-scripts --prefer-dist
   - composer require symfony/http-kernel:${SYMFONY_VERSION} --no-update --no-scripts --prefer-dist
+  - composer require symfony/yaml:${SYMFONY_VERSION} --no-update --no-scripts --prefer-dist
 
   - composer require --dev symfony/phpunit-bridge:${SYMFONY_VERSION} --no-update --no-scripts --prefer-dist
-  - composer require --dev symfony/yaml:${SYMFONY_VERSION} --no-update --no-scripts --prefer-dist
 
   - composer update --prefer-dist
 

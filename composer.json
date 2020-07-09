@@ -1,6 +1,6 @@
 {
     "name": "velhron/dadata-bundle",
-    "description": "DaData for Symfony 4.4|5",
+    "description": "DaData for Symfony",
     "keywords": ["dadata", "symfony-bundle", "symfony-dadata"],
     "type": "symfony-bundle",
     "license": "MIT",
@@ -16,13 +16,13 @@
         "symfony/config": "^4.4|^5.0",
         "symfony/dependency-injection": "^4.4|^5.0",
         "symfony/http-client": "^4.4|^5.0",
-        "symfony/http-kernel": "^4.4|^5.0"
+        "symfony/http-kernel": "^4.4|^5.0",
+        "symfony/yaml": "^4.4|^5.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
         "phpstan/phpstan": "^0.12.25",
-        "symfony/phpunit-bridge": "^4.4|^5.0",
-        "symfony/yaml": "^4.4|^5.0"
+        "symfony/phpunit-bridge": "^4.4|^5.0"
     },
     "autoload": {
         "psr-4": {
