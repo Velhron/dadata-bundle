@@ -8,7 +8,6 @@ use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Velhron\DadataBundle\Exception\DadataException;
 use Velhron\DadataBundle\Model\Request\AbstractRequest;
 use Velhron\DadataBundle\Model\Request\Iplocate\IplocateRequest;
-use Velhron\DadataBundle\Model\Response\AbstractResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\AddressResponse;
 
 class DadataIplocate extends AbstractService
@@ -69,7 +68,7 @@ class DadataIplocate extends AbstractService
      *
      * @throws DadataException
      */
-    public function iplocateAddress(string $ip, array $options = []): ?AbstractResponse
+    public function iplocateAddress(string $ip, array $options = []): ?AddressResponse
     {
         return $this->handle('iplocateAddress', $ip, $options);
     }
