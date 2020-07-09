@@ -2,10 +2,10 @@ services:
   Velhron\DadataBundle\Service\AbstractService:
     abstract: true
     arguments:
-      $token: '%velhron_dadata.token%'
-      $secret: '%velhron_dadata.secret%'
-      $resolver: '@Velhron\DadataBundle\Resolver'
-      $httpClient: '@http_client'
+      - '%velhron_dadata.token%'
+      - '%velhron_dadata.secret%'
+      - '@Velhron\DadataBundle\Resolver'
+      - '@http_client'
 
   Velhron\DadataBundle\Service\DadataGeneral:
     parent: Velhron\DadataBundle\Service\AbstractService
@@ -17,6 +17,7 @@ services:
     parent: Velhron\DadataBundle\Service\AbstractService
 
   Velhron\DadataBundle\Resolver:
+    public: true
     arguments:
       $methods:
         - name: 'suggestAddress'
