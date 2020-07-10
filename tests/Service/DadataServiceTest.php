@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Velhron\DadataBundle\Tests\Service;
 
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Velhron\DadataBundle\Resolver;
-use Velhron\DadataBundle\Tests\TestingKernel;
 
-abstract class DadataServiceTest extends TestCase
+abstract class DadataServiceTest extends KernelTestCase 
 {
     /**
      * @var Resolver
@@ -24,9 +23,8 @@ abstract class DadataServiceTest extends TestCase
      */
     protected function setUp(): void
     {
-        $kernel = new TestingKernel('test', false);
-        $kernel->boot();
-        $container = $kernel->getContainer();
+        self::bootKernel();
+        $container = self::$container;
         $this->resolver = $container->get(Resolver::class);
     }
 

@@ -23,7 +23,6 @@ services:
     parent: Velhron\DadataBundle\Service\AbstractService
 
   Velhron\DadataBundle\Resolver:
-    public: true
     arguments:
       $methods:
         - name: 'suggestAddress'

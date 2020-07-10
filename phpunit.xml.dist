@@ -8,6 +8,7 @@
         bootstrap                                  = "vendor/autoload.php"
 >
     <php>
+        <server name="KERNEL_CLASS" value="Velhron\DadataBundle\Tests\Kernel"/>
     </php>
 
     <testsuites>
