@@ -216,6 +216,7 @@ class DadataSuggestTest extends DadataServiceTest
 
         $this->assertEquals('SABRRUMM', $result[0]->swift);
         $this->assertEquals('7707083893', $result[0]->inn);
+        $this->assertEquals('044525225', $result[0]->bic);
         $this->assertEquals('г Москва, ул Вавилова, д 19', $result[0]->address->value);
     }
 
