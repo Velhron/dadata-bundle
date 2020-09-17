@@ -9,7 +9,7 @@ class BankResponse extends SuggestResponse
     /**
      * @var string Банковский идентификационный код (БИК) ЦБ РФ
      */
-    public $bik;
+    public $bic;
 
     /**
      * @var string Банковский идентификационный код в системе SWIFT
