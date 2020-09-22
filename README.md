@@ -151,3 +151,14 @@ $city = $response->value;
 $response = $dadataSuggest->findAddress('77000000000268400');
 $address = $response[0]->value;
 ```
+
+### [Поиск аффилированных компаний](https://dadata.ru/api/find-affiliated/)
+
+```php
+$response = $dadataSuggest->findAffiliatedParty('7736207543');
+$value = $response[0]->value;
+```
+
+## Лицензия
+
+[MIT License](https://opensource.org/licenses/mit-license) © Velhron

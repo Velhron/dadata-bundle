@@ -235,4 +235,16 @@ class DadataSuggestTest extends DadataServiceTest
         $this->assertEquals('г Москва, ул Снежная', $result[0]->value);
         $this->assertEquals('77000000000268400', $result[0]->kladrId);
     }
+
+    public function testFindAffiliatedParty(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Find/affiliatedParty.json');
+        $result = $service->findAffiliatedParty('7736207543');
+
+        $this->assertEquals('ООО "ДЗЕН.ПЛАТФОРМА"', $result[0]->value);
+        $this->assertEquals('770501001', $result[0]->kpp);
+        $this->assertEquals('LEGAL', $result[0]->type);
+        $this->assertEquals('7704431373', $result[0]->inn);
+        $this->assertEquals('45286560000', $result[0]->okato);
+    }
 }

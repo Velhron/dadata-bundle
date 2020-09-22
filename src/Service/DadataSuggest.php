@@ -8,6 +8,7 @@ use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Velhron\DadataBundle\Exception\DadataException;
 use Velhron\DadataBundle\Model\Request\AbstractRequest;
 use Velhron\DadataBundle\Model\Request\Suggest\SuggestRequest;
+use Velhron\DadataBundle\Model\Response\Find\AffiliatedPartyResponse;
 use Velhron\DadataBundle\Model\Response\Find\DeliveryResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\AddressResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\BankResponse;
@@ -396,7 +397,11 @@ class DadataSuggest extends AbstractService
     }
 
     /**
-     * Организация по ИНН или ОГРН.
+     * Организация по ИНН, КПП, ОГРН.
+     *
+     * Находит компанию или индивидуального предпринимателя по ИНН, КПП, ОГРН.
+     * Возвращает реквизиты компании, учредителей, руководителей, сведения о налоговой, ПФР и ФСС, финансы, лицензии,
+     * реестр МСП и другую информацию о компании.
      *
      * @param string $query   - текст запроса
      * @param array  $options - дополнительные параметры запроса
@@ -420,6 +425,7 @@ class DadataSuggest extends AbstractService
      * - ИНН + КПП (для филиалов),
      * - регистрационному номеру, присвоенному Банком России.
      *
+     * Возвращает реквизиты банка, корр. счёт, адрес и статус (действующий / на ликвидации).
      * Ищет только по точному совпадению.
      *
      * @param string $query   - текст запроса
@@ -447,5 +453,22 @@ class DadataSuggest extends AbstractService
     public function findFias(string $query, array $options = []): array
     {
         return $this->handle('findFias', $query, $options);
+    }
+
+    /**
+     * Поиск аффилированных компаний.
+     *
+     * Находит организации по ИНН учредителей и руководителей. Работает для физических и юридических лиц.
+     *
+     * @param string $query   - текст запроса
+     * @param array  $options - дополнительные параметры запроса
+     *
+     * @return AffiliatedPartyResponse[]
+     *
+     * @throws DadataException
+     */
+    public function findAffiliatedParty(string $query, array $options = []): array
+    {
+        return $this->handle('findAffiliatedParty', $query, $options);
     }
 }

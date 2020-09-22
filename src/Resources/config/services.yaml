@@ -114,6 +114,10 @@ services:
           request: Velhron\DadataBundle\Model\Request\Find\FiasRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
 
+        - name: 'findAffiliatedParty'
+          request: Velhron\DadataBundle\Model\Request\Find\AffiliatedPartyRequest
+          response: Velhron\DadataBundle\Model\Response\Find\AffiliatedPartyResponse
+
         - name: 'geolocateAddress'
           request: Velhron\DadataBundle\Model\Request\Geolocate\AddressRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
