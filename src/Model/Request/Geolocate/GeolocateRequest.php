@@ -19,6 +19,11 @@ abstract class GeolocateRequest extends SuggestRequest
     protected $lon;
 
     /**
+     * @var int Радиус поиска в метрах
+     */
+    protected $radius_meters;
+
+    /**
      * {@inheritdoc}
      */
     public function getBaseUrl(): string
