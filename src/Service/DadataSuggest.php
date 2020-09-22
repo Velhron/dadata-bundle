@@ -80,10 +80,10 @@ class DadataSuggest extends AbstractService
      * Например: «тверская нижний 12» → «Нижегородская обл, г Нижний Новгород, ул Тверская, д 12».
      * Также ищет по почтовому индексу («105568» → «г Москва, ул Магнитогорская»).
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return AddressResponse[]
+     * @return AddressResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -102,10 +102,10 @@ class DadataSuggest extends AbstractService
      * - ФИО руководителя компании;
      * - адресу до улицы.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return PartyResponse[]
+     * @return PartyResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -117,10 +117,10 @@ class DadataSuggest extends AbstractService
     /**
      * Подсказки по банкам.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return BankResponse[]
+     * @return BankResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -136,10 +136,10 @@ class DadataSuggest extends AbstractService
      * Исправляет клавиатурную раскладку («fynjy» → «Антон»).
      * Определяет пол.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return FioResponse[]
+     * @return FioResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -154,10 +154,10 @@ class DadataSuggest extends AbstractService
      * Подсказывает локальную (до «собачки») и доменную (после «собачки») части эл. почты.
      * Исправляет опечатки (yadex.ru → yandex.ru).
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return EmailResponse[]
+     * @return EmailResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -171,10 +171,10 @@ class DadataSuggest extends AbstractService
      *
      * Ищет адреса строго по ФИАС.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return AddressResponse[]
+     * @return AddressResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -186,10 +186,10 @@ class DadataSuggest extends AbstractService
     /**
      * Подсказки по справочнику "Кем выдан паспорт".
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return FmsUnitResponse[]
+     * @return FmsUnitResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -201,10 +201,10 @@ class DadataSuggest extends AbstractService
     /**
      * Подсказки по справочнику "Отделения почты России".
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return PostalUnitResponse[]
+     * @return PostalUnitResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -218,10 +218,10 @@ class DadataSuggest extends AbstractService
      *
      * Справочник инспекций Налоговой службы.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return FnsUnitResponse[]
+     * @return FnsUnitResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -235,10 +235,10 @@ class DadataSuggest extends AbstractService
      *
      * Справочник мировых судов России.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return RegionCourtResponse[]
+     * @return RegionCourtResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -252,10 +252,10 @@ class DadataSuggest extends AbstractService
      *
      * Справочник станций метро в Москве, Санкт-Петербурге и других городах России.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return MetroResponse[]
+     * @return MetroResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -269,10 +269,10 @@ class DadataSuggest extends AbstractService
      *
      * Справочник марок автомобилей на английском и русском языках.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return CarBrandResponse[]
+     * @return CarBrandResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -286,10 +286,10 @@ class DadataSuggest extends AbstractService
      *
      * Справочник стран мира по стандарту ISO 3166.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return CountryResponse[]
+     * @return CountryResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -303,10 +303,10 @@ class DadataSuggest extends AbstractService
      *
      * Справочник валют по стандарту ISO 4217.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return CurrencyResponse[]
+     * @return CurrencyResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -320,10 +320,10 @@ class DadataSuggest extends AbstractService
      *
      * Общероссийский классификатор видов экономической деятельности.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return Okved2Response[]
+     * @return Okved2Response[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -337,10 +337,10 @@ class DadataSuggest extends AbstractService
      *
      * Общероссийский классификатор продукции по видам экономической деятельности.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return Okpd2Response[]
+     * @return Okpd2Response[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -354,10 +354,10 @@ class DadataSuggest extends AbstractService
      *
      * Находит адрес по коду КЛАДР или ФИАС.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return AddressResponse[]
+     * @return AddressResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -369,10 +369,10 @@ class DadataSuggest extends AbstractService
     /**
      * Почтовое отделение по индексу.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return PostalUnitResponse[]
+     * @return PostalUnitResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -384,10 +384,10 @@ class DadataSuggest extends AbstractService
     /**
      * Идентификатор города в СДЭК, Boxberry и DPD.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return DeliveryResponse[]
+     * @return DeliveryResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -403,10 +403,10 @@ class DadataSuggest extends AbstractService
      * Возвращает реквизиты компании, учредителей, руководителей, сведения о налоговой, ПФР и ФСС, финансы, лицензии,
      * реестр МСП и другую информацию о компании.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return PartyResponse[]
+     * @return PartyResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -428,10 +428,10 @@ class DadataSuggest extends AbstractService
      * Возвращает реквизиты банка, корр. счёт, адрес и статус (действующий / на ликвидации).
      * Ищет только по точному совпадению.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return BankResponse[]
+     * @return BankResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -443,10 +443,10 @@ class DadataSuggest extends AbstractService
     /**
      * Адрес в ФИАС по идентификатору.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return AddressResponse[]
+     * @return AddressResponse[] Массив подсказок
      *
      * @throws DadataException
      */
@@ -460,10 +460,10 @@ class DadataSuggest extends AbstractService
      *
      * Находит организации по ИНН учредителей и руководителей. Работает для физических и юридических лиц.
      *
-     * @param string $query   - текст запроса
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return AffiliatedPartyResponse[]
+     * @return AffiliatedPartyResponse[] Массив подсказок
      *
      * @throws DadataException
      */
