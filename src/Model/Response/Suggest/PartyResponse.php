@@ -42,9 +42,29 @@ class PartyResponse extends SuggestResponse
     public $name;
 
     /**
+     * @var string Код ОКАТО
+     */
+    public $okato;
+
+    /**
+     * @var string Код ОКТМО
+     */
+    public $oktmo;
+
+    /**
      * @var string Код ОКПО
      */
     public $okpo;
+
+    /**
+     * @var string Код ОКОГУ
+     */
+    public $okogu;
+
+    /**
+     * @var string Код ОКФС
+     */
+    public $okfs;
 
     /**
      * @var string Код ОКВЭД
