@@ -39,6 +39,8 @@ class DadataGeneral extends AbstractService
      *
      * Возвращает сумму в рублях с точностью до копеек, десятичный разделитель — точка.
      *
+     * @return float Текущий баланс счета
+     *
      * @throws DadataException
      */
     public function balance(): float
@@ -53,9 +55,13 @@ class DadataGeneral extends AbstractService
      *
      * Дата должна быть задана в формате YYYY-MM-DD. По умолчанию, сегодня.
      *
+     * @param string|null $date Дата в формате YYYY-MM-DD
+     *
+     * @return StatResponse Статистика
+     *
      * @throws DadataException
      */
-    public function stat(string $date = ''): StatResponse
+    public function stat(string $date = null): StatResponse
     {
         $request = new StatRequest();
         $request->date = $date;
@@ -66,6 +72,8 @@ class DadataGeneral extends AbstractService
 
     /**
      * Возвращает даты актуальности справочников (ФИАС, ЕГРЮЛ, банки и другие).
+     *
+     * @return array Информация по датам актуальности справочников
      *
      * @throws DadataException
      */

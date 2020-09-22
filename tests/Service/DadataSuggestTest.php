@@ -31,6 +31,13 @@ class DadataSuggestTest extends DadataServiceTest
         $this->assertCount(2, $result);
         $this->assertEquals('ПАО СБЕРБАНК', $result[0]->value);
         $this->assertEquals('7707083893', $result[0]->inn);
+        $this->assertEquals('773601001', $result[0]->kpp);
+        $this->assertEquals('1027700132195', $result[0]->ogrn);
+        $this->assertEquals('00032537', $result[0]->okpo);
+        $this->assertEquals('45293554000', $result[0]->okato);
+        $this->assertEquals('45397000000', $result[0]->oktmo);
+        $this->assertEquals('4100104', $result[0]->okogu);
+        $this->assertEquals('41', $result[0]->okfs);
         $this->assertEquals('г Москва, ул Вавилова, д 19', $result[0]->address->value);
     }
 
@@ -227,5 +234,17 @@ class DadataSuggestTest extends DadataServiceTest
 
         $this->assertEquals('г Москва, ул Снежная', $result[0]->value);
         $this->assertEquals('77000000000268400', $result[0]->kladrId);
+    }
+
+    public function testFindAffiliatedParty(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Find/affiliatedParty.json');
+        $result = $service->findAffiliatedParty('7736207543');
+
+        $this->assertEquals('ООО "ДЗЕН.ПЛАТФОРМА"', $result[0]->value);
+        $this->assertEquals('770501001', $result[0]->kpp);
+        $this->assertEquals('LEGAL', $result[0]->type);
+        $this->assertEquals('7704431373', $result[0]->inn);
+        $this->assertEquals('45286560000', $result[0]->okato);
     }
 }

@@ -5,23 +5,54 @@
       "unrestricted_value": "ПАО СБЕРБАНК",
       "data": {
         "kpp": "773601001",
-        "capital": null,
+        "capital": {
+          "type": "УСТАВНЫЙ КАПИТАЛ",
+          "value": 67760844000
+        },
         "management": {
           "name": "Греф Герман Оскарович",
           "post": "ПРЕЗИДЕНТ, ПРЕДСЕДАТЕЛЬ ПРАВЛЕНИЯ",
           "disqualified": null
         },
-        "founders": null,
-        "managers": null,
+        "founders": [
+          {
+            "ogrn": null,
+            "inn": "7702235133",
+            "name": "ЦЕНТРАЛЬНЫЙ БАНК РОССИЙСКОЙ ФЕДЕРАЦИИ",
+            "hid": "33b78a80c782d847d02a7e7a53d3aa17a5dff9a1cb5ec73d0311423dcc065a89",
+            "type": "LEGAL",
+            "share": {
+              "numerator": 1009489,
+              "denominator": 112934740,
+              "type": "FRACTION"
+            }
+          }
+        ],
+        "managers": [
+          {
+            "inn": "770303580308",
+            "fio": {
+              "surname": "Греф",
+              "name": "Герман",
+              "patronymic": "Оскарович",
+              "gender": "MALE",
+              "source": "ГРЕФ ГЕРМАН ОСКАРОВИЧ",
+              "qc": null
+            },
+            "post": "ПРЕЗИДЕНТ, ПРЕДСЕДАТЕЛЬ ПРАВЛЕНИЯ",
+            "hid": "8aca73ef155e20b8ba6687d23521630e8fbe9b505b388cb9cb12eb1c43b68253",
+            "type": "EMPLOYEE"
+          }
+        ],
         "branch_type": "MAIN",
         "branch_count": 88,
         "source": null,
         "qc": null,
-        "hid": "145a83ab38c9ad95889a7b894ce57a97cf6f6d5f42932a71331ff18606edecc6",
+        "hid": "588a141bc5e17cbc976ec2d0d54149af49d5a4ca16e26ed2effafdf06841d645",
         "type": "LEGAL",
         "state": {
           "status": "ACTIVE",
-          "actuality_date": 1586304000000,
+          "actuality_date": 1594339200000,
           "registration_date": 677376000000,
           "liquidation_date": null
         },
@@ -40,12 +71,310 @@
         },
         "inn": "7707083893",
         "ogrn": "1027700132195",
-        "okpo": null,
+        "okpo": "00032537",
+        "okato": "45293554000",
+        "oktmo": "45397000000",
+        "okogu": "4100104",
+        "okfs": "41",
         "okved": "64.19",
-        "okveds": null,
-        "authorities": null,
-        "documents": null,
-        "licenses": null,
+        "okveds": [
+          {
+            "main": true,
+            "type": "2014",
+            "code": "64.19",
+            "name": "Денежное посредничество прочее"
+          }
+        ],
+        "authorities": {
+          "fts_registration": {
+            "type": "FEDERAL_TAX_SERVICE",
+            "code": "7700",
+            "name": "Управление Федеральной налоговой службы по г.Москве",
+            "address": "125284, г.Москва, Хорошевское ш., 12А"
+          },
+          "fts_report": {
+            "type": "FEDERAL_TAX_SERVICE",
+            "code": "7736",
+            "name": "Инспекция Федеральной налоговой службы № 36 по г.Москве",
+            "address": null
+          },
+          "pf": {
+            "type": "PENSION_FUND",
+            "code": "087705",
+            "name": "Государственное учреждение - Главное Управление Пенсионного фонда РФ №4 Управление №1 по г. Москве и Московской области муниципальный район Гагаринский г.Москвы",
+            "address": null
+          },
+          "sif": {
+            "type": "SOCIAL_INSURANCE_FUND",
+            "code": "7706",
+            "name": "Филиал №6 Государственного учреждения - Московского регионального отделения Фонда социального страхования Российской Федерации",
+            "address": null
+          }
+        },
+        "documents": {
+          "fts_registration": {
+            "type": "FTS_REGISTRATION",
+            "series": "77",
+            "number": "4856976",
+            "issue_date": 1029456000000,
+            "issue_authority": "7700"
+          },
+          "pf_registration": {
+            "type": "PF_REGISTRATION",
+            "series": null,
+            "number": "087705007215",
+            "issue_date": 1283472000000,
+            "issue_authority": "087705"
+          },
+          "sif_registration": {
+            "type": "SIF_REGISTRATION",
+            "series": null,
+            "number": "770600307277061",
+            "issue_date": 978566400000,
+            "issue_authority": "7706"
+          },
+          "smb": null
+        },
+        "licenses": [
+          {
+            "series": null,
+            "number": "045-02894-100000",
+            "issue_date": 975283200000,
+            "issue_authority": "Центральный банк Российской Федерации",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1444089600000,
+            "valid_to": null,
+            "activities": [
+              "Брокерская деятельность"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "77.99.15.002.Л.000086.10.14",
+            "issue_date": 1412726400000,
+            "issue_authority": "Федеральная служба по надзору в сфере защиты прав потребителей и благополучия человека",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1412726400000,
+            "valid_to": null,
+            "activities": [
+              "Деятельность в области использования источников ионизирующего излучения (генерирующих) (за исключением случая, если эти источники используются в медицинской деятельности)"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "045-03004-010000",
+            "issue_date": 975283200000,
+            "issue_authority": "Центральный банк Российской Федерации",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1444089600000,
+            "valid_to": null,
+            "activities": [
+              "Дилерская деятельность"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "ВХ-01-007336",
+            "issue_date": 1381708800000,
+            "issue_authority": "Межрегиональное технологическое управление Федеральной службы по экологическому, технологическому и атомному надзору",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1381708800000,
+            "valid_to": null,
+            "activities": [
+              "Эксплуатация взрывопожароопасных и химически опасных производственных объектов I, II и III классов опасности"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "1481",
+            "issue_date": 1439251200000,
+            "issue_authority": "Центральный банк Российской Федерации",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1439251200000,
+            "valid_to": null,
+            "activities": [
+              "Осуществление банк. операций (со средствами в рублях и ин. валюте), право на осуществление которых предоставляет Генеральная лицензия:- привлечение денежных средств физических и юридических лиц во вклады (до востребования и на определенный срок); - размещение привлеченных во вклады (до востребования и на определенный срок) денежных средств физических и юридических лиц от своего имени и за свой счет;- открытие и ведение банк. счетов физических и юридических лиц; - осуществление переводов денежных средств по поручению физических и юридических лиц, в том числе уполномоченных банков-корреспондентов и иностранных банков, по их банковским счетам;- инкассация денеж. средств, векселей, платежных и расчетных документов и кассовое обслуживание физических и юридических лиц;- купля-продажа ин. валюты в наличной и безналичной формах;- выдача банк. гарантий;- осуществление переводов денеж. средств без открытия банк. счетов, в том числе электронных денеж. средств (за исключением почтовых переводов)"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "13259 Н",
+            "issue_date": 1384387200000,
+            "issue_authority": "ЦЕНТР ПО ЛИЦЕНЗИРОВАНИЮ, СЕРТИФИКАЦИИ И ЗАЩИТЕ ГОСУДАРСТВЕННОЙ ТАЙНЫ",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1384387200000,
+            "valid_to": null,
+            "activities": [
+              "Разработка, производство, распространение шифровальных (криптографических) средств, информационных систем и телекоммуникационных систем, защищенных с использованием шифровальных (криптографических) средств, выполнение работ, оказание услуг в области шифрования информации, техническое обслуживание шифровальных (криптографических) средств, информационных систем и телекоммуникационных систем, защищенных с использованием шифровальных (криптографических) средств (за исключением случая, если техническое обслуживание шифровальных (криптографических) средств, информационных систем и телекоммуникационных систем, защищенных с использованием шифровальных (криптографических) средств, осуществляется для обеспечения собственных нужд юридического лица или индивидуального предпринимателя)"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "045-02768-000100",
+            "issue_date": 973641600000,
+            "issue_authority": "Центральный банк Российской Федерации",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1444089600000,
+            "valid_to": null,
+            "activities": [
+              "Депозитарная деятельность"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "ВХ-01 007336 ПЕРЕОФОРМ",
+            "issue_date": 1456272000000,
+            "issue_authority": "Межрегиональное технологическое управление Федеральной службы по экологическому, технологическому и атомному надзору",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1456272000000,
+            "valid_to": null,
+            "activities": [
+              "Эксплуатация взрывопожароопасных и химически опасных производственных объектов I, II и III классов опасности"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "УЛН 80173 ВЭ",
+            "issue_date": 1386288000000,
+            "issue_authority": "Министерство сельского, лесного хозяйства и природных ресурсов Ульяновской области",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1460073600000,
+            "valid_to": 1701820800000,
+            "activities": [
+              "Пользование участками недр для целей геологического изучения и добычи подземных вод, используемых для питьевого водоснабжения населения или технологического обеспечения водой объектов промышленности"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "02970",
+            "issue_date": 1378080000000,
+            "issue_authority": "Департамент по недропользованию по Южному федеральному округу",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1378080000000,
+            "valid_to": 2009145600000,
+            "activities": [
+              "Пользование участками недр для целей геологического изучения и добычи подземных вод, используемых для питьевого водоснабжения населения или технологического обеспечения водой объектов промышленности"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "ВХ-01 007336 Переоформ",
+            "issue_date": 1492041600000,
+            "issue_authority": "Межрегиональное технологическое управление Федеральной службы по экологическому, технологическому и атомному надзору",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1492041600000,
+            "valid_to": null,
+            "activities": [
+              "Эксплуатация взрывопожароопасных и химически опасных производственных объектов I, II и III классов опасности"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "ЛО-59-01-000253",
+            "issue_date": 1222732800000,
+            "issue_authority": "Министерство здравоохранения Пермского края",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1222732800000,
+            "valid_to": null,
+            "activities": [
+              "Медицинская деятельность (за исключением указанной деятельности, осуществляемой медицинскими организациями и другими организациями, входящими в частную систему здравоохранения, на территории инновационного центра \"Сколково\")"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "ГТ 0092576 2279",
+            "issue_date": 1535673600000,
+            "issue_authority": "Управление федеральной службы безопасности Российской Федерации по Саратовской области",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1535673600000,
+            "valid_to": 1675036800000,
+            "activities": [
+              "ДЕЯТЕЛЬНОСТЬ, СВЯЗАННАЯ С ЗАЩИТОЙ ГОСУДАРСТВЕННОЙ ТАЙНЫ (ФСБ России, ФСТЭК России, СВР России, Минобороны России)"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "ГТ0090372 5925/597",
+            "issue_date": 1536537600000,
+            "issue_authority": "Управление Федеральной службы безопасности Российской Федерации по Республике Бурятия",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1536537600000,
+            "valid_to": 1675036800000,
+            "activities": [
+              "ДЕЯТЕЛЬНОСТЬ, СВЯЗАННАЯ С ЗАЩИТОЙ ГОСУДАРСТВЕННОЙ ТАЙНЫ (ФСБ России, ФСТЭК России, СВР России, Минобороны России)"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "ГТ 0072996 2024",
+            "issue_date": 1543968000000,
+            "issue_authority": "Управление Федеральной службы безопасности Российской Федерации по Нижегородской области",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1543968000000,
+            "valid_to": 1675036800000,
+            "activities": [
+              "ДЕЯТЕЛЬНОСТЬ, СВЯЗАННАЯ С ЗАЩИТОЙ ГОСУДАРСТВЕННОЙ ТАЙНЫ (ФСБ России, ФСТЭК России, СВР России, Минобороны России)"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "ГТ0074475 5925/ХК/2153",
+            "issue_date": 1544400000000,
+            "issue_authority": "Управление Федеральной службы безопасности Российской Федерации по Хабаровскому краю",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1544400000000,
+            "valid_to": 1675036800000,
+            "activities": [
+              "ДЕЯТЕЛЬНОСТЬ, СВЯЗАННАЯ С ЗАЩИТОЙ ГОСУДАРСТВЕННОЙ ТАЙНЫ (ФСБ России, ФСТЭК России, СВР России, Минобороны России)"
+            ],
+            "addresses": null
+          },
+          {
+            "series": null,
+            "number": "ЛСЗ0016523 17389В",
+            "issue_date": 1565136000000,
+            "issue_authority": "Центр по лицензированию, сертификации и защите государственной тайны ФСБ России",
+            "suspend_date": null,
+            "suspend_authority": null,
+            "valid_from": 1565136000000,
+            "valid_to": null,
+            "activities": [
+              "Деятельность по выявлению электронных устройств, предназначенных для негласного получения информации (за исключением случая, если указанная деятельность осуществляется для обеспечения собственных нужд юридического лица или индивидуального предпринимателя)"
+            ],
+            "addresses": null
+          }
+        ],
         "finance": null,
         "address": {
           "value": "г Москва, ул Вавилова, д 19",
@@ -113,7 +442,7 @@
             "fias_level": "8",
             "fias_actuality_state": "0",
             "kladr_id": "7700000000009240170",
-            "geoname_id": null,
+            "geoname_id": "524901",
             "capital_marker": "0",
             "okato": "45293554000",
             "oktmo": "45397000",
@@ -158,103 +487,113 @@
       }
     },
     {
-      "value": "АО \"НПФ СБЕРБАНКА\"",
-      "unrestricted_value": "АО \"НПФ СБЕРБАНКА\"",
+      "value": "БАЙКАЛЬСКИЙ БАНК ПАО СБЕРБАНК",
+      "unrestricted_value": "БАЙКАЛЬСКИЙ БАНК ПАО СБЕРБАНК",
       "data": {
-        "kpp": "772501001",
+        "kpp": "380843001",
         "capital": null,
-        "management": {
-          "name": "Зарецкий Александр Михайлович",
-          "post": "ГЕНЕРАЛЬНЫЙ ДИРЕКТОР",
-          "disqualified": null
-        },
+        "management": null,
         "founders": null,
         "managers": null,
-        "branch_type": "MAIN",
+        "branch_type": "BRANCH",
         "branch_count": 0,
         "source": null,
         "qc": null,
-        "hid": "54ab59e2d9d69aa15497cfbe57382338779042881e7d674749142be33ac13ea6",
+        "hid": "259fdc9a81120194c8534e3394049da8d2f13666387db9aff615bf9acbc2bbf9",
         "type": "LEGAL",
         "state": {
           "status": "ACTIVE",
-          "actuality_date": 1577836800000,
-          "registration_date": 1402358400000,
+          "actuality_date": 1594339200000,
+          "registration_date": null,
           "liquidation_date": null
         },
         "opf": {
           "type": "2014",
-          "code": "12200",
-          "full": "Акционерное общество",
-          "short": "АО"
+          "code": "30002",
+          "full": "Филиал юридического лица",
+          "short": "Филиал"
         },
         "name": {
-          "full_with_opf": "АКЦИОНЕРНОЕ ОБЩЕСТВО \"НЕГОСУДАРСТВЕННЫЙ ПЕНСИОННЫЙ ФОНД СБЕРБАНКА\"",
-          "short_with_opf": "АО \"НПФ СБЕРБАНКА\"",
+          "full_with_opf": "БАЙКАЛЬСКИЙ БАНК ПАО СБЕРБАНК",
+          "short_with_opf": "БАЙКАЛЬСКИЙ БАНК ПАО СБЕРБАНК",
           "latin": null,
-          "full": "НПФ СБЕРБАНКА",
-          "short": "НПФ СБЕРБАНКА"
+          "full": "БАЙКАЛЬСКИЙ БАНК ПАО СБЕРБАНК",
+          "short": "БАЙКАЛЬСКИЙ БАНК ПАО СБЕРБАНК"
         },
-        "inn": "7725352740",
-        "ogrn": "1147799009160",
+        "inn": "7707083893",
+        "ogrn": "1027700132195",
         "okpo": null,
-        "okved": "65.30",
+        "okato": null,
+        "oktmo": null,
+        "okogu": null,
+        "okfs": null,
+        "okved": null,
         "okveds": null,
-        "authorities": null,
+        "authorities": {
+          "fts_registration": null,
+          "fts_report": {
+            "type": "FEDERAL_TAX_SERVICE",
+            "code": "3808",
+            "name": "Межрайонная инспекция Федеральной налоговой службы № 20 по Иркутской области",
+            "address": null
+          },
+          "pf": null,
+          "sif": null
+        },
         "documents": null,
         "licenses": null,
         "finance": null,
         "address": {
-          "value": "г Москва, ул Шаболовка, д 31Г",
-          "unrestricted_value": "115162, г Москва, Донской р-н, ул Шаболовка, д 31Г",
+          "value": "г Иркутск, ул Нижняя Набережная, д 10",
+          "unrestricted_value": "664011, Иркутская обл, г Иркутск, Кировский р-н, ул Нижняя Набережная, д 10",
           "data": {
-            "postal_code": "115162",
+            "postal_code": "664011",
             "country": "Россия",
             "country_iso_code": "RU",
-            "federal_district": "Центральный",
-            "region_fias_id": "0c5b2444-70a0-4932-980c-b4dc0d3f02b5",
-            "region_kladr_id": "7700000000000",
-            "region_iso_code": "RU-MOW",
-            "region_with_type": "г Москва",
-            "region_type": "г",
-            "region_type_full": "город",
-            "region": "Москва",
+            "federal_district": "Сибирский",
+            "region_fias_id": "6466c988-7ce3-45e5-8b97-90ae16cb1249",
+            "region_kladr_id": "3800000000000",
+            "region_iso_code": "RU-IRK",
+            "region_with_type": "Иркутская обл",
+            "region_type": "обл",
+            "region_type_full": "область",
+            "region": "Иркутская",
             "area_fias_id": null,
             "area_kladr_id": null,
             "area_with_type": null,
             "area_type": null,
             "area_type_full": null,
             "area": null,
-            "city_fias_id": "0c5b2444-70a0-4932-980c-b4dc0d3f02b5",
-            "city_kladr_id": "7700000000000",
-            "city_with_type": "г Москва",
+            "city_fias_id": "8eeed222-72e7-47c3-ab3a-9a553c31cf72",
+            "city_kladr_id": "3800000300000",
+            "city_with_type": "г Иркутск",
             "city_type": "г",
             "city_type_full": "город",
-            "city": "Москва",
-            "city_area": "Южный",
+            "city": "Иркутск",
+            "city_area": null,
             "city_district_fias_id": null,
             "city_district_kladr_id": null,
-            "city_district_with_type": "Донской р-н",
+            "city_district_with_type": "Кировский р-н",
             "city_district_type": "р-н",
             "city_district_type_full": "район",
-            "city_district": "Донской",
+            "city_district": "Кировский",
             "settlement_fias_id": null,
             "settlement_kladr_id": null,
             "settlement_with_type": null,
             "settlement_type": null,
             "settlement_type_full": null,
             "settlement": null,
-            "street_fias_id": "d1febe9c-11b9-46db-891e-30f3083d5611",
-            "street_kladr_id": "77000000000313300",
-            "street_with_type": "ул Шаболовка",
+            "street_fias_id": "241f2f43-5a67-4d79-b440-fda4a700ad45",
+            "street_kladr_id": "38000003000038000",
+            "street_with_type": "ул Нижняя Набережная",
             "street_type": "ул",
             "street_type_full": "улица",
-            "street": "Шаболовка",
-            "house_fias_id": "b9c0af21-cc2f-4a2f-8a74-d73a880c25f6",
-            "house_kladr_id": "7700000000031330032",
+            "street": "Нижняя Набережная",
+            "house_fias_id": "9332c1e4-555c-478c-90cd-08a3e4454ef9",
+            "house_kladr_id": "3800000300003800001",
             "house_type": "д",
             "house_type_full": "дом",
-            "house": "31Г",
+            "house": "10",
             "block_type": null,
             "block_type_full": null,
             "block": null,
@@ -265,52 +604,36 @@
             "square_meter_price": null,
             "flat_price": null,
             "postal_box": null,
-            "fias_id": "b9c0af21-cc2f-4a2f-8a74-d73a880c25f6",
-            "fias_code": "77000000000000031330032",
+            "fias_id": "9332c1e4-555c-478c-90cd-08a3e4454ef9",
+            "fias_code": "38000003000000003800001",
             "fias_level": "8",
             "fias_actuality_state": "0",
-            "kladr_id": "7700000000031330032",
-            "geoname_id": null,
-            "capital_marker": "0",
-            "okato": "45296561000",
-            "oktmo": "45915000",
-            "tax_office": "7725",
-            "tax_office_legal": "7725",
-            "timezone": "UTC+3",
-            "geo_lat": "55.7207645",
-            "geo_lon": "37.6102354",
-            "beltway_hit": "IN_MKAD",
+            "kladr_id": "3800000300003800001",
+            "geoname_id": "2023469",
+            "capital_marker": "2",
+            "okato": "25401365000",
+            "oktmo": "25701000001",
+            "tax_office": "3808",
+            "tax_office_legal": "3808",
+            "timezone": "UTC+8",
+            "geo_lat": "52.2928747",
+            "geo_lon": "104.2875056",
+            "beltway_hit": null,
             "beltway_distance": null,
-            "metro": [
-              {
-                "name": "Шаболовская",
-                "line": "Калужско-Рижская",
-                "distance": 0.3
-              },
-              {
-                "name": "Октябрьская",
-                "line": "Кольцевая",
-                "distance": 0.9
-              },
-              {
-                "name": "Серпуховская",
-                "line": "Серпуховско-Тимирязевская",
-                "distance": 1.1
-              }
-            ],
+            "metro": null,
             "qc_geo": "0",
             "qc_complete": null,
             "qc_house": null,
             "history_values": null,
             "unparsed_parts": null,
-            "source": "115162, ГОРОД МОСКВА, УЛИЦА ШАБОЛОВКА, 31, Г",
+            "source": "664011, ОБЛАСТЬ ИРКУТСКАЯ, ГОРОД ИРКУТСК, УЛИЦА НИЖНЯЯ НАБЕРЕЖНАЯ, 10",
             "qc": "0"
           }
         },
         "phones": null,
         "emails": null,
-        "ogrn_date": 1402358400000,
-        "okved_type": "2014",
+        "ogrn_date": null,
+        "okved_type": null,
         "employee_count": null
       }
     }

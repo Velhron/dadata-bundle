@@ -1,0 +1,112 @@
+{
+  "suggestions": [
+    {
+      "value": "ООО \"ДЗЕН.ПЛАТФОРМА\"",
+      "unrestricted_value": "ООО \"ДЗЕН.ПЛАТФОРМА\"",
+      "data": {
+        "kpp": "770501001",
+        "capital": null,
+        "management": null,
+        "founders": null,
+        "managers": null,
+        "branch_type": "MAIN",
+        "branch_count": 0,
+        "source": null,
+        "qc": null,
+        "hid": "7d012acf8db1719e9669758c3e12ae1a6859842ff733a680ecf62a32363b6534",
+        "type": "LEGAL",
+        "state": {
+          "status": "ACTIVE",
+          "actuality_date": 1577836800000,
+          "registration_date": 1499126400000,
+          "liquidation_date": null
+        },
+        "opf": null,
+        "name": null,
+        "inn": "7704431373",
+        "ogrn": "1177746651389",
+        "okpo": "16210930",
+        "okato": "45286560000",
+        "oktmo": "45376000000",
+        "okogu": "4210014",
+        "okfs": "16",
+        "okved": "63.11.1",
+        "okveds": null,
+        "authorities": null,
+        "documents": null,
+        "licenses": null,
+        "finance": {
+          "tax_system": null,
+          "income": null,
+          "expense": null,
+          "debt": null,
+          "penalty": null
+        },
+        "address": {
+          "value": "115035, ГОРОД МОСКВА, УЛИЦА САДОВНИЧЕСКАЯ, ДОМ 82, СТРОЕНИЕ 2, ПОМЕЩЕНИЕ 4А29",
+          "unrestricted_value": "115035, ГОРОД МОСКВА, УЛИЦА САДОВНИЧЕСКАЯ, ДОМ 82, СТРОЕНИЕ 2, ПОМЕЩЕНИЕ 4А29",
+          "data": null
+        },
+        "phones": null,
+        "emails": null,
+        "ogrn_date": 1499126400000,
+        "okved_type": "2014",
+        "employee_count": null
+      }
+    },
+    {
+      "value": "ООО \"ЕДАДИЛ\"",
+      "unrestricted_value": "ООО \"ЕДАДИЛ\"",
+      "data": {
+        "kpp": "770401001",
+        "capital": null,
+        "management": null,
+        "founders": null,
+        "managers": null,
+        "branch_type": "MAIN",
+        "branch_count": 0,
+        "source": null,
+        "qc": null,
+        "hid": "1bd907427a567a4939888ba23e3f1a96e6372c5c0bc7c7474d995452feed8c43",
+        "type": "LEGAL",
+        "state": {
+          "status": "ACTIVE",
+          "actuality_date": 1577836800000,
+          "registration_date": 1430179200000,
+          "liquidation_date": null
+        },
+        "opf": null,
+        "name": null,
+        "inn": "7728237907",
+        "ogrn": "1157746397368",
+        "okpo": "11624347",
+        "okato": "45286590000",
+        "oktmo": "45383000000",
+        "okogu": "4210014",
+        "okfs": "16",
+        "okved": "63.11.1",
+        "okveds": null,
+        "authorities": null,
+        "documents": null,
+        "licenses": null,
+        "finance": {
+          "tax_system": null,
+          "income": null,
+          "expense": null,
+          "debt": null,
+          "penalty": null
+        },
+        "address": {
+          "value": "г Москва, ул Тимура Фрунзе, д 11 к 2, пом 8206",
+          "unrestricted_value": "119021, г Москва, р-н Хамовники, ул Тимура Фрунзе, д 11 к 2, пом 8206",
+          "data": null
+        },
+        "phones": null,
+        "emails": null,
+        "ogrn_date": 1430179200000,
+        "okved_type": "2014",
+        "employee_count": null
+      }
+    }
+  ]
+}

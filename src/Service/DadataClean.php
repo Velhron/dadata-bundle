@@ -68,6 +68,10 @@ class DadataClean extends AbstractService
      * - Определяет округ и район города, геокоординаты, метро, площадь и стоимость квартиры.
      * - Достает коды КЛАДР, ФИАС, ОКАТО, ОКТМО и ИФНС.
      *
+     * @param string $query Текст запроса
+     *
+     * @return AddressResponse Стандартизованный объект
+     *
      * @throws DadataException
      */
     public function cleanAddress(string $query): AddressResponse
@@ -77,6 +81,13 @@ class DadataClean extends AbstractService
 
     /**
      * Стандартизация телефона.
+     *
+     * Проверяет телефон по справочнику Россвязи.
+     * Определяет оператора с учётом переноса номеров, заполняет страну, город и часовой пояс.
+     *
+     * @param string $query Текст запроса
+     *
+     * @return PhoneResponse Стандартизованный объект
      *
      * @throws DadataException
      */
@@ -88,6 +99,12 @@ class DadataClean extends AbstractService
     /**
      * Стандартизация паспорта.
      *
+     * Проверяет паспорт по справочнику недействительных паспортов МВД.
+     *
+     * @param string $query Текст запроса
+     *
+     * @return PassportResponse Стандартизованный объект
+     *
      * @throws DadataException
      */
     public function cleanPassport(string $query): PassportResponse
@@ -97,6 +114,10 @@ class DadataClean extends AbstractService
 
     /**
      * Стандартизация даты рождения.
+     *
+     * @param string $query Текст запроса
+     *
+     * @return BirthdateResponse Стандартизованный объект
      *
      * @throws DadataException
      */
@@ -108,6 +129,10 @@ class DadataClean extends AbstractService
     /**
      * Стандартизация автомобиля.
      *
+     * @param string $query Текст запроса
+     *
+     * @return VehicleResponse Стандартизованный объект
+     *
      * @throws DadataException
      */
     public function cleanVehicle(string $query): VehicleResponse
@@ -118,6 +143,12 @@ class DadataClean extends AbstractService
     /**
      * Стандартизация ФИО.
      *
+     * Разбивает ФИО из строки по отдельным полям (фамилия, имя, отчество). Определяет пол и склоняет по падежам.
+     *
+     * @param string $query Текст запроса
+     *
+     * @return NameResponse Стандартизованный объект
+     *
      * @throws DadataException
      */
     public function cleanName(string $query): NameResponse
@@ -127,6 +158,13 @@ class DadataClean extends AbstractService
 
     /**
      * Стандартизация e-mail.
+     *
+     * Исправляет опечатки и проверяет на одноразовый адрес.
+     * Классифицирует адреса на личные, корпоративные и «ролевые».
+     *
+     * @param string $query Текст запроса
+     *
+     * @return EmailResponse Стандартизованный объект
      *
      * @throws DadataException
      */
