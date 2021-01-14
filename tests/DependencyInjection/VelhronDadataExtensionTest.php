@@ -14,7 +14,7 @@ class VelhronDadataExtensionTest extends TestCase
 {
     public function testRegister(): void
     {
-        $config = Yaml::parse(file_get_contents(__DIR__ . '/config.yaml'));
+        $config = Yaml::parse(file_get_contents(__DIR__.'/config.yaml'));
 
         $containerBuilder = new ContainerBuilder();
         $containerBuilder->setParameter('kernel.debug', true);

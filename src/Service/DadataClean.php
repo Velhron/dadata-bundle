@@ -23,11 +23,6 @@ class DadataClean extends AbstractService
     /**
      * Обработчик для API стандартизации.
      *
-     * @param string $method
-     * @param string $query
-     *
-     * @return AbstractResponse
-     *
      * @throws DadataException|InvalidConfigException
      */
     private function handle(string $method, string $query): AbstractResponse

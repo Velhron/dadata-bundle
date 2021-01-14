@@ -32,12 +32,6 @@ class DadataSuggest extends AbstractService
     /**
      * Обработчик для API подсказок.
      *
-     * @param string $method
-     * @param string $query
-     * @param array  $options
-     *
-     * @return array
-     *
      * @throws DadataException|InvalidConfigException
      */
     private function handle(string $method, string $query, array $options = []): array

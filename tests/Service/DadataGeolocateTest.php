@@ -17,7 +17,7 @@ class DadataGeolocateTest extends DadataServiceTest
 
     public function testGeolocateAddress(): void
     {
-        $service = $this->createService(__DIR__ . '/../mocks/Geolocate/address.json');
+        $service = $this->createService(__DIR__.'/../mocks/Geolocate/address.json');
         $result = $service->geolocateAddress(55.878, 37.653);
 
         $this->assertEquals('г Москва, ул Сухонская, д 11', $result[0]->value);
@@ -26,7 +26,7 @@ class DadataGeolocateTest extends DadataServiceTest
 
     public function testGeolocatePostalUnit(): void
     {
-        $service = $this->createService(__DIR__ . '/../mocks/Geolocate/postalUnit.json');
+        $service = $this->createService(__DIR__.'/../mocks/Geolocate/postalUnit.json');
         $result = $service->geolocatePostalUnit(55.878, 37.653, ['radius_meters' => 1000]);
 
         $this->assertEquals('127642', $result[0]->postalCode);
@@ -39,32 +39,28 @@ class DadataGeolocateTest extends DadataServiceTest
             [
                 'geolocateAddress',
                 '/geolocate/address',
-                __DIR__ . '/../mocks/Geolocate/address.json',
+                __DIR__.'/../mocks/Geolocate/address.json',
             ],
             [
                 'geolocatePostalUnit',
                 '/geolocate/postal_unit',
-                __DIR__ . '/../mocks/Geolocate/postalUnit.json',
+                __DIR__.'/../mocks/Geolocate/postalUnit.json',
             ],
         ];
     }
 
     /**
-     * @param string $methodName
-     * @param string $methodUrl
-     * @param string $filePath
-     *
      * @dataProvider dataProvider
      */
     public function testRequestParams(string $methodName, string $methodUrl, string $filePath): void
     {
-        $expectedUrl = 'https://example.com/suggetions' . $methodUrl;
+        $expectedUrl = 'https://example.com/suggetions'.$methodUrl;
 
         $expectedOptions = [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-                'Authorization' => "Token token",
+                'Authorization' => 'Token token',
             ],
             'body' => '{"lat":55.878,"lon":37.653}',
         ];

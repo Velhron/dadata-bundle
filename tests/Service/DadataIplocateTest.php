@@ -17,7 +17,7 @@ class DadataIplocateTest extends DadataServiceTest
 
     public function testIplocateAddress(): void
     {
-        $service = $this->createService(__DIR__ . '/../mocks/Iplocate/address.json');
+        $service = $this->createService(__DIR__.'/../mocks/Iplocate/address.json');
         $result = $service->iplocateAddress('46.226.227.20');
 
         $this->assertEquals('г Белгород', $result->value);
@@ -31,27 +31,23 @@ class DadataIplocateTest extends DadataServiceTest
             [
                 'iplocateAddress',
                 '/iplocate/address',
-                __DIR__ . '/../mocks/Iplocate/address.json',
+                __DIR__.'/../mocks/Iplocate/address.json',
             ],
         ];
     }
 
     /**
-     * @param string $methodName
-     * @param string $methodUrl
-     * @param string $filePath
-     *
      * @dataProvider dataProvider
      */
     public function testRequestParams(string $methodName, string $methodUrl, string $filePath): void
     {
-        $expectedUrl = 'https://example.com/suggetions' . $methodUrl;
+        $expectedUrl = 'https://example.com/suggetions'.$methodUrl;
 
         $expectedOptions = [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-                'Authorization' => "Token token",
+                'Authorization' => 'Token token',
             ],
             'query' => ['query' => '46.226.227.20'],
         ];

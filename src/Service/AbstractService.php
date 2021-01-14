@@ -52,10 +52,6 @@ abstract class AbstractService
     }
 
     /**
-     * @param AbstractRequest $request
-     *
-     * @return array
-     *
      * @throws DadataException
      */
     abstract protected function query(AbstractRequest $request): array;

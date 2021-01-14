@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Velhron\DadataBundle;
 
 use Velhron\DadataBundle\Exception\InvalidConfigException;
@@ -18,11 +20,6 @@ class ResponseFactory
     }
 
     /**
-     * @param string $methodName
-     * @param array  $data
-     *
-     * @return AbstractResponse
-     *
      * @throws InvalidConfigException
      */
     public function create(string $methodName, array $data): AbstractResponse

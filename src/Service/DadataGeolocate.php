@@ -17,13 +17,6 @@ class DadataGeolocate extends AbstractService
     /**
      * Обработчик для API обратного геокодирования (по координатам).
      *
-     * @param string $method
-     * @param float  $latitude
-     * @param float  $longitude
-     * @param array  $options
-     *
-     * @return array
-     *
      * @throws DadataException|InvalidConfigException
      */
     private function handle(string $method, float $latitude, float $longitude, array $options = []): array

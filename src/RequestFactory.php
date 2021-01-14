@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Velhron\DadataBundle;
 
 use Velhron\DadataBundle\Exception\InvalidConfigException;
@@ -18,10 +20,6 @@ class RequestFactory
     }
 
     /**
-     * @param string $methodName
-     *
-     * @return AbstractRequest
-     *
      * @throws InvalidConfigException
      */
     public function create(string $methodName): AbstractRequest

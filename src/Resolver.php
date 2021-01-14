@@ -16,8 +16,6 @@ class Resolver
     /**
      * Resolver constructor.
      *
-     * @param array $methods
-     *
      * @throws InvalidConfigException
      */
     public function __construct(array $methods)
@@ -25,12 +23,12 @@ class Resolver
         foreach ($methods as $method) {
             if (isset($method['name'])) {
                 if (isset($this->methodsByName[$method['name']])) {
-                    throw new InvalidConfigException("Наименование метода должно быть уникально");
+                    throw new InvalidConfigException('Наименование метода должно быть уникально');
                 }
 
                 $this->methodsByName[$method['name']] = $method;
             } else {
-                throw new InvalidConfigException("Для одного из методов не указан параметр \"name\"");
+                throw new InvalidConfigException('Для одного из методов не указан параметр "name"');
             }
         }
     }

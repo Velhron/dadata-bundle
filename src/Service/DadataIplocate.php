@@ -17,12 +17,6 @@ class DadataIplocate extends AbstractService
     /**
      * Обработчик для API по IP-адресу.
      *
-     * @param string $method
-     * @param string $ip
-     * @param array  $options
-     *
-     * @return AbstractResponse|null
-     *
      * @throws DadataException|InvalidConfigException
      */
     private function handle(string $method, string $ip, array $options = []): ?AbstractResponse
