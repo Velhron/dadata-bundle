@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace Velhron\DadataBundle\Tests\Service;
 
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 use Velhron\DadataBundle\Service\DadataClean;
 
 class DadataCleanTest extends DadataServiceTest
 {
     protected function createService(string $mockFilepath): DadataClean
     {
-        return new DadataClean('', '', $this->resolver, $this->getMockHttpClient($mockFilepath));
+        return new DadataClean('', '', $this->getMockHttpClient($mockFilepath), $this->requestFactory, $this->responseFactory);
     }
 
     public function testCleanAddress(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Clean/address.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Clean/address.json');
         $result = $service->cleanAddress('мск сухонска 11/-89');
 
         $this->assertEquals(0, $result->qc);
@@ -25,7 +27,7 @@ class DadataCleanTest extends DadataServiceTest
 
     public function testCleanPhone(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Clean/phone.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Clean/phone.json');
         $result = $service->cleanPhone('раб 846)231.60.14 *139');
 
         $this->assertEquals('+7 846 231-60-14 доб. 139', $result->phone);
@@ -34,7 +36,7 @@ class DadataCleanTest extends DadataServiceTest
 
     public function testCleanPassport(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Clean/passport.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Clean/passport.json');
         $result = $service->cleanPassport('4509 235857');
 
         $this->assertEquals('45 09', $result->series);
@@ -43,7 +45,7 @@ class DadataCleanTest extends DadataServiceTest
 
     public function testCleanBirthdate(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Clean/birthdate.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Clean/birthdate.json');
         $result = $service->cleanBirthdate('24/3/12');
 
         $this->assertEquals('24.03.2012', $result->birthdate);
@@ -51,7 +53,7 @@ class DadataCleanTest extends DadataServiceTest
 
     public function testCleanVehicle(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Clean/vehicle.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Clean/vehicle.json');
         $result = $service->cleanVehicle('бмв');
 
         $this->assertEquals('BMW', $result->brand);
@@ -59,7 +61,7 @@ class DadataCleanTest extends DadataServiceTest
 
     public function testCleanName(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Clean/name.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Clean/name.json');
         $result = $service->cleanName('Срегей владимерович иванов');
 
         $this->assertEquals('Иванов', $result->surname);
@@ -69,9 +71,102 @@ class DadataCleanTest extends DadataServiceTest
 
     public function testCleanEmail(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Clean/email.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Clean/email.json');
         $result = $service->cleanEmail('serega@yandex/ru');
 
         $this->assertEquals('serega@yandex.ru', $result->email);
+    }
+
+    public function dataProvider(): array
+    {
+        return [
+            [
+                'cleanAddress',
+                '/address',
+                'мск сухонска 11/-89',
+                __DIR__ . '/../mocks/Clean/address.json',
+            ],
+            [
+                'cleanPhone',
+                '/phone',
+                'раб 846)231.60.14 *139',
+                __DIR__ . '/../mocks/Clean/phone.json',
+            ],
+            [
+                'cleanPassport',
+                '/passport',
+                '4509 235857',
+                __DIR__ . '/../mocks/Clean/passport.json',
+            ],
+            [
+                'cleanBirthdate',
+                '/birthdate',
+                '24/3/12',
+                __DIR__ . '/../mocks/Clean/birthdate.json',
+            ],
+            [
+                'cleanVehicle',
+                '/vehicle',
+                'бмв',
+                __DIR__ . '/../mocks/Clean/vehicle.json',
+            ],
+            [
+                'cleanName',
+                '/name',
+                'Срегей владимерович иванов',
+                __DIR__ . '/../mocks/Clean/name.json',
+            ],
+            [
+                'cleanEmail',
+                '/email',
+                'serega@yandex/ru',
+                __DIR__ . '/../mocks/Clean/email.json',
+            ],
+        ];
+    }
+
+    /**
+     * @param string $methodName
+     * @param string $methodUrl
+     * @param string $query
+     * @param string $filePath
+     *
+     * @dataProvider dataProvider
+     */
+    public function testRequestParams(
+        string $methodName,
+        string $methodUrl,
+        string $query,
+        string $filePath
+    ): void {
+        $expectedUrl = 'https://example.com/cleaner' . $methodUrl;
+
+        $expectedOptions = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => "Token token",
+                'X-Secret' => 'secret',
+            ],
+            'body' => json_encode([$query]),
+        ];
+
+        $response = $this->createMock(ResponseInterface::class);
+
+        $response
+            ->expects($this->once())
+            ->method('getContent')
+            ->willReturn(file_get_contents($filePath));
+
+        $httpClient = $this->createMock(HttpClientInterface::class);
+
+        $httpClient
+            ->expects($this->once())
+            ->method('request')
+            ->with('POST', $expectedUrl, $expectedOptions)
+            ->willReturn($response);
+
+        $service = new DadataClean('token', 'secret', $httpClient, $this->requestFactory, $this->responseFactory);
+
+        $service->$methodName($query);
     }
 }

@@ -7,15 +7,21 @@ namespace Velhron\DadataBundle\Tests\Service;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
-use Velhron\DadataBundle\Resolver;
+use Velhron\DadataBundle\RequestFactory;
+use Velhron\DadataBundle\ResponseFactory;
 use Velhron\DadataBundle\Tests\TestingKernel;
 
 abstract class DadataServiceTest extends TestCase
 {
     /**
-     * @var Resolver
+     * @var RequestFactory
      */
-    protected $resolver;
+    protected $requestFactory;
+
+    /**
+     * @var ResponseFactory
+     */
+    protected $responseFactory;
 
     abstract protected function createService(string $mockFilepath);
 
@@ -27,7 +33,8 @@ abstract class DadataServiceTest extends TestCase
         $kernel = new TestingKernel('test', false);
         $kernel->boot();
         $container = $kernel->getContainer();
-        $this->resolver = $container->get(Resolver::class);
+        $this->requestFactory = $container->get(RequestFactory::class);
+        $this->responseFactory = $container->get(ResponseFactory::class);
     }
 
     protected function getMockHttpClient(string $filepath): MockHttpClient

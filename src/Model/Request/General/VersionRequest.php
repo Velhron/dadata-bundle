@@ -6,11 +6,4 @@ namespace Velhron\DadataBundle\Model\Request\General;
 
 class VersionRequest extends GeneralRequest
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function getMethodUrl(): string
-    {
-        return 'version';
-    }
 }

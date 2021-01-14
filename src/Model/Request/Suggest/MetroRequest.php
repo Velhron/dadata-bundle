@@ -10,12 +10,4 @@ class MetroRequest extends SuggestRequest
      * @var array Фильтрация
      */
     public $filters;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getMethodUrl(): string
-    {
-        return 'metro';
-    }
 }

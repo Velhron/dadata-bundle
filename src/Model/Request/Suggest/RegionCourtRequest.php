@@ -10,12 +10,4 @@ class RegionCourtRequest extends SuggestRequest
      * @var array Фильтрация
      */
     protected $filters;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getMethodUrl(): string
-    {
-        return 'region_court';
-    }
 }

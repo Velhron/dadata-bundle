@@ -25,6 +25,6 @@ class TestingKernel extends Kernel
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/DependencyInjection/config.yaml');
+        $loader->load(__DIR__ . '/DependencyInjection/config.yaml');
     }
 }

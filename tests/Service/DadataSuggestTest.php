@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace Velhron\DadataBundle\Tests\Service;
 
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
+use Velhron\DadataBundle\Exception\DadataException;
 use Velhron\DadataBundle\Service\DadataSuggest;
 
 class DadataSuggestTest extends DadataServiceTest
 {
     protected function createService(string $mockFilepath): DadataSuggest
     {
-        return new DadataSuggest('', '', $this->resolver, $this->getMockHttpClient($mockFilepath));
+        return new DadataSuggest('', '', $this->getMockHttpClient($mockFilepath), $this->requestFactory, $this->responseFactory);
     }
 
     public function testSuggestAddress(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/address.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/address.json');
         $result = $service->suggestAddress('москва хабар', ['count' => 10]);
 
         $this->assertCount(10, $result);
@@ -25,7 +28,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestParty(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/party.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/party.json');
         $result = $service->suggestParty('сбербанк', ['count' => 2]);
 
         $this->assertCount(2, $result);
@@ -43,7 +46,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestBank(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/bank.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/bank.json');
         $result = $service->suggestBank('сбербанк', ['count' => 2]);
 
         $this->assertCount(2, $result);
@@ -54,7 +57,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestFio(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/fio.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/fio.json');
         $result = $service->suggestFio('Викт');
 
         $this->assertEquals('Виктор', $result[0]->value);
@@ -63,7 +66,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestEmail(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/email.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/email.json');
         $result = $service->suggestEmail('anton@');
 
         $this->assertEquals('anton@mail.ru', $result[0]->value);
@@ -73,7 +76,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestFias(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/fias.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/fias.json');
         $result = $service->suggestFias('москва хабар', ['count' => 2]);
 
         $this->assertCount(2, $result);
@@ -83,7 +86,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestFmsUnit(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/fmsUnit.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/fmsUnit.json');
         $result = $service->suggestFmsUnit('772 053');
 
         $this->assertEquals('ОВД ЗЮЗИНО Г. МОСКВЫ', $result[0]->value);
@@ -93,7 +96,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestPostalUnit(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/postalUnit.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/postalUnit.json');
         $result = $service->suggestPostalUnit('дежнева 2а');
 
         $this->assertEquals('127642', $result[0]->value);
@@ -103,7 +106,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestFnsUnit(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/fnsUnit.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/fnsUnit.json');
         $result = $service->suggestFnsUnit('нижнего');
 
         $this->assertEquals('Инспекция ФНС России по Автозаводскому району г.Нижнего Новгорода', $result[0]->value);
@@ -113,7 +116,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestRegionCourt(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/regionCourt.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/regionCourt.json');
         $result = $service->suggestRegionCourt('нижний');
 
         $this->assertEquals('52MS0001', $result[0]->code);
@@ -122,7 +125,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestMetro(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/metro.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/metro.json');
         $result = $service->suggestMetro('алек');
 
         $this->assertEquals('Александровский сад', $result[0]->value);
@@ -133,7 +136,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestCarBrand(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/carBrand.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/carBrand.json');
         $result = $service->suggestCarBrand('форд');
 
         $this->assertEquals('Ford', $result[0]->value);
@@ -142,7 +145,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestCountry(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/country.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/country.json');
         $result = $service->suggestCountry('та');
 
         $this->assertEquals('Таджикистан', $result[0]->value);
@@ -151,7 +154,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestCurrency(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/currency.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/currency.json');
         $result = $service->suggestCurrency('руб');
 
         $this->assertEquals('Белорусский рубль', $result[0]->value);
@@ -162,7 +165,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestOkved2(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/okved2.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/okved2.json');
         $result = $service->suggestOkved2('запуск');
 
         $this->assertEquals('H.51.22.3', $result[0]->idx);
@@ -171,7 +174,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testSuggestOkpd2(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Suggest/okpd2.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Suggest/okpd2.json');
         $result = $service->suggestOkpd2('калоши');
 
         $this->assertEquals('Услуги по обрезиневанию валенок (рыбацкие калоши)', $result[0]->value);
@@ -180,7 +183,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testFindAddress(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Find/address.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Find/address.json');
         $result = $service->findAddress('77000000000268400');
 
         $this->assertEquals('129323, г Москва, ул Снежная', $result[0]->unrestrictedValue);
@@ -189,7 +192,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testFindPostalUnit(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Find/postalUnit.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Find/postalUnit.json');
         $result = $service->findPostalUnit('127642');
 
         $this->assertEquals('127642', $result[0]->postalCode);
@@ -198,7 +201,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testFindDelivery(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Find/delivery.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Find/delivery.json');
         $result = $service->findDelivery('3100400100000');
 
         $this->assertEquals('3100400100000', $result[0]->kladrId);
@@ -208,7 +211,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testFindParty(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Find/party.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Find/party.json');
         $result = $service->findParty('7707083893');
 
         $this->assertEquals('145a83ab38c9ad95889a7b894ce57a97cf6f6d5f42932a71331ff18606edecc6', $result[0]->hid);
@@ -218,7 +221,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testFindBank(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Find/bank.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Find/bank.json');
         $result = $service->findBank('044525225');
 
         $this->assertEquals('SABRRUMM', $result[0]->swift);
@@ -229,7 +232,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testFindFias(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Find/fias.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Find/fias.json');
         $result = $service->findFias('77000000000268400');
 
         $this->assertEquals('г Москва, ул Снежная', $result[0]->value);
@@ -238,7 +241,7 @@ class DadataSuggestTest extends DadataServiceTest
 
     public function testFindAffiliatedParty(): void
     {
-        $service = $this->createService(__DIR__.'/../mocks/Find/affiliatedParty.json');
+        $service = $this->createService(__DIR__ . '/../mocks/Find/affiliatedParty.json');
         $result = $service->findAffiliatedParty('7736207543');
 
         $this->assertEquals('ООО "ДЗЕН.ПЛАТФОРМА"', $result[0]->value);
@@ -246,5 +249,194 @@ class DadataSuggestTest extends DadataServiceTest
         $this->assertEquals('LEGAL', $result[0]->type);
         $this->assertEquals('7704431373', $result[0]->inn);
         $this->assertEquals('45286560000', $result[0]->okato);
+    }
+
+    public function suggestDataProvider(): array
+    {
+        return [
+            [
+                'suggestAddress',
+                '/suggest/address',
+                'москва хабар',
+                __DIR__ . '/../mocks/Suggest/address.json',
+            ],
+            [
+                'suggestParty',
+                '/suggest/party',
+                'сбербанк',
+                __DIR__ . '/../mocks/Suggest/party.json',
+            ],
+            [
+                'suggestBank',
+                '/suggest/bank',
+                'сбербанк',
+                __DIR__ . '/../mocks/Suggest/bank.json',
+            ],
+            [
+                'suggestFio',
+                '/suggest/fio',
+                'Викт',
+                __DIR__ . '/../mocks/Suggest/fio.json',
+            ],
+            [
+                'suggestEmail',
+                '/suggest/email',
+                'anton@mail.ru',
+                __DIR__ . '/../mocks/Suggest/email.json',
+            ],
+            [
+                'suggestFias',
+                '/suggest/fias',
+                'москва хабар',
+                __DIR__ . '/../mocks/Suggest/fias.json',
+            ],
+            [
+                'suggestFmsUnit',
+                '/suggest/fms_unit',
+                '772 053',
+                __DIR__ . '/../mocks/Suggest/fmsUnit.json',
+            ],
+            [
+                'suggestPostalUnit',
+                '/suggest/postal_unit',
+                'дежнева 2а',
+                __DIR__ . '/../mocks/Suggest/postalUnit.json',
+            ],
+            [
+                'suggestFnsUnit',
+                '/suggest/fns_unit',
+                'нижнего',
+                __DIR__ . '/../mocks/Suggest/fnsUnit.json',
+            ],
+            [
+                'suggestRegionCourt',
+                '/suggest/region_court',
+                'нижний',
+                __DIR__ . '/../mocks/Suggest/regionCourt.json',
+            ],
+            [
+                'suggestMetro',
+                '/suggest/metro',
+                'алек',
+                __DIR__ . '/../mocks/Suggest/metro.json',
+            ],
+            [
+                'suggestCarBrand',
+                '/suggest/car_brand',
+                'форд',
+                __DIR__ . '/../mocks/Suggest/carBrand.json',
+            ],
+            [
+                'suggestCountry',
+                '/suggest/country',
+                'та',
+                __DIR__ . '/../mocks/Suggest/country.json',
+            ],
+            [
+                'suggestCurrency',
+                '/suggest/currency',
+                'руб',
+                __DIR__ . '/../mocks/Suggest/currency.json',
+            ],
+            [
+                'suggestOkved2',
+                '/suggest/okved2',
+                'запуск',
+                __DIR__ . '/../mocks/Suggest/okved2.json',
+            ],
+            [
+                'suggestOkpd2',
+                '/suggest/okpd2',
+                'калоши',
+                __DIR__ . '/../mocks/Suggest/okpd2.json',
+            ],
+            [
+                'findAddress',
+                '/findById/address',
+                '77000000000268400',
+                __DIR__ . '/../mocks/Find/address.json',
+            ],
+            [
+                'findPostalUnit',
+                '/findById/postal_unit',
+                '127642',
+                __DIR__ . '/../mocks/Find/postalUnit.json',
+            ],
+            [
+                'findDelivery',
+                '/findById/delivery',
+                '3100400100000',
+                __DIR__ . '/../mocks/Find/delivery.json',
+            ],
+            [
+                'findParty',
+                '/findById/party',
+                '7707083893',
+                __DIR__ . '/../mocks/Find/party.json',
+            ],
+            [
+                'findBank',
+                '/findById/bank',
+                '044525225',
+                __DIR__ . '/../mocks/Find/bank.json',
+            ],
+            [
+                'findFias',
+                '/findById/fias',
+                '77000000000268400',
+                __DIR__ . '/../mocks/Find/fias.json',
+            ],
+            [
+                'findAffiliatedParty',
+                '/findAffiliated/party',
+                '7736207543',
+                __DIR__ . '/../mocks/Find/affiliatedParty.json',
+            ],
+        ];
+    }
+
+    /**
+     * @param string $methodName
+     * @param string $methodUrl
+     * @param string $query
+     * @param string $filePath
+     *
+     * @dataProvider suggestDataProvider
+     */
+    public function testSuggestRequestParams(
+        string $methodName,
+        string $methodUrl,
+        string $query,
+        string $filePath
+    ): void {
+        $expectedUrl = 'https://example.com/suggetions' . $methodUrl;
+
+        $expectedOptions = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => "Token token",
+            ],
+            'body' => json_encode(['query' => $query]),
+        ];
+
+        $response = $this->createMock(ResponseInterface::class);
+
+        $response
+            ->expects($this->once())
+            ->method('getContent')
+            ->willReturn(file_get_contents($filePath));
+
+        $httpClient = $this->createMock(HttpClientInterface::class);
+
+        $httpClient
+            ->expects($this->once())
+            ->method('request')
+            ->with('POST', $expectedUrl, $expectedOptions)
+            ->willReturn($response);
+
+        $service = new DadataSuggest('token', 'secret', $httpClient, $this->requestFactory, $this->responseFactory);
+
+        $service->$methodName($query);
     }
 }

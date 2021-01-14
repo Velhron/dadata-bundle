@@ -35,12 +35,4 @@ class AddressRequest extends SuggestRequest
      * @var array Гранулярные подсказки по адресу
      */
     protected $to_bound;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMethodUrl(): string
-    {
-        return 'address';
-    }
 }

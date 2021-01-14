@@ -19,10 +19,13 @@ class VelhronDadataExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
 
         $container->setParameter('velhron_dadata.token', $config['token']);
         $container->setParameter('velhron_dadata.secret', $config['secret']);
+        $container->setParameter('velhron_dadata.base_general_url', $config['base_general_url']);
+        $container->setParameter('velhron_dadata.base_cleaner_url', $config['base_cleaner_url']);
+        $container->setParameter('velhron_dadata.base_suggestions_url', $config['base_suggestions_url']);
     }
 }

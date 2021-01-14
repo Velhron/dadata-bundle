@@ -6,11 +6,4 @@ namespace Velhron\DadataBundle\Model\Request\Clean;
 
 class EmailRequest extends CleanRequest
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function getMethodUrl(): string
-    {
-        return 'email';
-    }
 }

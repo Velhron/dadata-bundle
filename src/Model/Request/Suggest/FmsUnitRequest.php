@@ -10,12 +10,4 @@ class FmsUnitRequest extends SuggestRequest
      * @var array Фильтрация
      */
     public $filters;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMethodUrl(): string
-    {
-        return 'fms_unit';
-    }
 }

@@ -6,10 +6,9 @@ namespace Velhron\DadataBundle\Service;
 
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Velhron\DadataBundle\Exception\DadataException;
+use Velhron\DadataBundle\Exception\InvalidConfigException;
 use Velhron\DadataBundle\Model\Request\AbstractRequest;
-use Velhron\DadataBundle\Model\Request\General\BalanceRequest;
 use Velhron\DadataBundle\Model\Request\General\StatRequest;
-use Velhron\DadataBundle\Model\Request\General\VersionRequest;
 use Velhron\DadataBundle\Model\Response\General\StatResponse;
 
 class DadataGeneral extends AbstractService
@@ -41,11 +40,11 @@ class DadataGeneral extends AbstractService
      *
      * @return float Текущий баланс счета
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function balance(): float
     {
-        $responseData = $this->query(new BalanceRequest());
+        $responseData = $this->query($this->requestFactory->create('balance'));
 
         return $responseData['balance'] ?? 0.0;
     }
@@ -59,11 +58,12 @@ class DadataGeneral extends AbstractService
      *
      * @return StatResponse Статистика
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function stat(string $date = null): StatResponse
     {
-        $request = new StatRequest();
+        /** @var StatRequest $request */
+        $request = $this->requestFactory->create('stat');
         $request->date = $date;
         $responseData = $this->query($request);
 
@@ -75,10 +75,10 @@ class DadataGeneral extends AbstractService
      *
      * @return array Информация по датам актуальности справочников
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function version(): array
     {
-        return $this->query(new VersionRequest());
+        return $this->query($this->requestFactory->create('version'));
     }
 }

@@ -20,12 +20,4 @@ class PartyRequest extends FindRequest
      * @var string Юр. лицо (LEGAL) или индивидуальный предприниматель (INDIVIDUAL)
      */
     protected $type;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getMethodUrl(): string
-    {
-        return 'party';
-    }
 }

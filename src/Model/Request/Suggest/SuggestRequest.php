@@ -16,14 +16,6 @@ abstract class SuggestRequest extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getBaseUrl(): string
-    {
-        return 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getBody(): array
     {
         return array_filter(get_object_vars($this), function ($var) {

@@ -6,11 +6,4 @@ namespace Velhron\DadataBundle\Model\Request\Find;
 
 class DeliveryRequest extends FindRequest
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function getMethodUrl(): string
-    {
-        return 'delivery';
-    }
 }
