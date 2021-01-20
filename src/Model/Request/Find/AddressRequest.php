@@ -10,12 +10,4 @@ class AddressRequest extends FindRequest
      * @var string На каком языке вернуть результат (ru / en)
      */
     protected $language;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getMethodUrl(): string
-    {
-        return 'address';
-    }
 }

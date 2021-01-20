@@ -6,6 +6,7 @@ namespace Velhron\DadataBundle\Service;
 
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Velhron\DadataBundle\Exception\DadataException;
+use Velhron\DadataBundle\Exception\InvalidConfigException;
 use Velhron\DadataBundle\Model\Request\AbstractRequest;
 use Velhron\DadataBundle\Model\Request\Geolocate\GeolocateRequest;
 use Velhron\DadataBundle\Model\Response\Suggest\AddressResponse;
@@ -16,15 +17,13 @@ class DadataGeolocate extends AbstractService
     /**
      * Обработчик для API обратного геокодирования (по координатам).
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     private function handle(string $method, float $latitude, float $longitude, array $options = []): array
     {
-        $requestClass = $this->resolver->getMatchedRequest($method);
-        $responseClass = $this->resolver->getMatchedResponse($method);
-
         /* @var GeolocateRequest $request */
-        $request = new $requestClass();
+        $request = $this->requestFactory->create($method);
+
         $request->fillOptions(array_merge([
             'lat' => $latitude,
             'lon' => $longitude,
@@ -32,7 +31,7 @@ class DadataGeolocate extends AbstractService
 
         $responseData = $this->query($request);
         foreach ($responseData['suggestions'] ?? [] as $suggestion) {
-            $data[] = new $responseClass($suggestion);
+            $data[] = $this->responseFactory->create($method, $suggestion);
         }
 
         return $data ?? [];
@@ -70,7 +69,7 @@ class DadataGeolocate extends AbstractService
      *
      * @return AddressResponse[]
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function geolocateAddress(float $latitude, float $longitude, array $options = []): array
     {
@@ -86,7 +85,7 @@ class DadataGeolocate extends AbstractService
      *
      * @return PostalUnitResponse[]
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function geolocatePostalUnit(float $latitude, float $longitude, array $options = []): array
     {

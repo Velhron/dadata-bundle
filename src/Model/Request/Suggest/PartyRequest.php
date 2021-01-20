@@ -25,12 +25,4 @@ class PartyRequest extends SuggestRequest
      * @var array Приоритет города при ранжировании
      */
     protected $locations_boost;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMethodUrl(): string
-    {
-        return 'party';
-    }
 }

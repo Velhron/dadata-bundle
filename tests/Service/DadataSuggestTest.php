@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Velhron\DadataBundle\Tests\Service;
 
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 use Velhron\DadataBundle\Service\DadataSuggest;
 
 class DadataSuggestTest extends DadataServiceTest
 {
     protected function createService(string $mockFilepath): DadataSuggest
     {
-        return new DadataSuggest('', '', $this->resolver, $this->getMockHttpClient($mockFilepath));
+        return new DadataSuggest('', '', $this->getMockHttpClient($mockFilepath), $this->requestFactory, $this->responseFactory);
     }
 
     public function testSuggestAddress(): void
@@ -246,5 +248,189 @@ class DadataSuggestTest extends DadataServiceTest
         $this->assertEquals('LEGAL', $result[0]->type);
         $this->assertEquals('7704431373', $result[0]->inn);
         $this->assertEquals('45286560000', $result[0]->okato);
+    }
+
+    public function suggestDataProvider(): array
+    {
+        return [
+            [
+                'suggestAddress',
+                '/suggest/address',
+                'москва хабар',
+                __DIR__.'/../mocks/Suggest/address.json',
+            ],
+            [
+                'suggestParty',
+                '/suggest/party',
+                'сбербанк',
+                __DIR__.'/../mocks/Suggest/party.json',
+            ],
+            [
+                'suggestBank',
+                '/suggest/bank',
+                'сбербанк',
+                __DIR__.'/../mocks/Suggest/bank.json',
+            ],
+            [
+                'suggestFio',
+                '/suggest/fio',
+                'Викт',
+                __DIR__.'/../mocks/Suggest/fio.json',
+            ],
+            [
+                'suggestEmail',
+                '/suggest/email',
+                'anton@mail.ru',
+                __DIR__.'/../mocks/Suggest/email.json',
+            ],
+            [
+                'suggestFias',
+                '/suggest/fias',
+                'москва хабар',
+                __DIR__.'/../mocks/Suggest/fias.json',
+            ],
+            [
+                'suggestFmsUnit',
+                '/suggest/fms_unit',
+                '772 053',
+                __DIR__.'/../mocks/Suggest/fmsUnit.json',
+            ],
+            [
+                'suggestPostalUnit',
+                '/suggest/postal_unit',
+                'дежнева 2а',
+                __DIR__.'/../mocks/Suggest/postalUnit.json',
+            ],
+            [
+                'suggestFnsUnit',
+                '/suggest/fns_unit',
+                'нижнего',
+                __DIR__.'/../mocks/Suggest/fnsUnit.json',
+            ],
+            [
+                'suggestRegionCourt',
+                '/suggest/region_court',
+                'нижний',
+                __DIR__.'/../mocks/Suggest/regionCourt.json',
+            ],
+            [
+                'suggestMetro',
+                '/suggest/metro',
+                'алек',
+                __DIR__.'/../mocks/Suggest/metro.json',
+            ],
+            [
+                'suggestCarBrand',
+                '/suggest/car_brand',
+                'форд',
+                __DIR__.'/../mocks/Suggest/carBrand.json',
+            ],
+            [
+                'suggestCountry',
+                '/suggest/country',
+                'та',
+                __DIR__.'/../mocks/Suggest/country.json',
+            ],
+            [
+                'suggestCurrency',
+                '/suggest/currency',
+                'руб',
+                __DIR__.'/../mocks/Suggest/currency.json',
+            ],
+            [
+                'suggestOkved2',
+                '/suggest/okved2',
+                'запуск',
+                __DIR__.'/../mocks/Suggest/okved2.json',
+            ],
+            [
+                'suggestOkpd2',
+                '/suggest/okpd2',
+                'калоши',
+                __DIR__.'/../mocks/Suggest/okpd2.json',
+            ],
+            [
+                'findAddress',
+                '/findById/address',
+                '77000000000268400',
+                __DIR__.'/../mocks/Find/address.json',
+            ],
+            [
+                'findPostalUnit',
+                '/findById/postal_unit',
+                '127642',
+                __DIR__.'/../mocks/Find/postalUnit.json',
+            ],
+            [
+                'findDelivery',
+                '/findById/delivery',
+                '3100400100000',
+                __DIR__.'/../mocks/Find/delivery.json',
+            ],
+            [
+                'findParty',
+                '/findById/party',
+                '7707083893',
+                __DIR__.'/../mocks/Find/party.json',
+            ],
+            [
+                'findBank',
+                '/findById/bank',
+                '044525225',
+                __DIR__.'/../mocks/Find/bank.json',
+            ],
+            [
+                'findFias',
+                '/findById/fias',
+                '77000000000268400',
+                __DIR__.'/../mocks/Find/fias.json',
+            ],
+            [
+                'findAffiliatedParty',
+                '/findAffiliated/party',
+                '7736207543',
+                __DIR__.'/../mocks/Find/affiliatedParty.json',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider suggestDataProvider
+     */
+    public function testSuggestRequestParams(
+        string $methodName,
+        string $methodUrl,
+        string $query,
+        string $filePath
+    ): void {
+        $expectedUrl = 'https://example.com/suggetions'.$methodUrl;
+
+        $expectedOptions = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => 'Token token',
+            ],
+            'body' => json_encode(['query' => $query]),
+        ];
+
+        $response = $this->createMock(ResponseInterface::class);
+
+        $response
+            ->expects($this->once())
+            ->method('getContent')
+            ->willReturn(file_get_contents($filePath));
+
+        $httpClient = $this->createMock(HttpClientInterface::class);
+
+        $httpClient
+            ->expects($this->once())
+            ->method('request')
+            ->with('POST', $expectedUrl, $expectedOptions)
+            ->willReturn($response);
+
+        $service = new DadataSuggest('token', 'secret', $httpClient, $this->requestFactory, $this->responseFactory);
+
+        $service->$methodName($query);
     }
 }

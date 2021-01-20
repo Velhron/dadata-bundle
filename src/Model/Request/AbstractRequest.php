@@ -12,14 +12,14 @@ abstract class AbstractRequest
     protected $query;
 
     /**
-     * Базовый URL-адрес API.
+     * @var string URL запроса
      */
-    abstract protected function getBaseUrl(): string;
+    private $requestUrl;
 
-    /**
-     * Вызываемый метод API для URL.
-     */
-    abstract protected function getMethodUrl(): string;
+    public function __construct(string $url)
+    {
+        $this->requestUrl = $url;
+    }
 
     /**
      * Тело запроса.
@@ -35,7 +35,7 @@ abstract class AbstractRequest
 
     public function getUrl(): string
     {
-        return $this->getBaseUrl().$this->getMethodUrl();
+        return $this->requestUrl;
     }
 
     public function fillOptions(array $data): self

@@ -1,3 +1,6 @@
 velhron_dadata:
   token: 'token'
   secret: 'secret'
+  base_general_url: 'https://example.com/general'
+  base_cleaner_url: 'https://example.com/cleaner'
+  base_suggestions_url: 'https://example.com/suggetions'

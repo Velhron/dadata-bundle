@@ -6,8 +6,10 @@ namespace Velhron\DadataBundle\Service;
 
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Velhron\DadataBundle\Exception\DadataException;
+use Velhron\DadataBundle\Exception\InvalidConfigException;
 use Velhron\DadataBundle\Model\Request\AbstractRequest;
 use Velhron\DadataBundle\Model\Request\Clean\CleanRequest;
+use Velhron\DadataBundle\Model\Response\AbstractResponse;
 use Velhron\DadataBundle\Model\Response\Clean\AddressResponse;
 use Velhron\DadataBundle\Model\Response\Clean\BirthdateResponse;
 use Velhron\DadataBundle\Model\Response\Clean\EmailResponse;
@@ -21,20 +23,17 @@ class DadataClean extends AbstractService
     /**
      * Обработчик для API стандартизации.
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
-    private function handle(string $method, string $query)
+    private function handle(string $method, string $query): AbstractResponse
     {
-        $requestClass = $this->resolver->getMatchedRequest($method);
-        $responseClass = $this->resolver->getMatchedResponse($method);
-
         /* @var CleanRequest $request */
-        $request = new $requestClass();
+        $request = $this->requestFactory->create($method);
         $request->setQuery($query);
 
         $responseData = $this->query($request);
 
-        return new $responseClass($responseData);
+        return $this->responseFactory->create($method, $responseData);
     }
 
     /**
@@ -72,11 +71,14 @@ class DadataClean extends AbstractService
      *
      * @return AddressResponse Стандартизованный объект
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function cleanAddress(string $query): AddressResponse
     {
-        return $this->handle('cleanAddress', $query);
+        /** @var AddressResponse $response */
+        $response = $this->handle('cleanAddress', $query);
+
+        return $response;
     }
 
     /**
@@ -89,11 +91,14 @@ class DadataClean extends AbstractService
      *
      * @return PhoneResponse Стандартизованный объект
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function cleanPhone(string $query): PhoneResponse
     {
-        return $this->handle('cleanPhone', $query);
+        /** @var PhoneResponse $response */
+        $response = $this->handle('cleanPhone', $query);
+
+        return $response;
     }
 
     /**
@@ -105,11 +110,14 @@ class DadataClean extends AbstractService
      *
      * @return PassportResponse Стандартизованный объект
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function cleanPassport(string $query): PassportResponse
     {
-        return $this->handle('cleanPassport', $query);
+        /** @var PassportResponse $response */
+        $response = $this->handle('cleanPassport', $query);
+
+        return $response;
     }
 
     /**
@@ -119,11 +127,14 @@ class DadataClean extends AbstractService
      *
      * @return BirthdateResponse Стандартизованный объект
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function cleanBirthdate(string $query): BirthdateResponse
     {
-        return $this->handle('cleanBirthdate', $query);
+        /** @var BirthdateResponse $response */
+        $response = $this->handle('cleanBirthdate', $query);
+
+        return $response;
     }
 
     /**
@@ -133,11 +144,14 @@ class DadataClean extends AbstractService
      *
      * @return VehicleResponse Стандартизованный объект
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function cleanVehicle(string $query): VehicleResponse
     {
-        return $this->handle('cleanVehicle', $query);
+        /** @var VehicleResponse $response */
+        $response = $this->handle('cleanVehicle', $query);
+
+        return $response;
     }
 
     /**
@@ -149,11 +163,14 @@ class DadataClean extends AbstractService
      *
      * @return NameResponse Стандартизованный объект
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function cleanName(string $query): NameResponse
     {
-        return $this->handle('cleanName', $query);
+        /** @var NameResponse $response */
+        $response = $this->handle('cleanName', $query);
+
+        return $response;
     }
 
     /**
@@ -166,10 +183,13 @@ class DadataClean extends AbstractService
      *
      * @return EmailResponse Стандартизованный объект
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function cleanEmail(string $query): EmailResponse
     {
-        return $this->handle('cleanEmail', $query);
+        /** @var EmailResponse $response */
+        $response = $this->handle('cleanEmail', $query);
+
+        return $response;
     }
 }

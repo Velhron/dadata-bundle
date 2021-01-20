@@ -6,11 +6,4 @@ namespace Velhron\DadataBundle\Model\Request\Suggest;
 
 class CurrencyRequest extends SuggestRequest
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function getMethodUrl(): string
-    {
-        return 'currency';
-    }
 }
