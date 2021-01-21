@@ -25,4 +25,9 @@ class PartyRequest extends SuggestRequest
      * @var array Приоритет города при ранжировании
      */
     protected $locations_boost;
+
+    /**
+     * @var array Ограничение по коду ОКВЭД
+     */
+    protected $okved;
 }

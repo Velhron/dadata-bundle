@@ -137,6 +137,16 @@ class PartyResponse extends SuggestResponse
     public $managers;
 
     /**
+     * @var array Правопредшественники (только для юр. лиц)
+     */
+    public $predecessors;
+
+    /**
+     * @var array Правопреемники (только для юр. лиц)
+     */
+    public $successors;
+
+    /**
      * @var string Уставной капитал компании
      */
     public $capital;
