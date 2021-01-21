@@ -188,7 +188,7 @@ class DadataSuggestTest extends DadataServiceTest
         $this->assertEquals('54623422', $result[0]->oktmo);
         $this->assertEquals('Колпнянский', $result[0]->area);
         $this->assertEquals('54623000', $result[1]->areaCode);
-        $this->assertEquals('Ярищенское', $result[0]->subarea);
+        $this->assertEquals('Ярищенское', $result[1]->subarea);
     }
 
     public function testFindAddress(): void
