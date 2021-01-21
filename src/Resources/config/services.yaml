@@ -117,6 +117,11 @@ services:
           response: Velhron\DadataBundle\Model\Response\Suggest\Okpd2Response
           url: '%velhron_dadata.base_suggestions_url%/suggest/okpd2'
 
+        - name: 'suggestOktmo'
+          request: Velhron\DadataBundle\Model\Request\Suggest\OktmoRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\OktmoResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/oktmo'
+
         - name: 'findAddress'
           request: Velhron\DadataBundle\Model\Request\Find\AddressRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
@@ -151,6 +156,11 @@ services:
           request: Velhron\DadataBundle\Model\Request\Find\AffiliatedPartyRequest
           response: Velhron\DadataBundle\Model\Response\Find\AffiliatedPartyResponse
           url: '%velhron_dadata.base_suggestions_url%/findAffiliated/party'
+
+        - name: 'findOktmo'
+          request: Velhron\DadataBundle\Model\Request\Find\OktmoRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\OktmoResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/oktmo'
 
         - name: 'geolocateAddress'
           request: Velhron\DadataBundle\Model\Request\Geolocate\AddressRequest
