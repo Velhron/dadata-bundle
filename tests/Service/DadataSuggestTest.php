@@ -180,6 +180,17 @@ class DadataSuggestTest extends DadataServiceTest
         $this->assertEquals('S.95.23.10.133', $result[0]->idx);
     }
 
+    public function testSuggestOktmo(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Suggest/oktmo.json');
+        $result = $service->suggestOktmo('5462342');
+
+        $this->assertEquals('54623422', $result[0]->oktmo);
+        $this->assertEquals('Колпнянский', $result[0]->area);
+        $this->assertEquals('54623000', $result[1]->areaCode);
+        $this->assertEquals('Ярищенское', $result[1]->subarea);
+    }
+
     public function testFindAddress(): void
     {
         $service = $this->createService(__DIR__.'/../mocks/Find/address.json');
@@ -248,6 +259,15 @@ class DadataSuggestTest extends DadataServiceTest
         $this->assertEquals('LEGAL', $result[0]->type);
         $this->assertEquals('7704431373', $result[0]->inn);
         $this->assertEquals('45286560000', $result[0]->okato);
+    }
+
+    public function testFindOktmo(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Find/oktmo.json');
+        $result = $service->findOktmo('54623425');
+
+        $this->assertEquals('54623425', $result[0]->value);
+        $this->assertEquals('54623000', $result[0]->areaCode);
     }
 
     public function suggestDataProvider(): array
@@ -350,6 +370,12 @@ class DadataSuggestTest extends DadataServiceTest
                 __DIR__.'/../mocks/Suggest/okpd2.json',
             ],
             [
+                'suggestOktmo',
+                '/suggest/oktmo',
+                '5462342',
+                __DIR__.'/../mocks/Suggest/oktmo.json',
+            ],
+            [
                 'findAddress',
                 '/findById/address',
                 '77000000000268400',
@@ -390,6 +416,12 @@ class DadataSuggestTest extends DadataServiceTest
                 '/findAffiliated/party',
                 '7736207543',
                 __DIR__.'/../mocks/Find/affiliatedParty.json',
+            ],
+            [
+                'findOktmo',
+                '/findById/oktmo',
+                '54623425',
+                __DIR__.'/../mocks/Find/oktmo.json',
             ],
         ];
     }

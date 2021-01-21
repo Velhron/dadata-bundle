@@ -22,6 +22,7 @@ use Velhron\DadataBundle\Model\Response\Suggest\FmsUnitResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FnsUnitResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\MetroResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\Okpd2Response;
+use Velhron\DadataBundle\Model\Response\Suggest\OktmoResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\Okved2Response;
 use Velhron\DadataBundle\Model\Response\Suggest\PartyResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse;
@@ -95,6 +96,7 @@ class DadataSuggest extends AbstractService
     /**
      * Подсказки по организациям.
      *
+     * Возвращает только базовые поля.
      * Ищет компании и индивидуальных предпринимателей:
      * - по ИНН, ОГРН и КПП;
      * - названию (полному и краткому);
@@ -350,6 +352,23 @@ class DadataSuggest extends AbstractService
     }
 
     /**
+     * Подсказки по справочнику "Муниципальные образования (ОКТМО)".
+     *
+     * Общероссийский классификатор территорий муниципальных образований.
+     *
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
+     *
+     * @return OktmoResponse[]
+     *
+     * @throws DadataException|InvalidConfigException
+     */
+    public function suggestOktmo(string $query, array $options = []): array
+    {
+        return $this->handle('suggestOktmo', $query, $options);
+    }
+
+    /**
      * Адрес по коду КЛАДР или ФИАС.
      *
      * Находит адрес по коду КЛАДР или ФИАС.
@@ -401,7 +420,7 @@ class DadataSuggest extends AbstractService
      *
      * Находит компанию или индивидуального предпринимателя по ИНН, КПП, ОГРН.
      * Возвращает реквизиты компании, учредителей, руководителей, сведения о налоговой, ПФР и ФСС, финансы, лицензии,
-     * реестр МСП и другую информацию о компании.
+     * реестр МСП и другую информацию о компании. Возвращает все доступные сведения о компании.
      *
      * @param string $query   Текст запроса
      * @param array  $options Дополнительные параметры запроса
@@ -470,5 +489,22 @@ class DadataSuggest extends AbstractService
     public function findAffiliatedParty(string $query, array $options = []): array
     {
         return $this->handle('findAffiliatedParty', $query, $options);
+    }
+
+    /**
+     * Муниципальные образования (ОКТМО) по идентификатору.
+     *
+     * Общероссийский классификатор территорий муниципальных образований.
+     *
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
+     *
+     * @return OktmoResponse[]
+     *
+     * @throws DadataException|InvalidConfigException
+     */
+    public function findOktmo(string $query, array $options = []): array
+    {
+        return $this->handle('findOktmo', $query, $options);
     }
 }

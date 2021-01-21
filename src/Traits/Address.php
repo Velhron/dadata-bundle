@@ -252,6 +252,16 @@ trait Address
     public $block;
 
     /**
+     * @var string Подъезд
+     */
+    public $entrance;
+
+    /**
+     * @var string Этаж
+     */
+    public $floor;
+
+    /**
      * @var string Тип квартиры (сокращенный)
      */
     public $flatType;
