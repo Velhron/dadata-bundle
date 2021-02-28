@@ -77,6 +77,46 @@ class DadataCleanTest extends DadataServiceTest
         $this->assertEquals('serega@yandex.ru', $result->email);
     }
 
+    /**
+     * @dataProvider dataProvider
+     */
+    public function testRequestParams(
+        string $methodName,
+        string $methodUrl,
+        string $query,
+        string $filePath
+    ): void {
+        $expectedUrl = 'https://example.com/cleaner'.$methodUrl;
+
+        $expectedOptions = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Token token',
+                'X-Secret' => 'secret',
+            ],
+            'body' => json_encode([$query]),
+        ];
+
+        $response = $this->createMock(ResponseInterface::class);
+
+        $response
+            ->expects($this->once())
+            ->method('getContent')
+            ->willReturn(file_get_contents($filePath));
+
+        $httpClient = $this->createMock(HttpClientInterface::class);
+
+        $httpClient
+            ->expects($this->once())
+            ->method('request')
+            ->with('POST', $expectedUrl, $expectedOptions)
+            ->willReturn($response);
+
+        $service = new DadataClean('token', 'secret', $httpClient, $this->requestFactory, $this->responseFactory);
+
+        $service->$methodName($query);
+    }
+
     public function dataProvider(): array
     {
         return [
@@ -123,45 +163,5 @@ class DadataCleanTest extends DadataServiceTest
                 __DIR__.'/../mocks/Clean/email.json',
             ],
         ];
-    }
-
-    /**
-     * @dataProvider dataProvider
-     */
-    public function testRequestParams(
-        string $methodName,
-        string $methodUrl,
-        string $query,
-        string $filePath
-    ): void {
-        $expectedUrl = 'https://example.com/cleaner'.$methodUrl;
-
-        $expectedOptions = [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => 'Token token',
-                'X-Secret' => 'secret',
-            ],
-            'body' => json_encode([$query]),
-        ];
-
-        $response = $this->createMock(ResponseInterface::class);
-
-        $response
-            ->expects($this->once())
-            ->method('getContent')
-            ->willReturn(file_get_contents($filePath));
-
-        $httpClient = $this->createMock(HttpClientInterface::class);
-
-        $httpClient
-            ->expects($this->once())
-            ->method('request')
-            ->with('POST', $expectedUrl, $expectedOptions)
-            ->willReturn($response);
-
-        $service = new DadataClean('token', 'secret', $httpClient, $this->requestFactory, $this->responseFactory);
-
-        $service->$methodName($query);
     }
 }

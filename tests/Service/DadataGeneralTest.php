@@ -33,22 +33,6 @@ class DadataGeneralTest extends DadataServiceTest
         $this->assertEquals(7, $result->clean);
     }
 
-    public function dataProvider(): array
-    {
-        return [
-            [
-                'balance',
-                '/profile/balance',
-                __DIR__.'/../mocks/General/balance.json',
-            ],
-            [
-                'stat',
-                '/stat/daily',
-                __DIR__.'/../mocks/General/stat.json',
-            ],
-        ];
-    }
-
     /**
      * @dataProvider dataProvider
      */
@@ -82,5 +66,21 @@ class DadataGeneralTest extends DadataServiceTest
         $service = new DadataGeneral('token', 'secret', $httpClient, $this->requestFactory, $this->responseFactory);
 
         $service->$methodName();
+    }
+
+    public function dataProvider(): array
+    {
+        return [
+            [
+                'balance',
+                '/profile/balance',
+                __DIR__.'/../mocks/General/balance.json',
+            ],
+            [
+                'stat',
+                '/stat/daily',
+                __DIR__.'/../mocks/General/stat.json',
+            ],
+        ];
     }
 }
