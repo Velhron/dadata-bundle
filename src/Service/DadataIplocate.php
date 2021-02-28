@@ -63,10 +63,10 @@ class DadataIplocate extends AbstractService
      * - Поддерживает как IPv4, так и IPv6 адреса
      * - Возвращает детальную информацию о городе, в том числе почтовый индекс
      *
-     * @param string $ip      - ip-адрес
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $ip      IP-адрес
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return AddressResponse|null - ответ
+     * @return AddressResponse|null Ответ
      *
      * @throws DadataException|InvalidConfigException
      */

@@ -25,17 +25,6 @@ class DadataIplocateTest extends DadataServiceTest
         $this->assertEquals('31000001000000000000000', $result->fiasCode);
     }
 
-    public function dataProvider(): array
-    {
-        return [
-            [
-                'iplocateAddress',
-                '/iplocate/address',
-                __DIR__.'/../mocks/Iplocate/address.json',
-            ],
-        ];
-    }
-
     /**
      * @dataProvider dataProvider
      */
@@ -49,7 +38,7 @@ class DadataIplocateTest extends DadataServiceTest
                 'Accept' => 'application/json',
                 'Authorization' => 'Token token',
             ],
-            'query' => ['query' => '46.226.227.20'],
+            'query' => ['ip' => '46.226.227.20'],
         ];
 
         $response = $this->createMock(ResponseInterface::class);
@@ -70,5 +59,16 @@ class DadataIplocateTest extends DadataServiceTest
         $service = new DadataIplocate('token', 'secret', $httpClient, $this->requestFactory, $this->responseFactory);
 
         $service->$methodName('46.226.227.20');
+    }
+
+    public function dataProvider(): array
+    {
+        return [
+            [
+                'iplocateAddress',
+                '/iplocate/address',
+                __DIR__.'/../mocks/Iplocate/address.json',
+            ],
+        ];
     }
 }
