@@ -20,6 +20,7 @@ use Velhron\DadataBundle\Model\Response\Suggest\EmailResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FioResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FmsUnitResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FnsUnitResponse;
+use Velhron\DadataBundle\Model\Response\Suggest\FtsUnitResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\MetroResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\Okpd2Response;
 use Velhron\DadataBundle\Model\Response\Suggest\OktmoResponse;
@@ -219,6 +220,7 @@ class DadataSuggest extends AbstractService
      * Подсказки по справочнику "Налоговые инспекции".
      *
      * Справочник инспекций Налоговой службы.
+     * Поиск работает по полям: code, name_short, address.
      *
      * @param string $query   Текст запроса
      * @param array  $options Дополнительные параметры запроса
@@ -230,6 +232,21 @@ class DadataSuggest extends AbstractService
     public function suggestFnsUnit(string $query, array $options = []): array
     {
         return $this->handle('suggestFnsUnit', $query, $options);
+    }
+
+    /**
+     * Подсказки по справочнику таможенных органов и постов.
+     *
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
+     *
+     * @return FtsUnitResponse[] Массив подсказок
+     *
+     * @throws DadataException|InvalidConfigException
+     */
+    public function suggestFtsUnit(string $query, array $options = []): array
+    {
+        return $this->handle('suggestFtsUnit', $query, $options);
     }
 
     /**
@@ -499,12 +516,80 @@ class DadataSuggest extends AbstractService
      * @param string $query   Текст запроса
      * @param array  $options Дополнительные параметры запроса
      *
-     * @return OktmoResponse[]
+     * @return OktmoResponse[] Массив подсказок
      *
      * @throws DadataException|InvalidConfigException
      */
     public function findOktmo(string $query, array $options = []): array
     {
         return $this->handle('findOktmo', $query, $options);
+    }
+
+    /**
+     * Налоговые инспекции по идентификатору.
+     *
+     * Выборка работает по полям: code, inn.
+     *
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
+     *
+     * @return FnsUnitResponse[] Массив подсказок
+     *
+     * @throws DadataException|InvalidConfigException
+     */
+    public function findFnsUnit(string $query, array $options = []): array
+    {
+        return $this->handle('findFnsUnit', $query, $options);
+    }
+
+    /**
+     * Таможни по идентификатору.
+     *
+     * Выборка работает по полям: code.
+     *
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
+     *
+     * @return FnsUnitResponse[] Массив подсказок
+     *
+     * @throws DadataException|InvalidConfigException
+     */
+    public function findFtsUnit(string $query, array $options = []): array
+    {
+        return $this->handle('findFtsUnit', $query, $options);
+    }
+
+    /**
+     * Страны по идентификатору.
+     *
+     * Выборка работает по полям: code, alfa2, alfa3.
+     *
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
+     *
+     * @return CountryResponse[] Массив подсказок
+     *
+     * @throws DadataException|InvalidConfigException
+     */
+    public function findCountry(string $query, array $options = []): array
+    {
+        return $this->handle('findCountry', $query, $options);
+    }
+
+    /**
+     * Мировые суды по справочнику.
+     *
+     * Выборка работает по полям: code.
+     *
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
+     *
+     * @return RegionCourtResponse[] Массив подсказок
+     *
+     * @throws DadataException|InvalidConfigException
+     */
+    public function findRegionCourt(string $query, array $options = []): array
+    {
+        return $this->handle('findRegionCourt', $query, $options);
     }
 }

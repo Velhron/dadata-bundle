@@ -113,6 +113,18 @@ class DadataSuggestTest extends DadataServiceTest
         $this->assertEquals('5256034801', $result[0]->inn);
     }
 
+    public function testSuggestFtsUnit(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Suggest/ftsUnit.json');
+        $result = $service->suggestFtsUnit('домодедово');
+
+        $this->assertEquals('ДОМОДЕДОВСКАЯ', $result[0]->value);
+        $this->assertEquals('ДОМОДЕДОВСКАЯ ТАМОЖНЯ', $result[0]->name);
+        $this->assertEquals('10002000', $result[0]->code);
+        $this->assertEquals('5009004697', $result[0]->inn);
+        $this->assertEquals('domodedovo@ca.eais.customs.ru', $result[0]->email);
+    }
+
     public function testSuggestRegionCourt(): void
     {
         $service = $this->createService(__DIR__.'/../mocks/Suggest/regionCourt.json');
@@ -270,6 +282,87 @@ class DadataSuggestTest extends DadataServiceTest
         $this->assertEquals('54623000', $result[0]->areaCode);
     }
 
+    public function testFindFnsUnit(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Find/fnsUnit.json');
+        $result = $service->findFnsUnit('5257');
+
+        $this->assertEquals('Межрайонная инспекция ФНС России № 19 по Нижегородской области', $result[0]->value);
+        $this->assertEquals('5257', $result[0]->code);
+        $this->assertEquals('5257046101', $result[0]->inn);
+    }
+
+    public function testFindFtsUnit(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Find/ftsUnit.json');
+        $result = $service->findFtsUnit('10002000');
+
+        $this->assertEquals('ДОМОДЕДОВСКАЯ', $result[0]->value);
+        $this->assertEquals('ДОМОДЕДОВСКАЯ ТАМОЖНЯ', $result[0]->name);
+        $this->assertEquals('10002000', $result[0]->code);
+        $this->assertEquals('5009004697', $result[0]->inn);
+    }
+
+    public function testCountry(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Find/country.json');
+        $result = $service->findCountry('TH');
+
+        $this->assertEquals('Таиланд', $result[0]->value);
+        $this->assertEquals('Королевство Таиланд', $result[0]->name);
+        $this->assertEquals('TH', $result[0]->alfa2);
+        $this->assertEquals('764', $result[0]->code);
+    }
+
+    public function findRegionCourt(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Find/regionCourt.json');
+        $result = $service->findRegionCourt('52MS0022');
+
+        $this->assertEquals('52MS0001', $result[0]->code);
+        $this->assertEquals('52', $result[0]->regionCode);
+    }
+
+    /**
+     * @dataProvider suggestDataProvider
+     */
+    public function testSuggestRequestParams(
+        string $methodName,
+        string $methodUrl,
+        string $query,
+        string $filePath
+    ): void {
+        $expectedUrl = 'https://example.com/suggetions'.$methodUrl;
+
+        $expectedOptions = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => 'Token token',
+            ],
+            'body' => json_encode(['query' => $query]),
+        ];
+
+        $response = $this->createMock(ResponseInterface::class);
+
+        $response
+            ->expects($this->once())
+            ->method('getContent')
+            ->willReturn(file_get_contents($filePath));
+
+        $httpClient = $this->createMock(HttpClientInterface::class);
+
+        $httpClient
+            ->expects($this->once())
+            ->method('request')
+            ->with('POST', $expectedUrl, $expectedOptions)
+            ->willReturn($response);
+
+        $service = new DadataSuggest('token', 'secret', $httpClient, $this->requestFactory, $this->responseFactory);
+
+        $service->$methodName($query);
+    }
+
     public function suggestDataProvider(): array
     {
         return [
@@ -376,6 +469,12 @@ class DadataSuggestTest extends DadataServiceTest
                 __DIR__.'/../mocks/Suggest/oktmo.json',
             ],
             [
+                'suggestFtsUnit',
+                '/suggest/fts_unit',
+                'домодедово',
+                __DIR__.'/../mocks/Suggest/ftsUnit.json',
+            ],
+            [
                 'findAddress',
                 '/findById/address',
                 '77000000000268400',
@@ -423,46 +522,30 @@ class DadataSuggestTest extends DadataServiceTest
                 '54623425',
                 __DIR__.'/../mocks/Find/oktmo.json',
             ],
-        ];
-    }
-
-    /**
-     * @dataProvider suggestDataProvider
-     */
-    public function testSuggestRequestParams(
-        string $methodName,
-        string $methodUrl,
-        string $query,
-        string $filePath
-    ): void {
-        $expectedUrl = 'https://example.com/suggetions'.$methodUrl;
-
-        $expectedOptions = [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-                'Authorization' => 'Token token',
+            [
+                'findFnsUnit',
+                '/findById/fns_unit',
+                '5257',
+                __DIR__.'/../mocks/Find/fnsUnit.json',
             ],
-            'body' => json_encode(['query' => $query]),
+            [
+                'findFtsUnit',
+                '/findById/fts_unit',
+                '10002000',
+                __DIR__.'/../mocks/Find/ftsUnit.json',
+            ],
+            [
+                'findCountry',
+                '/findById/country',
+                'TH',
+                __DIR__.'/../mocks/Find/country.json',
+            ],
+            [
+                'findRegionCourt',
+                '/findById/region_court',
+                '52MS0022',
+                __DIR__.'/../mocks/Find/regionCourt.json',
+            ],
         ];
-
-        $response = $this->createMock(ResponseInterface::class);
-
-        $response
-            ->expects($this->once())
-            ->method('getContent')
-            ->willReturn(file_get_contents($filePath));
-
-        $httpClient = $this->createMock(HttpClientInterface::class);
-
-        $httpClient
-            ->expects($this->once())
-            ->method('request')
-            ->with('POST', $expectedUrl, $expectedOptions)
-            ->willReturn($response);
-
-        $service = new DadataSuggest('token', 'secret', $httpClient, $this->requestFactory, $this->responseFactory);
-
-        $service->$methodName($query);
     }
 }

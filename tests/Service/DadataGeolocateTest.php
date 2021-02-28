@@ -33,22 +33,6 @@ class DadataGeolocateTest extends DadataServiceTest
         $this->assertEquals('г Москва, проезд Дежнёва, д 2А', $result[0]->addressStr);
     }
 
-    public function dataProvider(): array
-    {
-        return [
-            [
-                'geolocateAddress',
-                '/geolocate/address',
-                __DIR__.'/../mocks/Geolocate/address.json',
-            ],
-            [
-                'geolocatePostalUnit',
-                '/geolocate/postal_unit',
-                __DIR__.'/../mocks/Geolocate/postalUnit.json',
-            ],
-        ];
-    }
-
     /**
      * @dataProvider dataProvider
      */
@@ -83,5 +67,21 @@ class DadataGeolocateTest extends DadataServiceTest
         $service = new DadataGeolocate('token', 'secret', $httpClient, $this->requestFactory, $this->responseFactory);
 
         $service->$methodName(55.878, 37.653);
+    }
+
+    public function dataProvider(): array
+    {
+        return [
+            [
+                'geolocateAddress',
+                '/geolocate/address',
+                __DIR__.'/../mocks/Geolocate/address.json',
+            ],
+            [
+                'geolocatePostalUnit',
+                '/geolocate/postal_unit',
+                __DIR__.'/../mocks/Geolocate/postalUnit.json',
+            ],
+        ];
     }
 }

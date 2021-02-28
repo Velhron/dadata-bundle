@@ -82,6 +82,11 @@ services:
           response: Velhron\DadataBundle\Model\Response\Suggest\FnsUnitResponse
           url: '%velhron_dadata.base_suggestions_url%/suggest/fns_unit'
 
+        - name: 'suggestFtsUnit'
+          request: Velhron\DadataBundle\Model\Request\Suggest\FtsUnitRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\FtsUnitResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/fts_unit'
+
         - name: 'suggestRegionCourt'
           request: Velhron\DadataBundle\Model\Request\Suggest\RegionCourtRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\RegionCourtResponse
@@ -161,6 +166,26 @@ services:
           request: Velhron\DadataBundle\Model\Request\Find\OktmoRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\OktmoResponse
           url: '%velhron_dadata.base_suggestions_url%/findById/oktmo'
+
+        - name: 'findFnsUnit'
+          request: Velhron\DadataBundle\Model\Request\Find\FnsUnitRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\FnsUnitResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/fns_unit'
+
+        - name: 'findFtsUnit'
+          request: Velhron\DadataBundle\Model\Request\Find\FtsUnitRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\FtsUnitResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/fts_unit'
+
+        - name: 'findCountry'
+          request: Velhron\DadataBundle\Model\Request\Find\CountryRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\CountryResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/country'
+
+        - name: 'findRegionCourt'
+          request: Velhron\DadataBundle\Model\Request\Find\RegionCourtRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\RegionCourtResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/region_court'
 
         - name: 'geolocateAddress'
           request: Velhron\DadataBundle\Model\Request\Geolocate\AddressRequest
