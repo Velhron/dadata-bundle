@@ -150,8 +150,41 @@
             "qc": "0"
           }
         },
-        "phones": null,
-        "emails": null,
+        "phones": [
+          {
+            "value": "+7 911 1000000",
+            "unrestricted_value": "+7 911 1000000",
+            "data": {
+              "contact": null,
+              "source": "+7 911 1000000",
+              "qc": null,
+              "type": "Мобильный",
+              "number": "1000000",
+              "extension": null,
+              "provider": "ПАО \"Мобильные ТелеСистемы\"",
+              "country": null,
+              "region": "Санкт-Петербург и Ленинградская область",
+              "city": null,
+              "timezone": "UTC+3",
+              "country_code": "7",
+              "city_code": "911",
+              "qc_conflict": null
+            }
+          }
+        ],
+        "emails": [
+          {
+            "value": "test@example.com",
+            "unrestricted_value": "test@example.com",
+            "data": {
+              "local": "test",
+              "domain": "example.com",
+              "type": null,
+              "source": "test@example.com",
+              "qc": null
+            }
+          }
+        ],
         "ogrn_date": 1029456000000,
         "okved_type": "2014",
         "employee_count": null
@@ -287,8 +320,41 @@
             "qc": "0"
           }
         },
-        "phones": null,
-        "emails": null,
+        "phones": [
+          {
+            "value": "+7 911 2000000",
+            "unrestricted_value": "+7 911 2000000",
+            "data": {
+              "contact": null,
+              "source": "+7 911 2000000",
+              "qc": null,
+              "type": "Мобильный",
+              "number": "2000000",
+              "extension": null,
+              "provider": "ПАО \"Мобильные ТелеСистемы\"",
+              "country": null,
+              "region": "Санкт-Петербург и Ленинградская область",
+              "city": null,
+              "timezone": "UTC+3",
+              "country_code": "7",
+              "city_code": "911",
+              "qc_conflict": null
+            }
+          }
+        ],
+        "emails": [
+          {
+            "value": "test@example.com",
+            "unrestricted_value": "test@example.com",
+            "data": {
+              "local": "test",
+              "domain": "example.com",
+              "type": null,
+              "source": "test@example.com",
+              "qc": null
+            }
+          }
+        ],
         "ogrn_date": null,
         "okved_type": null,
         "employee_count": null
