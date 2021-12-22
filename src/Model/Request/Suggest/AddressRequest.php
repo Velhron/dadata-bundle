@@ -35,4 +35,9 @@ class AddressRequest extends SuggestRequest
      * @var array Гранулярные подсказки по адресу
      */
     protected $to_bound;
+
+    /**
+     * @var bool Гранулярные подсказки по адресу
+     */
+    protected $restrict_value;
 }
