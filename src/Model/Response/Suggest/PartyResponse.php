@@ -137,6 +137,16 @@ class PartyResponse extends SuggestResponse
     public $managers;
 
     /**
+     * @var array Правопредшественники (только для юр. лиц)
+     */
+    public $predecessors;
+
+    /**
+     * @var array Правопреемники (только для юр. лиц)
+     */
+    public $successors;
+
+    /**
      * @var string Уставной капитал компании
      */
     public $capital;
@@ -156,12 +166,34 @@ class PartyResponse extends SuggestResponse
      */
     public $licenses;
 
+    /**
+     * @var EmailResponse[] Адреса эл. почты
+     */
+    public $emails;
+
+    /**
+     * @var PhoneResponse[] Телефоны
+     */
+    public $phones;
+
     public function __construct(array $data)
     {
         parent::__construct($data);
 
         if (isset($data['data']['address'])) {
             $this->address = new AddressResponse($data['data']['address']);
+        }
+
+        if (isset($data['data']['emails']) && is_array($data['data']['emails'])) {
+            foreach ($data['data']['emails'] as $data) {
+                $this->emails[] = new EmailResponse($data);
+            }
+        }
+
+        if (isset($data['data']['phones']) && is_array($data['data']['phones'])) {
+            foreach ($data['data']['phones'] as $data) {
+                $this->phones[] = new PhoneResponse($data);
+            }
         }
     }
 }

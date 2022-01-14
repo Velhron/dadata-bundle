@@ -1,0 +1,30 @@
+{
+  "suggestions": [
+    {
+      "value": "54623422",
+      "unrestricted_value": "54623422",
+      "data": {
+        "oktmo": "54623422",
+        "area_type": "1",
+        "area_code": "54623000",
+        "area": "Колпнянский",
+        "subarea_type": "2",
+        "subarea_code": "54623422",
+        "subarea": "Ушаковское"
+      }
+    },
+    {
+      "value": "54623425",
+      "unrestricted_value": "54623425",
+      "data": {
+        "oktmo": "54623425",
+        "area_type": "1",
+        "area_code": "54623000",
+        "area": "Колпнянский",
+        "subarea_type": "2",
+        "subarea_code": "54623425",
+        "subarea": "Ярищенское"
+      }
+    }
+  ]
+}

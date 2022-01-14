@@ -15,12 +15,4 @@ class FioRequest extends SuggestRequest
      * @var array Подсказки по части ФИО
      */
     protected $parts;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMethodUrl(): string
-    {
-        return 'fio';
-    }
 }

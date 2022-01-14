@@ -4,23 +4,20 @@ declare(strict_types=1);
 
 namespace Velhron\DadataBundle\Model\Request\Iplocate;
 
+use Velhron\DadataBundle\Model\Request\AbstractRequest;
 use Velhron\DadataBundle\Model\Request\Suggest\SuggestRequest;
 
 class AddressRequest extends SuggestRequest
 {
     /**
-     * {@inheritdoc}
+     * @var string IP-адрес
      */
-    public function getBaseUrl(): string
-    {
-        return 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/';
-    }
+    protected $ip;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getMethodUrl(): string
+    public function setQuery(string $ip): AbstractRequest
     {
-        return 'address';
+        $this->ip = $ip;
+
+        return $this;
     }
 }

@@ -10,12 +10,4 @@ class StatRequest extends GeneralRequest
      * @var string Дата, за которую возвращается статистика
      */
     public $date;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getMethodUrl(): string
-    {
-        return 'stat/daily';
-    }
 }

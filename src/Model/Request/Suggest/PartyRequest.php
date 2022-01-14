@@ -27,10 +27,7 @@ class PartyRequest extends SuggestRequest
     protected $locations_boost;
 
     /**
-     * {@inheritdoc}
+     * @var array Ограничение по коду ОКВЭД
      */
-    public function getMethodUrl(): string
-    {
-        return 'party';
-    }
+    protected $okved;
 }

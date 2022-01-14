@@ -6,6 +6,7 @@ namespace Velhron\DadataBundle\Service;
 
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Velhron\DadataBundle\Exception\DadataException;
+use Velhron\DadataBundle\Exception\InvalidConfigException;
 use Velhron\DadataBundle\Model\Request\AbstractRequest;
 use Velhron\DadataBundle\Model\Request\Suggest\SuggestRequest;
 use Velhron\DadataBundle\Model\Response\Find\AffiliatedPartyResponse;
@@ -19,8 +20,10 @@ use Velhron\DadataBundle\Model\Response\Suggest\EmailResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FioResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FmsUnitResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\FnsUnitResponse;
+use Velhron\DadataBundle\Model\Response\Suggest\FtsUnitResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\MetroResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\Okpd2Response;
+use Velhron\DadataBundle\Model\Response\Suggest\OktmoResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\Okved2Response;
 use Velhron\DadataBundle\Model\Response\Suggest\PartyResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse;
@@ -31,25 +34,24 @@ class DadataSuggest extends AbstractService
     /**
      * Обработчик для API подсказок.
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     private function handle(string $method, string $query, array $options = []): array
     {
-        $requestClass = $this->resolver->getMatchedRequest($method);
-        $responseClass = $this->resolver->getMatchedResponse($method);
-
         /* @var SuggestRequest $request */
-        $request = new $requestClass();
+        $request = $this->requestFactory->create($method);
         $request
             ->setQuery($query)
             ->fillOptions($options);
 
         $responseData = $this->query($request);
+
+        $data = [];
         foreach ($responseData['suggestions'] ?? [] as $suggestion) {
-            $data[] = new $responseClass($suggestion);
+            $data[] = $this->responseFactory->create($method, $suggestion);
         }
 
-        return $data ?? [];
+        return $data;
     }
 
     /**
@@ -85,7 +87,7 @@ class DadataSuggest extends AbstractService
      *
      * @return AddressResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestAddress(string $query, array $options = []): array
     {
@@ -95,6 +97,7 @@ class DadataSuggest extends AbstractService
     /**
      * Подсказки по организациям.
      *
+     * Возвращает только базовые поля.
      * Ищет компании и индивидуальных предпринимателей:
      * - по ИНН, ОГРН и КПП;
      * - названию (полному и краткому);
@@ -107,7 +110,7 @@ class DadataSuggest extends AbstractService
      *
      * @return PartyResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestParty(string $query, array $options = []): array
     {
@@ -122,7 +125,7 @@ class DadataSuggest extends AbstractService
      *
      * @return BankResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestBank(string $query, array $options = []): array
     {
@@ -141,7 +144,7 @@ class DadataSuggest extends AbstractService
      *
      * @return FioResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestFio(string $query, array $options = []): array
     {
@@ -159,7 +162,7 @@ class DadataSuggest extends AbstractService
      *
      * @return EmailResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestEmail(string $query, array $options = []): array
     {
@@ -176,7 +179,7 @@ class DadataSuggest extends AbstractService
      *
      * @return AddressResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestFias(string $query, array $options = []): array
     {
@@ -191,7 +194,7 @@ class DadataSuggest extends AbstractService
      *
      * @return FmsUnitResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestFmsUnit(string $query, array $options = []): array
     {
@@ -206,7 +209,7 @@ class DadataSuggest extends AbstractService
      *
      * @return PostalUnitResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestPostalUnit(string $query, array $options = []): array
     {
@@ -217,17 +220,33 @@ class DadataSuggest extends AbstractService
      * Подсказки по справочнику "Налоговые инспекции".
      *
      * Справочник инспекций Налоговой службы.
+     * Поиск работает по полям: code, name_short, address.
      *
      * @param string $query   Текст запроса
      * @param array  $options Дополнительные параметры запроса
      *
      * @return FnsUnitResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestFnsUnit(string $query, array $options = []): array
     {
         return $this->handle('suggestFnsUnit', $query, $options);
+    }
+
+    /**
+     * Подсказки по справочнику таможенных органов и постов.
+     *
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
+     *
+     * @return FtsUnitResponse[] Массив подсказок
+     *
+     * @throws DadataException|InvalidConfigException
+     */
+    public function suggestFtsUnit(string $query, array $options = []): array
+    {
+        return $this->handle('suggestFtsUnit', $query, $options);
     }
 
     /**
@@ -240,7 +259,7 @@ class DadataSuggest extends AbstractService
      *
      * @return RegionCourtResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestRegionCourt(string $query, array $options = []): array
     {
@@ -257,7 +276,7 @@ class DadataSuggest extends AbstractService
      *
      * @return MetroResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestMetro(string $query, array $options = []): array
     {
@@ -274,7 +293,7 @@ class DadataSuggest extends AbstractService
      *
      * @return CarBrandResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestCarBrand(string $query, array $options = []): array
     {
@@ -291,7 +310,7 @@ class DadataSuggest extends AbstractService
      *
      * @return CountryResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestCountry(string $query, array $options = []): array
     {
@@ -308,7 +327,7 @@ class DadataSuggest extends AbstractService
      *
      * @return CurrencyResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestCurrency(string $query, array $options = []): array
     {
@@ -325,7 +344,7 @@ class DadataSuggest extends AbstractService
      *
      * @return Okved2Response[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestOkved2(string $query, array $options = []): array
     {
@@ -342,11 +361,28 @@ class DadataSuggest extends AbstractService
      *
      * @return Okpd2Response[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function suggestOkpd2(string $query, array $options = []): array
     {
         return $this->handle('suggestOkpd2', $query, $options);
+    }
+
+    /**
+     * Подсказки по справочнику "Муниципальные образования (ОКТМО)".
+     *
+     * Общероссийский классификатор территорий муниципальных образований.
+     *
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
+     *
+     * @return OktmoResponse[]
+     *
+     * @throws DadataException|InvalidConfigException
+     */
+    public function suggestOktmo(string $query, array $options = []): array
+    {
+        return $this->handle('suggestOktmo', $query, $options);
     }
 
     /**
@@ -359,7 +395,7 @@ class DadataSuggest extends AbstractService
      *
      * @return AddressResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function findAddress(string $query, array $options = []): array
     {
@@ -374,7 +410,7 @@ class DadataSuggest extends AbstractService
      *
      * @return PostalUnitResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function findPostalUnit(string $query, array $options = []): array
     {
@@ -389,7 +425,7 @@ class DadataSuggest extends AbstractService
      *
      * @return DeliveryResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function findDelivery(string $query, array $options = []): array
     {
@@ -401,14 +437,14 @@ class DadataSuggest extends AbstractService
      *
      * Находит компанию или индивидуального предпринимателя по ИНН, КПП, ОГРН.
      * Возвращает реквизиты компании, учредителей, руководителей, сведения о налоговой, ПФР и ФСС, финансы, лицензии,
-     * реестр МСП и другую информацию о компании.
+     * реестр МСП и другую информацию о компании. Возвращает все доступные сведения о компании.
      *
      * @param string $query   Текст запроса
      * @param array  $options Дополнительные параметры запроса
      *
      * @return PartyResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function findParty(string $query, array $options = []): array
     {
@@ -433,7 +469,7 @@ class DadataSuggest extends AbstractService
      *
      * @return BankResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function findBank(string $query, array $options = []): array
     {
@@ -448,7 +484,7 @@ class DadataSuggest extends AbstractService
      *
      * @return AddressResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function findFias(string $query, array $options = []): array
     {
@@ -465,10 +501,95 @@ class DadataSuggest extends AbstractService
      *
      * @return AffiliatedPartyResponse[] Массив подсказок
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function findAffiliatedParty(string $query, array $options = []): array
     {
         return $this->handle('findAffiliatedParty', $query, $options);
+    }
+
+    /**
+     * Муниципальные образования (ОКТМО) по идентификатору.
+     *
+     * Общероссийский классификатор территорий муниципальных образований.
+     *
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
+     *
+     * @return OktmoResponse[] Массив подсказок
+     *
+     * @throws DadataException|InvalidConfigException
+     */
+    public function findOktmo(string $query, array $options = []): array
+    {
+        return $this->handle('findOktmo', $query, $options);
+    }
+
+    /**
+     * Налоговые инспекции по идентификатору.
+     *
+     * Выборка работает по полям: code, inn.
+     *
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
+     *
+     * @return FnsUnitResponse[] Массив подсказок
+     *
+     * @throws DadataException|InvalidConfigException
+     */
+    public function findFnsUnit(string $query, array $options = []): array
+    {
+        return $this->handle('findFnsUnit', $query, $options);
+    }
+
+    /**
+     * Таможни по идентификатору.
+     *
+     * Выборка работает по полям: code.
+     *
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
+     *
+     * @return FnsUnitResponse[] Массив подсказок
+     *
+     * @throws DadataException|InvalidConfigException
+     */
+    public function findFtsUnit(string $query, array $options = []): array
+    {
+        return $this->handle('findFtsUnit', $query, $options);
+    }
+
+    /**
+     * Страны по идентификатору.
+     *
+     * Выборка работает по полям: code, alfa2, alfa3.
+     *
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
+     *
+     * @return CountryResponse[] Массив подсказок
+     *
+     * @throws DadataException|InvalidConfigException
+     */
+    public function findCountry(string $query, array $options = []): array
+    {
+        return $this->handle('findCountry', $query, $options);
+    }
+
+    /**
+     * Мировые суды по справочнику.
+     *
+     * Выборка работает по полям: code.
+     *
+     * @param string $query   Текст запроса
+     * @param array  $options Дополнительные параметры запроса
+     *
+     * @return RegionCourtResponse[] Массив подсказок
+     *
+     * @throws DadataException|InvalidConfigException
+     */
+    public function findRegionCourt(string $query, array $options = []): array
+    {
+        return $this->handle('findRegionCourt', $query, $options);
     }
 }

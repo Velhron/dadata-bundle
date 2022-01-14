@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Velhron\DadataBundle\Tests\Service;
 
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 use Velhron\DadataBundle\Service\DadataSuggest;
 
 class DadataSuggestTest extends DadataServiceTest
 {
     protected function createService(string $mockFilepath): DadataSuggest
     {
-        return new DadataSuggest('', '', $this->resolver, $this->getMockHttpClient($mockFilepath));
+        return new DadataSuggest('', '', $this->getMockHttpClient($mockFilepath), $this->requestFactory, $this->responseFactory);
     }
 
     public function testSuggestAddress(): void
@@ -111,6 +113,18 @@ class DadataSuggestTest extends DadataServiceTest
         $this->assertEquals('5256034801', $result[0]->inn);
     }
 
+    public function testSuggestFtsUnit(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Suggest/ftsUnit.json');
+        $result = $service->suggestFtsUnit('домодедово');
+
+        $this->assertEquals('ДОМОДЕДОВСКАЯ', $result[0]->value);
+        $this->assertEquals('ДОМОДЕДОВСКАЯ ТАМОЖНЯ', $result[0]->name);
+        $this->assertEquals('10002000', $result[0]->code);
+        $this->assertEquals('5009004697', $result[0]->inn);
+        $this->assertEquals('domodedovo@ca.eais.customs.ru', $result[0]->email);
+    }
+
     public function testSuggestRegionCourt(): void
     {
         $service = $this->createService(__DIR__.'/../mocks/Suggest/regionCourt.json');
@@ -176,6 +190,17 @@ class DadataSuggestTest extends DadataServiceTest
 
         $this->assertEquals('Услуги по обрезиневанию валенок (рыбацкие калоши)', $result[0]->value);
         $this->assertEquals('S.95.23.10.133', $result[0]->idx);
+    }
+
+    public function testSuggestOktmo(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Suggest/oktmo.json');
+        $result = $service->suggestOktmo('5462342');
+
+        $this->assertEquals('54623422', $result[0]->oktmo);
+        $this->assertEquals('Колпнянский', $result[0]->area);
+        $this->assertEquals('54623000', $result[1]->areaCode);
+        $this->assertEquals('Ярищенское', $result[1]->subarea);
     }
 
     public function testFindAddress(): void
@@ -246,5 +271,281 @@ class DadataSuggestTest extends DadataServiceTest
         $this->assertEquals('LEGAL', $result[0]->type);
         $this->assertEquals('7704431373', $result[0]->inn);
         $this->assertEquals('45286560000', $result[0]->okato);
+    }
+
+    public function testFindOktmo(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Find/oktmo.json');
+        $result = $service->findOktmo('54623425');
+
+        $this->assertEquals('54623425', $result[0]->value);
+        $this->assertEquals('54623000', $result[0]->areaCode);
+    }
+
+    public function testFindFnsUnit(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Find/fnsUnit.json');
+        $result = $service->findFnsUnit('5257');
+
+        $this->assertEquals('Межрайонная инспекция ФНС России № 19 по Нижегородской области', $result[0]->value);
+        $this->assertEquals('5257', $result[0]->code);
+        $this->assertEquals('5257046101', $result[0]->inn);
+    }
+
+    public function testFindFtsUnit(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Find/ftsUnit.json');
+        $result = $service->findFtsUnit('10002000');
+
+        $this->assertEquals('ДОМОДЕДОВСКАЯ', $result[0]->value);
+        $this->assertEquals('ДОМОДЕДОВСКАЯ ТАМОЖНЯ', $result[0]->name);
+        $this->assertEquals('10002000', $result[0]->code);
+        $this->assertEquals('5009004697', $result[0]->inn);
+    }
+
+    public function testCountry(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Find/country.json');
+        $result = $service->findCountry('TH');
+
+        $this->assertEquals('Таиланд', $result[0]->value);
+        $this->assertEquals('Королевство Таиланд', $result[0]->name);
+        $this->assertEquals('TH', $result[0]->alfa2);
+        $this->assertEquals('764', $result[0]->code);
+    }
+
+    public function findRegionCourt(): void
+    {
+        $service = $this->createService(__DIR__.'/../mocks/Find/regionCourt.json');
+        $result = $service->findRegionCourt('52MS0022');
+
+        $this->assertEquals('52MS0001', $result[0]->code);
+        $this->assertEquals('52', $result[0]->regionCode);
+    }
+
+    /**
+     * @dataProvider suggestDataProvider
+     */
+    public function testSuggestRequestParams(
+        string $methodName,
+        string $methodUrl,
+        string $query,
+        string $filePath
+    ): void {
+        $expectedUrl = 'https://example.com/suggetions'.$methodUrl;
+
+        $expectedOptions = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => 'Token token',
+            ],
+            'body' => json_encode(['query' => $query]),
+        ];
+
+        $response = $this->createMock(ResponseInterface::class);
+
+        $response
+            ->expects($this->once())
+            ->method('getContent')
+            ->willReturn(file_get_contents($filePath));
+
+        $httpClient = $this->createMock(HttpClientInterface::class);
+
+        $httpClient
+            ->expects($this->once())
+            ->method('request')
+            ->with('POST', $expectedUrl, $expectedOptions)
+            ->willReturn($response);
+
+        $service = new DadataSuggest('token', 'secret', $httpClient, $this->requestFactory, $this->responseFactory);
+
+        $service->$methodName($query);
+    }
+
+    public function suggestDataProvider(): array
+    {
+        return [
+            [
+                'suggestAddress',
+                '/suggest/address',
+                'москва хабар',
+                __DIR__.'/../mocks/Suggest/address.json',
+            ],
+            [
+                'suggestParty',
+                '/suggest/party',
+                'сбербанк',
+                __DIR__.'/../mocks/Suggest/party.json',
+            ],
+            [
+                'suggestBank',
+                '/suggest/bank',
+                'сбербанк',
+                __DIR__.'/../mocks/Suggest/bank.json',
+            ],
+            [
+                'suggestFio',
+                '/suggest/fio',
+                'Викт',
+                __DIR__.'/../mocks/Suggest/fio.json',
+            ],
+            [
+                'suggestEmail',
+                '/suggest/email',
+                'anton@mail.ru',
+                __DIR__.'/../mocks/Suggest/email.json',
+            ],
+            [
+                'suggestFias',
+                '/suggest/fias',
+                'москва хабар',
+                __DIR__.'/../mocks/Suggest/fias.json',
+            ],
+            [
+                'suggestFmsUnit',
+                '/suggest/fms_unit',
+                '772 053',
+                __DIR__.'/../mocks/Suggest/fmsUnit.json',
+            ],
+            [
+                'suggestPostalUnit',
+                '/suggest/postal_unit',
+                'дежнева 2а',
+                __DIR__.'/../mocks/Suggest/postalUnit.json',
+            ],
+            [
+                'suggestFnsUnit',
+                '/suggest/fns_unit',
+                'нижнего',
+                __DIR__.'/../mocks/Suggest/fnsUnit.json',
+            ],
+            [
+                'suggestRegionCourt',
+                '/suggest/region_court',
+                'нижний',
+                __DIR__.'/../mocks/Suggest/regionCourt.json',
+            ],
+            [
+                'suggestMetro',
+                '/suggest/metro',
+                'алек',
+                __DIR__.'/../mocks/Suggest/metro.json',
+            ],
+            [
+                'suggestCarBrand',
+                '/suggest/car_brand',
+                'форд',
+                __DIR__.'/../mocks/Suggest/carBrand.json',
+            ],
+            [
+                'suggestCountry',
+                '/suggest/country',
+                'та',
+                __DIR__.'/../mocks/Suggest/country.json',
+            ],
+            [
+                'suggestCurrency',
+                '/suggest/currency',
+                'руб',
+                __DIR__.'/../mocks/Suggest/currency.json',
+            ],
+            [
+                'suggestOkved2',
+                '/suggest/okved2',
+                'запуск',
+                __DIR__.'/../mocks/Suggest/okved2.json',
+            ],
+            [
+                'suggestOkpd2',
+                '/suggest/okpd2',
+                'калоши',
+                __DIR__.'/../mocks/Suggest/okpd2.json',
+            ],
+            [
+                'suggestOktmo',
+                '/suggest/oktmo',
+                '5462342',
+                __DIR__.'/../mocks/Suggest/oktmo.json',
+            ],
+            [
+                'suggestFtsUnit',
+                '/suggest/fts_unit',
+                'домодедово',
+                __DIR__.'/../mocks/Suggest/ftsUnit.json',
+            ],
+            [
+                'findAddress',
+                '/findById/address',
+                '77000000000268400',
+                __DIR__.'/../mocks/Find/address.json',
+            ],
+            [
+                'findPostalUnit',
+                '/findById/postal_unit',
+                '127642',
+                __DIR__.'/../mocks/Find/postalUnit.json',
+            ],
+            [
+                'findDelivery',
+                '/findById/delivery',
+                '3100400100000',
+                __DIR__.'/../mocks/Find/delivery.json',
+            ],
+            [
+                'findParty',
+                '/findById/party',
+                '7707083893',
+                __DIR__.'/../mocks/Find/party.json',
+            ],
+            [
+                'findBank',
+                '/findById/bank',
+                '044525225',
+                __DIR__.'/../mocks/Find/bank.json',
+            ],
+            [
+                'findFias',
+                '/findById/fias',
+                '77000000000268400',
+                __DIR__.'/../mocks/Find/fias.json',
+            ],
+            [
+                'findAffiliatedParty',
+                '/findAffiliated/party',
+                '7736207543',
+                __DIR__.'/../mocks/Find/affiliatedParty.json',
+            ],
+            [
+                'findOktmo',
+                '/findById/oktmo',
+                '54623425',
+                __DIR__.'/../mocks/Find/oktmo.json',
+            ],
+            [
+                'findFnsUnit',
+                '/findById/fns_unit',
+                '5257',
+                __DIR__.'/../mocks/Find/fnsUnit.json',
+            ],
+            [
+                'findFtsUnit',
+                '/findById/fts_unit',
+                '10002000',
+                __DIR__.'/../mocks/Find/ftsUnit.json',
+            ],
+            [
+                'findCountry',
+                '/findById/country',
+                'TH',
+                __DIR__.'/../mocks/Find/country.json',
+            ],
+            [
+                'findRegionCourt',
+                '/findById/region_court',
+                '52MS0022',
+                __DIR__.'/../mocks/Find/regionCourt.json',
+            ],
+        ];
     }
 }

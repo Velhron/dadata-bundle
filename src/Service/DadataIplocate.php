@@ -6,8 +6,10 @@ namespace Velhron\DadataBundle\Service;
 
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Velhron\DadataBundle\Exception\DadataException;
+use Velhron\DadataBundle\Exception\InvalidConfigException;
 use Velhron\DadataBundle\Model\Request\AbstractRequest;
-use Velhron\DadataBundle\Model\Request\Iplocate\IplocateRequest;
+use Velhron\DadataBundle\Model\Request\Iplocate\AddressRequest;
+use Velhron\DadataBundle\Model\Response\AbstractResponse;
 use Velhron\DadataBundle\Model\Response\Suggest\AddressResponse;
 
 class DadataIplocate extends AbstractService
@@ -15,22 +17,22 @@ class DadataIplocate extends AbstractService
     /**
      * Обработчик для API по IP-адресу.
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
-    private function handle(string $method, string $ip, array $options = [])
+    private function handle(string $method, string $ip, array $options = []): ?AbstractResponse
     {
-        $requestClass = $this->resolver->getMatchedRequest($method);
-        $responseClass = $this->resolver->getMatchedResponse($method);
+        /* @var AddressRequest $request */
+        $request = $this->requestFactory->create($method);
 
-        /* @var IplocateRequest $request */
-        $request = new $requestClass();
         $request
             ->setQuery($ip)
             ->fillOptions($options);
 
         $responseData = $this->query($request);
 
-        return isset($responseData['location']) ? new $responseClass($responseData['location']) : null;
+        return isset($responseData['location'])
+            ? $this->responseFactory->create($method, $responseData['location'])
+            : null;
     }
 
     /**
@@ -61,15 +63,18 @@ class DadataIplocate extends AbstractService
      * - Поддерживает как IPv4, так и IPv6 адреса
      * - Возвращает детальную информацию о городе, в том числе почтовый индекс
      *
-     * @param string $ip      - ip-адрес
-     * @param array  $options - дополнительные параметры запроса
+     * @param string $ip      IP-адрес
+     * @param array  $options Дополнительные параметры запроса
      *
-     * @return AddressResponse|null - ответ
+     * @return AddressResponse|null Ответ
      *
-     * @throws DadataException
+     * @throws DadataException|InvalidConfigException
      */
     public function iplocateAddress(string $ip, array $options = []): ?AddressResponse
     {
-        return $this->handle('iplocateAddress', $ip, $options);
+        /** @var AddressResponse|null $response */
+        $response = $this->handle('iplocateAddress', $ip, $options);
+
+        return $response;
     }
 }

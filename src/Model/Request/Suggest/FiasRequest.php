@@ -25,12 +25,4 @@ class FiasRequest extends SuggestRequest
      * @var array Гранулярные подсказки по ФИАС
      */
     protected $to_bound;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMethodUrl(): string
-    {
-        return 'fias';
-    }
 }

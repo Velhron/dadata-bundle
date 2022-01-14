@@ -67,6 +67,11 @@ class FnsUnitResponse extends SuggestResponse
     public $bankBik;
 
     /**
+     * @var string Корсчет банка получателя
+     */
+    public $bankCorrespondentAccount;
+
+    /**
      * @var string Номер счёта получателя
      */
     public $bankAccount;

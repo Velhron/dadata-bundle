@@ -24,5 +24,8 @@ class VelhronDadataExtension extends Extension
 
         $container->setParameter('velhron_dadata.token', $config['token']);
         $container->setParameter('velhron_dadata.secret', $config['secret']);
+        $container->setParameter('velhron_dadata.base_general_url', $config['base_general_url']);
+        $container->setParameter('velhron_dadata.base_cleaner_url', $config['base_cleaner_url']);
+        $container->setParameter('velhron_dadata.base_suggestions_url', $config['base_suggestions_url']);
     }
 }

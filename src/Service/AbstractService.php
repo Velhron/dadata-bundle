@@ -7,7 +7,8 @@ namespace Velhron\DadataBundle\Service;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Velhron\DadataBundle\Exception\DadataException;
 use Velhron\DadataBundle\Model\Request\AbstractRequest;
-use Velhron\DadataBundle\Resolver;
+use Velhron\DadataBundle\RequestFactory;
+use Velhron\DadataBundle\ResponseFactory;
 
 abstract class AbstractService
 {
@@ -22,21 +23,32 @@ abstract class AbstractService
     protected $secret;
 
     /**
-     * @var Resolver
-     */
-    protected $resolver;
-
-    /**
      * @var HttpClientInterface HTTP-клиент
      */
     protected $httpClient;
 
-    public function __construct(string $token, string $secret, Resolver $resolver, HttpClientInterface $httpClient)
-    {
+    /**
+     * @var RequestFactory
+     */
+    protected $requestFactory;
+
+    /**
+     * @var ResponseFactory
+     */
+    protected $responseFactory;
+
+    public function __construct(
+        string $token,
+        string $secret,
+        HttpClientInterface $httpClient,
+        RequestFactory $requestFactory,
+        ResponseFactory $responseFactory
+    ) {
         $this->token = $token;
         $this->secret = $secret;
-        $this->resolver = $resolver;
         $this->httpClient = $httpClient;
+        $this->requestFactory = $requestFactory;
+        $this->responseFactory = $responseFactory;
     }
 
     /**

@@ -4,8 +4,9 @@ services:
     arguments:
       - '%velhron_dadata.token%'
       - '%velhron_dadata.secret%'
-      - '@Velhron\DadataBundle\Resolver'
       - '@http_client'
+      - '@Velhron\DadataBundle\RequestFactory'
+      - '@Velhron\DadataBundle\ResponseFactory'
 
   Velhron\DadataBundle\Service\DadataGeneral:
     parent: Velhron\DadataBundle\Service\AbstractService
@@ -22,6 +23,16 @@ services:
   Velhron\DadataBundle\Service\DadataGeolocate:
     parent: Velhron\DadataBundle\Service\AbstractService
 
+  Velhron\DadataBundle\RequestFactory:
+    public: true
+    arguments:
+      - '@Velhron\DadataBundle\Resolver'
+
+  Velhron\DadataBundle\ResponseFactory:
+    public: true
+    arguments:
+      - '@Velhron\DadataBundle\Resolver'
+
   Velhron\DadataBundle\Resolver:
     public: true
     arguments:
@@ -29,131 +40,211 @@ services:
         - name: 'suggestAddress'
           request: Velhron\DadataBundle\Model\Request\Suggest\AddressRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/address'
 
         - name: 'suggestParty'
           request: Velhron\DadataBundle\Model\Request\Suggest\PartyRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\PartyResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/party'
 
         - name: 'suggestBank'
           request: Velhron\DadataBundle\Model\Request\Suggest\BankRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\BankResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/bank'
 
         - name: 'suggestFio'
           request: Velhron\DadataBundle\Model\Request\Suggest\FioRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\FioResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/fio'
 
         - name: 'suggestEmail'
           request: Velhron\DadataBundle\Model\Request\Suggest\EmailRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\EmailResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/email'
 
         - name: 'suggestFias'
           request: Velhron\DadataBundle\Model\Request\Suggest\FiasRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/fias'
 
         - name: 'suggestFmsUnit'
           request: Velhron\DadataBundle\Model\Request\Suggest\FmsUnitRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\FmsUnitResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/fms_unit'
 
         - name: 'suggestPostalUnit'
           request: Velhron\DadataBundle\Model\Request\Suggest\PostalUnitRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/postal_unit'
 
         - name: 'suggestFnsUnit'
           request: Velhron\DadataBundle\Model\Request\Suggest\FnsUnitRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\FnsUnitResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/fns_unit'
+
+        - name: 'suggestFtsUnit'
+          request: Velhron\DadataBundle\Model\Request\Suggest\FtsUnitRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\FtsUnitResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/fts_unit'
 
         - name: 'suggestRegionCourt'
           request: Velhron\DadataBundle\Model\Request\Suggest\RegionCourtRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\RegionCourtResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/region_court'
 
         - name: 'suggestMetro'
           request: Velhron\DadataBundle\Model\Request\Suggest\MetroRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\MetroResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/metro'
 
         - name: 'suggestCarBrand'
           request: Velhron\DadataBundle\Model\Request\Suggest\CarBrandRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\CarBrandResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/car_brand'
 
         - name: 'suggestCountry'
           request: Velhron\DadataBundle\Model\Request\Suggest\CountryRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\CountryResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/country'
 
         - name: 'suggestCurrency'
           request: Velhron\DadataBundle\Model\Request\Suggest\CurrencyRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\CurrencyResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/currency'
 
         - name: 'suggestOkved2'
           request: Velhron\DadataBundle\Model\Request\Suggest\Okved2Request
           response: Velhron\DadataBundle\Model\Response\Suggest\Okved2Response
+          url: '%velhron_dadata.base_suggestions_url%/suggest/okved2'
 
         - name: 'suggestOkpd2'
           request: Velhron\DadataBundle\Model\Request\Suggest\Okpd2Request
           response: Velhron\DadataBundle\Model\Response\Suggest\Okpd2Response
+          url: '%velhron_dadata.base_suggestions_url%/suggest/okpd2'
+
+        - name: 'suggestOktmo'
+          request: Velhron\DadataBundle\Model\Request\Suggest\OktmoRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\OktmoResponse
+          url: '%velhron_dadata.base_suggestions_url%/suggest/oktmo'
 
         - name: 'findAddress'
           request: Velhron\DadataBundle\Model\Request\Find\AddressRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/address'
 
         - name: 'findPostalUnit'
           request: Velhron\DadataBundle\Model\Request\Find\PostalUnitRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/postal_unit'
 
         - name: 'findDelivery'
           request: Velhron\DadataBundle\Model\Request\Find\DeliveryRequest
           response: Velhron\DadataBundle\Model\Response\Find\DeliveryResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/delivery'
 
         - name: 'findParty'
           request: Velhron\DadataBundle\Model\Request\Find\PartyRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\PartyResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/party'
 
         - name: 'findBank'
           request: Velhron\DadataBundle\Model\Request\Find\BankRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\BankResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/bank'
 
         - name: 'findFias'
           request: Velhron\DadataBundle\Model\Request\Find\FiasRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/fias'
 
         - name: 'findAffiliatedParty'
           request: Velhron\DadataBundle\Model\Request\Find\AffiliatedPartyRequest
           response: Velhron\DadataBundle\Model\Response\Find\AffiliatedPartyResponse
+          url: '%velhron_dadata.base_suggestions_url%/findAffiliated/party'
+
+        - name: 'findOktmo'
+          request: Velhron\DadataBundle\Model\Request\Find\OktmoRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\OktmoResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/oktmo'
+
+        - name: 'findFnsUnit'
+          request: Velhron\DadataBundle\Model\Request\Find\FnsUnitRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\FnsUnitResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/fns_unit'
+
+        - name: 'findFtsUnit'
+          request: Velhron\DadataBundle\Model\Request\Find\FtsUnitRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\FtsUnitResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/fts_unit'
+
+        - name: 'findCountry'
+          request: Velhron\DadataBundle\Model\Request\Find\CountryRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\CountryResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/country'
+
+        - name: 'findRegionCourt'
+          request: Velhron\DadataBundle\Model\Request\Find\RegionCourtRequest
+          response: Velhron\DadataBundle\Model\Response\Suggest\RegionCourtResponse
+          url: '%velhron_dadata.base_suggestions_url%/findById/region_court'
 
         - name: 'geolocateAddress'
           request: Velhron\DadataBundle\Model\Request\Geolocate\AddressRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+          url: '%velhron_dadata.base_suggestions_url%/geolocate/address'
 
         - name: 'geolocatePostalUnit'
           request: Velhron\DadataBundle\Model\Request\Geolocate\PostalUnitRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\PostalUnitResponse
+          url: '%velhron_dadata.base_suggestions_url%/geolocate/postal_unit'
 
         - name: 'iplocateAddress'
           request: Velhron\DadataBundle\Model\Request\Iplocate\AddressRequest
           response: Velhron\DadataBundle\Model\Response\Suggest\AddressResponse
+          url: '%velhron_dadata.base_suggestions_url%/iplocate/address'
 
         - name: 'cleanAddress'
           request: Velhron\DadataBundle\Model\Request\Clean\AddressRequest
           response: Velhron\DadataBundle\Model\Response\Clean\AddressResponse
+          url: '%velhron_dadata.base_cleaner_url%/address'
 
         - name: 'cleanPhone'
           request: Velhron\DadataBundle\Model\Request\Clean\PhoneRequest
           response: Velhron\DadataBundle\Model\Response\Clean\PhoneResponse
+          url: '%velhron_dadata.base_cleaner_url%/phone'
 
         - name: 'cleanPassport'
           request: Velhron\DadataBundle\Model\Request\Clean\PassportRequest
           response: Velhron\DadataBundle\Model\Response\Clean\PassportResponse
+          url: '%velhron_dadata.base_cleaner_url%/passport'
 
         - name: 'cleanBirthdate'
           request: Velhron\DadataBundle\Model\Request\Clean\BirthdateRequest
           response: Velhron\DadataBundle\Model\Response\Clean\BirthdateResponse
+          url: '%velhron_dadata.base_cleaner_url%/birthdate'
 
         - name: 'cleanVehicle'
           request: Velhron\DadataBundle\Model\Request\Clean\VehicleRequest
           response: Velhron\DadataBundle\Model\Response\Clean\VehicleResponse
+          url: '%velhron_dadata.base_cleaner_url%/vehicle'
 
         - name: 'cleanName'
           request: Velhron\DadataBundle\Model\Request\Clean\NameRequest
           response: Velhron\DadataBundle\Model\Response\Clean\NameResponse
+          url: '%velhron_dadata.base_cleaner_url%/name'
 
         - name: 'cleanEmail'
           request: Velhron\DadataBundle\Model\Request\Clean\EmailRequest
           response: Velhron\DadataBundle\Model\Response\Clean\EmailResponse
+          url: '%velhron_dadata.base_cleaner_url%/email'
+
+        - name: 'balance'
+          request: Velhron\DadataBundle\Model\Request\General\BalanceRequest
+          url: '%velhron_dadata.base_general_url%/profile/balance'
+
+        - name: 'stat'
+          request: Velhron\DadataBundle\Model\Request\General\StatRequest
+          url: '%velhron_dadata.base_general_url%/stat/daily'
+
+        - name: 'version'
+          request: Velhron\DadataBundle\Model\Request\General\VersionRequest
+          url: '%velhron_dadata.base_general_url%/version'

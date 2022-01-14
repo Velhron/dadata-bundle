@@ -64,6 +64,12 @@ class AppKernel extends Kernel
 velhron_dadata:
     token: 'token'
     secret: 'secret'
+    # Если у вас инфраструктура состоит из n-сервисов, которые обращаются в dadata, то для контроля запросов в dadata
+    # в одной точке, Вам возможно потребуется прокси-кеш. Для замены оригинальных url от dadata на Ваш прокси, можете
+    # заполнить следующие необязательные параметры
+    #base_general_url: 'https://proxy_dadata.ru/proxy/v2'
+    #base_cleaner_url: 'https://cleaner.proxy_dadata.ru/proxy/v1/clean'
+    #base_suggestions_url: 'https://suggestions.proxy_dadata.ru/suggestions/proxy/4_1/rs'
 ```
 
 ## Использование

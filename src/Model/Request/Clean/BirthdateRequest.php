@@ -6,11 +6,4 @@ namespace Velhron\DadataBundle\Model\Request\Clean;
 
 class BirthdateRequest extends CleanRequest
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getMethodUrl(): string
-    {
-        return 'birthdate';
-    }
 }

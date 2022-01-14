@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Velhron\DadataBundle\Tests\Service;
 
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 use Velhron\DadataBundle\Service\DadataClean;
 
 class DadataCleanTest extends DadataServiceTest
 {
     protected function createService(string $mockFilepath): DadataClean
     {
-        return new DadataClean('', '', $this->resolver, $this->getMockHttpClient($mockFilepath));
+        return new DadataClean('', '', $this->getMockHttpClient($mockFilepath), $this->requestFactory, $this->responseFactory);
     }
 
     public function testCleanAddress(): void
@@ -73,5 +75,93 @@ class DadataCleanTest extends DadataServiceTest
         $result = $service->cleanEmail('serega@yandex/ru');
 
         $this->assertEquals('serega@yandex.ru', $result->email);
+    }
+
+    /**
+     * @dataProvider dataProvider
+     */
+    public function testRequestParams(
+        string $methodName,
+        string $methodUrl,
+        string $query,
+        string $filePath
+    ): void {
+        $expectedUrl = 'https://example.com/cleaner'.$methodUrl;
+
+        $expectedOptions = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Token token',
+                'X-Secret' => 'secret',
+            ],
+            'body' => json_encode([$query]),
+        ];
+
+        $response = $this->createMock(ResponseInterface::class);
+
+        $response
+            ->expects($this->once())
+            ->method('getContent')
+            ->willReturn(file_get_contents($filePath));
+
+        $httpClient = $this->createMock(HttpClientInterface::class);
+
+        $httpClient
+            ->expects($this->once())
+            ->method('request')
+            ->with('POST', $expectedUrl, $expectedOptions)
+            ->willReturn($response);
+
+        $service = new DadataClean('token', 'secret', $httpClient, $this->requestFactory, $this->responseFactory);
+
+        $service->$methodName($query);
+    }
+
+    public function dataProvider(): array
+    {
+        return [
+            [
+                'cleanAddress',
+                '/address',
+                'мск сухонска 11/-89',
+                __DIR__.'/../mocks/Clean/address.json',
+            ],
+            [
+                'cleanPhone',
+                '/phone',
+                'раб 846)231.60.14 *139',
+                __DIR__.'/../mocks/Clean/phone.json',
+            ],
+            [
+                'cleanPassport',
+                '/passport',
+                '4509 235857',
+                __DIR__.'/../mocks/Clean/passport.json',
+            ],
+            [
+                'cleanBirthdate',
+                '/birthdate',
+                '24/3/12',
+                __DIR__.'/../mocks/Clean/birthdate.json',
+            ],
+            [
+                'cleanVehicle',
+                '/vehicle',
+                'бмв',
+                __DIR__.'/../mocks/Clean/vehicle.json',
+            ],
+            [
+                'cleanName',
+                '/name',
+                'Срегей владимерович иванов',
+                __DIR__.'/../mocks/Clean/name.json',
+            ],
+            [
+                'cleanEmail',
+                '/email',
+                'serega@yandex/ru',
+                __DIR__.'/../mocks/Clean/email.json',
+            ],
+        ];
     }
 }

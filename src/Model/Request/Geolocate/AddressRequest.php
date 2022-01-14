@@ -10,12 +10,4 @@ class AddressRequest extends GeolocateRequest
      * @var string На каком языке вернуть результат (ru / en)
      */
     protected $language;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMethodUrl(): string
-    {
-        return 'address';
-    }
 }

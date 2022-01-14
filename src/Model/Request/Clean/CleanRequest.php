@@ -11,14 +11,6 @@ abstract class CleanRequest extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getBaseUrl(): string
-    {
-        return 'https://cleaner.dadata.ru/api/v1/clean/';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getBody(): array
     {
         return [$this->query];

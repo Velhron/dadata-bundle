@@ -1,0 +1,15 @@
+{
+  "suggestions": [
+    {
+      "value": "Таиланд",
+      "unrestricted_value": "Королевство Таиланд",
+      "data": {
+        "code": "764",
+        "alfa2": "TH",
+        "alfa3": "THA",
+        "name_short": "Таиланд",
+        "name": "Королевство Таиланд"
+      }
+    }
+  ]
+}
