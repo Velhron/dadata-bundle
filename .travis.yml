@@ -11,6 +11,8 @@ env:
   - SYMFONY_VERSION=5.0.*
   - SYMFONY_VERSION=5.1.*
   - SYMFONY_VERSION=5.2.*
+  - SYMFONY_VERSION=5.3.*
+  - SYMFONY_VERSION=5.4.*
 
 cache:
   directories:
