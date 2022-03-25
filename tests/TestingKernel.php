@@ -8,23 +8,43 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Velhron\DadataBundle\VelhronDadataBundle;
 
-class TestingKernel extends Kernel
-{
-    /**
-     * {@inheritdoc}
-     */
-    public function registerBundles()
+if (version_compare(Kernel::VERSION, '6.0', '<')) {
+    class TestingKernel extends Kernel
     {
-        return [
-            new VelhronDadataBundle(),
-        ];
-    }
+        /**
+         * @return iterable<mixed, Symfony\Component\HttpKernel\Bundle\BundleInterface>
+         */
+        public function registerBundles()
+        {
+            return [
+                new VelhronDadataBundle(),
+            ];
+        }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function registerContainerConfiguration(LoaderInterface $loader)
+        /**
+         * {@inheritdoc}
+         */
+        public function registerContainerConfiguration(LoaderInterface $loader)
+        {
+            $loader->load(__DIR__.'/DependencyInjection/config.yaml');
+        }
+    }
+} else {
+    class TestingKernel extends Kernel
     {
-        $loader->load(__DIR__.'/DependencyInjection/config.yaml');
+        public function registerBundles(): iterable
+        {
+            return [
+                new VelhronDadataBundle(),
+            ];
+        }
+
+        /**
+         * {@inheritdoc}
+         */
+        public function registerContainerConfiguration(LoaderInterface $loader)
+        {
+            $loader->load(__DIR__.'/DependencyInjection/config.yaml');
+        }
     }
 }
