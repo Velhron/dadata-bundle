@@ -40,6 +40,11 @@ class PartyResponse extends SuggestResponse
      * @var array Наименование
      */
     public $name;
+    
+    /**
+     * @var array ФИО (для индивидуальных предпринимателей)
+     */
+    public $fio;
 
     /**
      * @var string Код ОКАТО
