@@ -5,12 +5,11 @@ $finder = PhpCsFixer\Finder::create()
     ->in('tests')
 ;
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
+    ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
         'array_syntax' => ['syntax' => 'short'],
         'declare_strict_types' => true,
     ])
-    ->setRiskyAllowed(true)
-    ->setFinder($finder)
-;
+    ->setFinder($finder);
