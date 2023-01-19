@@ -42,6 +42,11 @@ class PartyResponse extends SuggestResponse
     public $name;
 
     /**
+     * @var array ФИО (для индивидуальных предпринимателей)
+     */
+    public $fio;
+
+    /**
      * @var string Код ОКАТО
      */
     public $okato;
@@ -185,14 +190,14 @@ class PartyResponse extends SuggestResponse
         }
 
         if (isset($data['data']['emails']) && is_array($data['data']['emails'])) {
-            foreach ($data['data']['emails'] as $data) {
-                $this->emails[] = new EmailResponse($data);
+            foreach ($data['data']['emails'] as $email) {
+                $this->emails[] = new EmailResponse($email);
             }
         }
 
         if (isset($data['data']['phones']) && is_array($data['data']['phones'])) {
-            foreach ($data['data']['phones'] as $data) {
-                $this->phones[] = new PhoneResponse($data);
+            foreach ($data['data']['phones'] as $phone) {
+                $this->phones[] = new PhoneResponse($phone);
             }
         }
     }
