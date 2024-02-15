@@ -20,4 +20,9 @@ class PartyRequest extends FindRequest
      * @var string Юр. лицо (LEGAL) или индивидуальный предприниматель (INDIVIDUAL)
      */
     protected $type;
+
+    /**
+     * @var array Ограничение по статусу организации
+     */
+    protected $status;
 }
