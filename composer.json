@@ -1,5 +1,5 @@
 {
-    "name": "velhron/dadata-bundle",
+    "name": "acvilev1/dadata-bundle",
     "description": "DaData for Symfony",
     "keywords": ["dadata", "symfony-bundle", "symfony-dadata"],
     "type": "symfony-bundle",
